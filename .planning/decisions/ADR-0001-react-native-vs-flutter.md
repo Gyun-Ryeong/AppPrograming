@@ -1,9 +1,9 @@
-# ADR-0001: 모바일 프레임워크 선택 — React Native vs Flutter
+# ADR-0001: 모바일 프레임워크 선택 — Flutter vs React Native
 
 | 항목 | 내용 |
 |------|------|
 | 상태 | 승인됨 (Accepted) |
-| 결정일 | 2026-05-03 |
+| 결정일 | 2026-05-04 (초기 React Native → Flutter로 변경) |
 | 결정자 | 프로젝트 팀 |
 | 관련 문서 | docs/architecture.md |
 
@@ -11,69 +11,75 @@
 
 ## 맥락 (Context)
 
-MEF는 iOS와 Android 모두를 지원하는 모바일 앱이다.  
+MEF는 iOS와 Android 모두를 지원하는 모바일 앱이다.
 네이티브 앱(Swift + Kotlin) 대신 크로스플랫폼 프레임워크를 사용하기로 결정했고,
-현재 유력한 두 선택지는 **React Native**와 **Flutter**다.
+유력한 두 선택지는 **Flutter**와 **React Native**다.
 
-두 프레임워크 모두 단일 코드베이스로 iOS/Android를 동시에 지원하며,
-성숙한 생태계를 가지고 있다.
+초기에 React Native(Expo)로 프로젝트를 시작했으나,
+실제 개발 진입 시점에 Flutter로 전환하기로 결정했다.
 
 ---
 
 ## 결정 (Decision)
 
-**React Native를 선택한다.**
+**Flutter를 선택한다.**
 
 ---
 
 ## 선택 이유 (Rationale)
 
-### React Native를 선택한 이유
+### Flutter를 선택한 이유
 
-1. **기존 기술 스택과의 연속성**  
-   팀(또는 개발자)이 JavaScript/TypeScript와 React에 이미 익숙하다.  
-   Flutter는 Dart라는 새로운 언어를 배워야 하므로 학습 비용이 추가로 발생한다.
+1. **완벽한 UI 일관성**
+   Flutter는 자체 렌더링 엔진(Skia/Impeller)을 사용해 iOS와 Android에서 픽셀 단위로 동일한 UI를 보장한다.
+   React Native는 각 플랫폼의 네이티브 컴포넌트를 사용하므로 플랫폼별 UI 차이가 발생할 수 있다.
 
-2. **웹 개발 지식의 재활용**  
-   React 컴포넌트 모델, 훅(Hook), 상태 관리 개념이 React Native에 그대로 적용된다.  
-   HTML/CSS 경험이 있다면 Flexbox 레이아웃을 빠르게 습득할 수 있다.
+2. **성능 우위**
+   Flutter는 네이티브 코드로 직접 컴파일되며 JS Bridge가 없다.
+   React Native는 JavaScript Bridge(또는 JSI)를 통해 네이티브와 통신하므로 성능 병목이 생길 수 있다.
+   채팅 UI처럼 실시간 업데이트가 잦은 화면에서 Flutter가 더 유리하다.
 
-3. **JavaScript 생태계의 풍부한 라이브러리**  
-   npm 생태계를 그대로 활용할 수 있다.  
-   Anthropic SDK, Supabase JS 클라이언트 등 AI/BaaS 라이브러리가 공식 JS 버전으로 제공된다.
+3. **Google 공식 지원 및 성장하는 생태계**
+   Flutter는 Google이 직접 개발·유지하며, pub.dev 생태계가 빠르게 성장 중이다.
+   Supabase, HTTP 호출, 차트 라이브러리 등 이 프로젝트에 필요한 패키지가 모두 존재한다.
 
-4. **Expo를 통한 빠른 프로토타이핑**  
-   Expo Go 앱을 사용하면 네이티브 빌드 없이 실기기에서 즉시 테스트 가능하다.  
-   빌드 환경(Xcode, Android Studio) 설정 없이 개발을 시작할 수 있어 초기 진입 장벽이 낮다.
+4. **Dart의 타입 안전성**
+   Dart는 강타입 언어로, 컴파일 타임에 에러를 잡을 수 있다.
+   AI 응답을 파싱하고 모델 클래스로 변환하는 과정에서 런타임 오류보다 컴파일 오류가 훨씬 디버깅하기 쉽다.
 
-5. **커뮤니티 및 레퍼런스**  
-   Meta가 주도하며 Microsoft, Shopify 등 대기업이 프로덕션에서 사용 중이다.  
-   Stack Overflow, GitHub Issues 등에 한국어 자료도 상대적으로 풍부하다.
+5. **단일 코드베이스의 완성도**
+   Flutter 하나로 Android / iOS / Web / Desktop 모두 빌드 가능하다.
+   과제 수준에서는 Android + iOS만 필요하지만, 향후 확장성이 뛰어나다.
 
 ---
 
-## 비교 분석 (Flutter와의 비교)
+## 비교 분석 (React Native와의 비교)
 
-| 항목 | React Native | Flutter |
-|------|-------------|---------|
-| 언어 | JavaScript / TypeScript | Dart |
-| 학습 곡선 | 낮음 (JS/React 경험 있을 때) | 보통 (Dart 신규 학습 필요) |
-| 성능 | 우수 (JS Bridge → JSI로 개선 중) | 매우 우수 (직접 렌더링) |
-| UI 일관성 | 네이티브 컴포넌트 사용 (플랫폼별 차이 있음) | 자체 렌더링 엔진 (완벽한 일관성) |
-| 생태계 | npm 풍부, AI/BaaS SDK 공식 지원 | pub.dev, 성장 중 |
-| 빠른 프로토타입 | Expo Go로 즉시 가능 | 빌드 환경 필요 |
-| 구글/AI SDK | JS SDK 공식 제공 | Dart SDK 별도 확인 필요 |
+| 항목 | Flutter | React Native |
+|------|---------|-------------|
+| 언어 | Dart | JavaScript / TypeScript |
+| 렌더링 | 자체 엔진 (Skia/Impeller) | 플랫폼 네이티브 컴포넌트 |
+| UI 일관성 | 완벽 (픽셀 단위 동일) | 플랫폼별 차이 있음 |
+| 성능 | 매우 우수 (JS Bridge 없음) | 우수 (JSI로 개선 중) |
+| 학습 곡선 | 보통 (Dart 신규 학습 필요) | 낮음 (JS/React 경험 시) |
+| 생태계 | pub.dev, 빠르게 성장 중 | npm 풍부 |
+| 빠른 프로토타입 | flutter run으로 즉시 | Expo Go로 즉시 |
+| 상태 관리 | Riverpod (공식 권장) | Context / Zustand 등 다양 |
+| 네비게이션 | go_router (공식 권장) | React Navigation |
 
 ---
 
 ## 결과적으로 버린 대안 (Rejected Alternatives)
 
-### Flutter
-- **버린 이유**: Dart 언어를 새로 배워야 하는 학습 비용, JavaScript 기반 AI/BaaS SDK와의 통합 추가 작업 필요.
-- **아쉬운 점**: 성능과 UI 일관성은 Flutter가 더 뛰어날 수 있다. 특히 복잡한 애니메이션이나 게임 수준의 UI가 필요하다면 Flutter가 유리하다.
+### React Native (Expo)
+- **버린 이유**:
+  - JS Bridge 기반 아키텍처는 실시간 채팅처럼 업데이트가 잦은 화면에서 성능 우려가 있다.
+  - 플랫폼별 UI 차이를 별도로 처리해야 하는 오버헤드가 발생한다.
+  - Expo Go의 편리함은 있지만, 네이티브 모듈 제한이 STT/TTS 구현 시 장벽이 될 수 있다.
+- **아쉬운 점**: JavaScript/TypeScript 경험이 있다면 초기 진입 장벽이 낮고, npm 생태계의 AI SDK 활용이 편리하다.
 
-### React Native CLI (Expo 없이)
-- **버린 이유**: 네이티브 빌드 설정(Xcode, Android Studio)이 필요해 초기 환경 설정에 시간이 소요된다. 수업 과제 특성상 빠른 프로토타이핑이 우선이므로 **Expo 기반 React Native**로 시작한다.
+### 네이티브 (Swift + Kotlin 별도 개발)
+- **버린 이유**: iOS와 Android를 각각 개발해야 하므로 7주 일정에서 비현실적이다.
 
 ---
 
@@ -81,14 +87,14 @@ MEF는 iOS와 Android 모두를 지원하는 모바일 앱이다.
 
 | 트레이드오프 | 완화 방안 |
 |-------------|-----------|
-| JS Bridge 성능 병목 가능성 | 과제 수준에서는 문제 없음. 필요 시 JSI/TurboModules 적용 |
-| Expo 제약 (일부 네이티브 기능 제한) | 음성 녹음 등 필요 시 Expo 플러그인 또는 Bare Workflow 전환 |
-| 플랫폼별 UI 차이 (iOS vs Android) | 핵심 화면은 직접 테스트, 공통 컴포넌트 사용으로 최소화 |
+| Dart 언어 신규 학습 필요 | Flutter 공식 문서 + Flutter Cookbook로 빠르게 습득 |
+| Supabase Edge Function은 TypeScript 작성 | Flutter 클라이언트와 HTTP POST로 통신 — 언어 혼용이지만 레이어가 명확히 분리됨 |
+| pub.dev 일부 패키지 품질 편차 | 공식 권장 패키지 우선 사용 (supabase_flutter, go_router, riverpod) |
 
 ---
 
 ## 검토 시점
 
 다음 상황이 발생하면 이 결정을 재검토한다:
-- AI 응답 스트리밍 처리에서 JS Bridge 성능이 UX에 영향을 주는 경우
-- 음성 입력(STT) 구현 시 Expo 제약으로 인해 핵심 기능 구현이 불가한 경우
+- pub.dev에서 핵심 기능 구현에 필요한 패키지를 찾을 수 없는 경우
+- Flutter의 특정 플랫폼 빌드 환경 문제로 개발이 2일 이상 지연되는 경우

@@ -1,8 +1,8 @@
- # CLAUDE.md
+# CLAUDE.md
 
 ## 프로젝트 개요
 - 앱 이름: MEF — My English Friend
-- 형태: 모바일 앱 (React Native)
+- 형태: 모바일 앱 (Flutter)
 - 목적: AI 기반 영어 회화 트레이너
 - 타겟: 학생, 직장인 (B2C)
 - 수익 모델: Freemium + 기능별 일회성 결제
@@ -19,10 +19,12 @@
 
 ## 코드 생성 규칙
 - 모든 코드에 한국어 주석 필수 (발표 설명 대비)
-- 컴포넌트는 반드시 단일 책임 원칙으로 파일 분리
-- AI 호출은 반드시 service/ 레이어에서만 수행
+- 위젯(Widget)은 반드시 단일 책임 원칙으로 파일 분리
+- AI 호출은 반드시 services/ 레이어에서만 수행
 - 상수/설정값은 하드코딩 금지, constants/ 에 모음
 - 복잡한 패턴보다 단순하고 명확한 구조 우선
+- 파일명은 Dart 관례에 따라 snake_case 사용 (예: scenario_service.dart)
+- 상태 관리는 Riverpod 사용
 
 ## 문서 생성 규칙
 - 새 기능/기술 선택 시 ADR 자동 생성할 것
@@ -32,7 +34,7 @@
 ## 디렉토리 구조 원칙
 - .planning/ — AI Agent가 생성하는 계획 문서
 - docs/      — 사람이 읽는 문서 (setup, deploy, testing)
-- src/       — 실제 코드
+- lib/       — Flutter 실제 코드 (Dart 표준 디렉토리)
 - .github/agents/   — 서브에이전트 정의
 - .github/prompts/  — 슬래시 명령 템플릿
 
