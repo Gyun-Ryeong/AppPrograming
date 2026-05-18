@@ -1,28 +1,62 @@
-// 인증 상태 관리 — Riverpod Provider
-// TODO: supabase_flutter + flutter_riverpod 패키지 추가 후 구현
+// 인증 상태 관리 — Supabase Auth 스트림을 Riverpod으로 감싼다
 
-// 사용자 정보 모델
-class AuthUser {
-  final String id;
-  final String email;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-  const AuthUser({required this.id, required this.email});
+// Supabase 클라이언트 단일 인스턴스를 Provider로 노출
+final supabaseProvider = Provider<SupabaseClient>((ref) {
+  return Supabase.instance.client;
+});
+
+// 현재 로그인한 사용자 정보 — null이면 비로그인 상태
+final authUserProvider = StreamProvider<User?>((ref) {
+  final supabase = ref.watch(supabaseProvider);
+  // onAuthStateChange 스트림: 로그인/로그아웃/세션 갱신 시 자동으로 새 값 방출
+  return supabase.auth.onAuthStateChange.map((event) => event.session?.user);
+});
+
+// 로그인/로그아웃 액션을 담당하는 Notifier
+class AuthNotifier extends Notifier<AsyncValue<void>> {
+  @override
+  AsyncValue<void> build() => const AsyncValue.data(null);
+
+  // 이메일/비밀번호 로그인
+  Future<void> signIn({
+    required String email,
+    required String password,
+  }) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await Supabase.instance.client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+    });
+  }
+
+  // 이메일/비밀번호 회원가입
+  Future<void> signUp({
+    required String email,
+    required String password,
+  }) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await Supabase.instance.client.auth.signUp(
+        email: email,
+        password: password,
+      );
+    });
+  }
+
+  // 로그아웃
+  Future<void> signOut() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await Supabase.instance.client.auth.signOut();
+    });
+  }
 }
 
-// TODO: Riverpod Provider 구현
-// final authProvider = StateNotifierProvider<AuthNotifier, AuthUser?>((ref) {
-//   return AuthNotifier();
-// });
-//
-// class AuthNotifier extends StateNotifier<AuthUser?> {
-//   AuthNotifier() : super(null);
-//
-//   Future<void> signIn(String email, String password) async {
-//     // Supabase signInWithPassword 호출
-//   }
-//
-//   Future<void> signOut() async {
-//     // Supabase signOut 호출
-//     state = null;
-//   }
-// }
+// 화면에서 signIn/signUp/signOut 호출할 때 사용하는 Provider
+final authNotifierProvider =
+    NotifierProvider<AuthNotifier, AsyncValue<void>>(AuthNotifier.new);
