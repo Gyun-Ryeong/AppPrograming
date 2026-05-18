@@ -7,14 +7,16 @@
 
 ## 담당 범위
 
-| 주차 | 작업 | 핵심 파일 |
-|------|------|-----------|
-| 1주차 | Supabase 프로젝트 설정 + 로그인/회원가입 화면 | `lib/screens/auth/` |
-| 1주차 | Supabase Auth 연동 (이메일/비밀번호) | `lib/providers/auth_provider.dart` |
-| 2주차 | 상황 입력 화면 UI | `lib/screens/scenario/` |
-| 2주차 | ScenarioAgent 프롬프트 설계 + 서비스 구현 | `lib/services/scenario_service.dart` |
-| 2주차 | 시나리오 결과 확인 화면 | `lib/screens/scenario/` |
-| 6주차 | AnalysisAgent 구현 + 약점 분석 화면 | `lib/screens/analysis/`, `lib/services/analysis_service.dart` |
+| 수업 주차 | 작업 | 핵심 파일 |
+|-----------|------|-----------|
+| 11주차 | ADR-0002 (Riverpod), ADR-0003 (Supabase) 작성 | `.planning/decisions/` |
+| 11주차 | Supabase 프로젝트 설정 + 로그인/회원가입 화면 | `lib/screens/auth/` |
+| 11주차 | Supabase Auth 연동 (이메일/비밀번호) | `lib/providers/auth_provider.dart` |
+| 12주차 | 상황 입력 화면 UI | `lib/screens/scenario/` |
+| 12주차 | ScenarioAgent 프롬프트 설계 + 서비스 구현 | `lib/services/scenario_service.dart` |
+| 12주차 | 시나리오 결과 확인 화면 | `lib/screens/scenario/` |
+| 14주차 | `docs/deploy.md` 작성 | `docs/deploy.md` |
+| 14주차 | AnalysisAgent 구현 + 약점 분석 화면 | `lib/screens/analysis/`, `lib/services/analysis_service.dart` |
 
 ---
 
@@ -45,9 +47,35 @@ lib/
 
 ---
 
-## 1주차 우선순위 작업
+## 11주차 우선 작업 — ADR 2개 먼저
 
-### Step 1 — pubspec.yaml에 패키지 추가
+팀원 B의 go_router 설정보다 **ADR 2개를 먼저 작성**해야 과제 +3점이 된다.
+
+### ADR-0002 — 상태 관리 (Riverpod)
+
+파일: `.planning/decisions/ADR-0002-state-management.md`
+
+작성할 내용:
+- 배경: Flutter 앱에서 전역 인증 상태 및 화면 간 데이터 공유 필요
+- 대안: Provider (공식 권장, 단순), BLoC (엄격한 단방향, 복잡), GetX (편리하지만 지나친 마법)
+- 결정: Riverpod 선택
+- 이유: Provider의 단점(context 의존) 해결, 컴파일 타임 안전성, 코드 생성 없이도 사용 가능
+
+### ADR-0003 — 백엔드 (Supabase)
+
+파일: `.planning/decisions/ADR-0003-backend-choice.md`
+
+작성할 내용:
+- 배경: 사용자 인증 + DB + AI API 프록시 서버 필요
+- 대안: Firebase (Google 생태계, 문서 풍부), 직접 서버 (Node.js/Express), AWS Amplify
+- 결정: Supabase 선택
+- 이유: PostgreSQL(관계형 DB), Edge Function으로 API 키 보호, 무료 티어 충분, 오픈소스
+
+---
+
+## Supabase 프로젝트 설정 (구 1주차 우선순위 작업)
+
+### Step 1 — pubspec.yaml에 패키지 추가 (팀원 B와 동일)
 
 ```yaml
 dependencies:

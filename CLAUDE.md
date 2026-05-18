@@ -38,7 +38,78 @@
 - .github/agents/   — 서브에이전트 정의
 - .github/prompts/  — 슬래시 명령 템플릿
 
+## 수업 일정 (10~15주차)
+
+| 주차 | 목표 | 핵심 산출물 |
+|------|------|------------|
+| 10주차 | 기획·일정 수립 | `.planning/*` 5개 문서 |
+| 11주차 | 설계·환경 구축 | `docs/architecture.md`, Hello World 빌드 |
+| 12주차 | 핵심 기능 1 + **중간 발표** | 동작하는 프로토타입 |
+| 13주차 | 핵심 기능 2 + 테스트 | 주요 기능 완성 |
+| 14주차 | 마감·배포·문서 | `docs/deploy.md`, `docs/testing.md` |
+| 15주차 | **최종 발표** | 발표 자료 + `BONUS.md` |
+
+---
+
+## 과제 점수 체크리스트 (5점 만점)
+
+| 점수 | 문서 | 상태 |
+|------|------|------|
+| +1 | `.planning/00-vision.md`, `01-requirements.md` | ✅ 완료 |
+| +2 | `.planning/02-wbs.md`, `04-schedule.md` | ✅ 완료 |
+| +3 | `docs/architecture.md` + ADR 최소 3개 | ⚠️ ADR-0001만 있음 (0002, 0003 필요) |
+| +4 | `docs/setup.md`, `docs/deploy.md`, `docs/testing.md` | ❌ deploy.md / testing.md 없음 |
+| +5 | `AGENTS.md` + `README.md` + `.github/agents/` | ✅ 완료 |
+
+**가산점 (+6점 최대):**
+- +1: AI Agent 활용 사례 시연 → `BONUS.md`에 기록
+- +2: 본인만의 부트스트랩 파일 → `AUTHORING.{이름}.md` 작성 필요
+- +1: LLM Wiki 10개 이상 항목 운영
+- +2: 최신 AI Agent 리포트 10분 발표
+
+**즉시 해야 할 것:**
+1. `ADR-0002-state-management.md` (Riverpod 선택 이유)
+2. `ADR-0003-backend-choice.md` (Supabase 선택 이유)
+3. `docs/deploy.md` (배포 절차)
+4. `docs/testing.md` (테스트 전략)
+5. `BONUS.md` (가산점 신청 트래킹)
+
+---
+
+## 발표 Q&A 대비 체크리스트
+
+발표에서 반드시 답할 수 있어야 하는 질문들:
+
+- [ ] Flutter를 선택한 이유는? (대안 비교 포함) → ADR-0001
+- [ ] Riverpod을 상태관리로 선택한 이유는? → ADR-0002
+- [ ] Supabase를 백엔드로 선택한 이유는? → ADR-0003
+- [ ] 새 화면을 추가하면 어느 폴더에 파일을 만드는가?
+- [ ] AI API 키는 어디에 있고, 왜 클라이언트에 없는가?
+- [ ] `git clone` 후 한 줄 명령으로 실행되는가?
+- [ ] 빌드가 실패하면 어디부터 확인하는가?
+- [ ] Must 기능 5개를 외워서 말할 수 있는가?
+- [ ] 가장 큰 위험 1개와 대응 방법은?
+
+---
+
+## 아키텍처 레이어 원칙
+
+이 프로젝트는 **Layered + MVVM** 패턴을 사용한다 (7주 프로젝트 적정 복잡도).
+
+```
+Presentation  →  Application  →  Domain  →  Data
+screens/          providers/      models/    services/
+widgets/                          (entities)  (API/DB)
+```
+
+- 화면(Screen)은 UI만 — 로직은 Provider/Service로 분리
+- API 호출은 반드시 services/ — 화면에서 직접 호출 금지
+- 새 화면 → `screens/`, 상태 → `providers/`, 규칙 → `models/`, 외부통신 → `services/`
+
+---
+
 ## 핵심 원칙 (절대 잊지 말 것)
+
 이 프로젝트는 바이브 코딩 수업 과제이다.
 AI가 생성한 모든 코드와 문서는
 반드시 본인이 처음부터 끝까지 읽고

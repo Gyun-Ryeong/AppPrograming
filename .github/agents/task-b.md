@@ -7,15 +7,17 @@
 
 ## 담당 범위
 
-| 주차 | 작업 | 핵심 파일 |
-|------|------|-----------|
-| 1주차 | DB 스키마 설계 (Supabase) | Supabase 콘솔 |
-| 1주차 | go_router 네비게이션 설정 | `lib/router/app_router.dart` |
-| 1주차 | 공통 위젯 + 앱 테마 설정 | `lib/widgets/`, `lib/main.dart` |
-| 3주차 | 채팅 화면 UI | `lib/screens/conversation/` |
-| 3주차 | ConversationAgent 프롬프트 설계 + 서비스 구현 | `lib/services/conversation_service.dart` |
-| 4주차 | FeedbackAgent 구현 + 피드백 결과 화면 | `lib/screens/feedback/`, `lib/services/feedback_service.dart` |
-| 4주차 | 대화 기록 목록 + 상세 화면 | `lib/screens/history/` |
+| 수업 주차 | 작업 | 핵심 파일 |
+|-----------|------|-----------|
+| 11주차 | DB 스키마 설계 (Supabase) | Supabase 콘솔 |
+| 11주차 | go_router 네비게이션 설정 | `lib/router/app_router.dart` |
+| 11주차 | 공통 위젯 + 앱 테마 설정 | `lib/widgets/`, `lib/main.dart` |
+| 12주차 | 채팅 화면 UI | `lib/screens/conversation/` |
+| 12주차 | ConversationAgent 프롬프트 설계 + 서비스 구현 | `lib/services/conversation_service.dart` |
+| 13주차 | FeedbackAgent 구현 + 피드백 결과 화면 | `lib/screens/feedback/`, `lib/services/feedback_service.dart` |
+| 13주차 | 대화 기록 목록 + 상세 화면 | `lib/screens/history/` |
+| 14주차 | `docs/testing.md` 작성 | `docs/testing.md` |
+| 14주차 | `BONUS.md` 작성 | `BONUS.md` |
 
 ---
 
@@ -51,7 +53,7 @@ lib/
 
 ---
 
-## 1주차 우선순위 작업
+## 11주차 우선순위 작업
 
 ### Step 1 — pubspec.yaml에 패키지 추가
 
@@ -144,7 +146,7 @@ final appRouter = GoRouter(
 
 ---
 
-## 3주차 우선순위 작업
+## 12주차 우선순위 작업
 
 ### 채팅 화면 UI 구성
 
@@ -184,7 +186,7 @@ final appRouter = GoRouter(
 
 ---
 
-## 4주차 우선순위 작업
+## 13주차 우선순위 작업
 
 ### 피드백 화면 UI 구성
 
