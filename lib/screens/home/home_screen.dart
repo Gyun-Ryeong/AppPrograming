@@ -1,36 +1,23 @@
-// 홈 화면 — 로그인 후 첫 화면, 시나리오 생성 버튼 제공
+// 홈 화면 — 앱 시작 시 첫 화면, 시나리오 생성 버튼 제공
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
-import '../../providers/auth_provider.dart';
 import '../../router/app_router.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // 현재 로그인한 사용자 이메일 표시용
-    final authUser = ref.watch(authUserProvider);
-
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text(AppStrings.appName),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
-        actions: [
-          // 로그아웃 버튼
-          IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: AppStrings.logout,
-            onPressed: () => ref.read(authNotifierProvider.notifier).signOut(),
-          ),
-        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -39,17 +26,13 @@ class HomeScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // 환영 메시지
-              authUser.when(
-                data: (user) => Text(
-                  '안녕하세요, ${user?.email ?? '사용자'}님!',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+              const Text(
+                '안녕하세요!',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
                 ),
-                loading: () => const SizedBox.shrink(),
-                error: (_, __) => const SizedBox.shrink(),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -58,7 +41,7 @@ class HomeScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 40),
 
-              // 시나리오 생성 카드
+              // 새 대화 시작 카드
               _MenuCard(
                 icon: Icons.add_circle_outline,
                 title: '새 대화 시작',

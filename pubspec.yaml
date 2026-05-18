@@ -32,9 +32,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  supabase_flutter: ^2.5.0      # 인증 + DB + Edge Function 호출
   flutter_riverpod: ^2.6.1      # 전역 상태 관리
   go_router: ^14.0.0            # 선언형 라우팅
+  http: ^1.1.0                  # Claude API HTTP 호출
 
 dev_dependencies:
   flutter_test:
