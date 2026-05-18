@@ -42,6 +42,9 @@ build/
 .env
 .env.local
 .env.*
+lib/constants/supabase_config.dart
+android/key.properties
+android/app/*.jks
 
 # IDE
 .idea/
