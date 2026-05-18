@@ -186,6 +186,23 @@ git checkout -b feat/scenario    # 시나리오 작업
 
 ---
 
+## WBS 작성 규칙
+
+- 파일: `.planning/02-wbs-a.md` (팀원 A 담당 항목만)
+- 시점: 매 주차 작업이 끝날 때 정리
+- 형식: 완료 항목 체크 + 실제 소요 시간 기록
+- 합본: 발표 전 팀원 B의 `02-wbs-b.md`와 합쳐서 `02-wbs.md`로 통합
+
+```markdown
+## 11주차 완료 항목
+- [x] ADR-0002 Riverpod 작성 (0.5d)
+- [x] ADR-0003 Supabase 작성 (0.5d)
+- [x] 로그인 화면 구현 (1d)
+- [ ] auth_provider 구현 (1d)
+```
+
+---
+
 ## Claude에게 요청할 때 유용한 프롬프트
 
 ```
