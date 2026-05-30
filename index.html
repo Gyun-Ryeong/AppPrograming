@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEF — My English Friend</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --surface2: #1a1a24;
+  --border: rgba(255,255,255,0.08);
+  --text: #f0eff8;
+  --text2: #8b8aa8;
+  --accent: #6c63ff;
+  --accent2: #ff6b6b;
+  --accent3: #43e97b;
+  --accent4: #f7971e;
+  --card-r: 16px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 16px 40px;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; }
+.nav-links { display:flex; gap:28px; }
+.nav-links a { color:var(--text2); text-decoration:none; font-size:14px; transition:color .2s; }
+.nav-links a:hover { color:var(--text); }
+
+/* SECTIONS */
+section { min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:100px 60px 60px; max-width:1100px; margin:0 auto; }
+
+/* HERO */
+#hero { min-height:100vh; justify-content:center; align-items:flex-start; gap:0; }
+.hero-tag {
+  display:inline-block; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+  color:var(--accent); border:1px solid rgba(108,99,255,0.3); padding:6px 14px; border-radius:99px; margin-bottom:24px;
+}
+.hero-title {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(52px,8vw,88px); font-weight:700; line-height:1.0;
+  letter-spacing:-3px;
+}
+.hero-title span { color:var(--accent); }
+.hero-sub {
+  font-size:18px; color:var(--text2); margin-top:20px; line-height:1.6; max-width:560px;
+}
+.hero-meta {
+  display:flex; gap:32px; margin-top:48px;
+}
+.hero-meta-item { display:flex; flex-direction:column; gap:4px; }
+.hero-meta-label { font-size:11px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; }
+.hero-meta-value { font-size:15px; font-weight:600; }
+
+/* SECTION HEADER */
+.section-tag {
+  font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+  color:var(--accent); margin-bottom:12px;
+}
+.section-title {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(32px,5vw,52px); font-weight:700; letter-spacing:-1.5px; line-height:1.1;
+  margin-bottom:48px;
+}
+
+/* PROBLEM */
+.problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.problem-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r);
+  padding:28px; transition:border-color .2s;
+}
+.problem-card:hover { border-color:rgba(108,99,255,0.3); }
+.problem-icon { font-size:32px; margin-bottom:16px; }
+.problem-card h3 { font-size:16px; font-weight:600; margin-bottom:8px; }
+.problem-card p { font-size:14px; color:var(--text2); line-height:1.7; }
+
+.stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:16px; }
+.stat-card {
+  background:linear-gradient(135deg,var(--surface2),var(--surface));
+  border:1px solid var(--border); border-radius:var(--card-r); padding:24px; text-align:center;
+}
+.stat-number { font-family:'Space Grotesk',sans-serif; font-size:42px; font-weight:700; }
+.stat-number.purple { color:var(--accent); }
+.stat-number.red { color:var(--accent2); }
+.stat-number.green { color:var(--accent3); }
+.stat-label { font-size:12px; color:var(--text2); margin-top:4px; }
+
+/* VISION */
+.vision-big {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(24px,4vw,44px); font-weight:700; line-height:1.2; letter-spacing:-1px;
+  border-left:3px solid var(--accent); padding-left:24px; margin-bottom:48px;
+}
+.vision-big em { color:var(--accent); font-style:normal; }
+
+.feature-list { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.feature-item {
+  display:flex; align-items:flex-start; gap:12px;
+  background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px;
+}
+.feature-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); margin-top:5px; flex-shrink:0; }
+.feature-item h4 { font-size:14px; font-weight:600; margin-bottom:4px; }
+.feature-item p { font-size:13px; color:var(--text2); line-height:1.6; }
+
+/* ARCH */
+#arch { min-height:auto; padding-bottom:80px; }
+.mermaid-wrap {
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r);
+  padding:32px; overflow:auto;
+}
+.mermaid { display:flex; justify-content:center; }
+
+/* WBS */
+#wbs { min-height:auto; padding-bottom:80px; }
+.wbs-table { width:100%; border-collapse:collapse; font-size:14px; }
+.wbs-table th {
+  text-align:left; padding:12px 16px; font-size:11px; letter-spacing:1px; text-transform:uppercase;
+  color:var(--text2); border-bottom:1px solid var(--border);
+}
+.wbs-table td { padding:14px 16px; border-bottom:1px solid var(--border); }
+.wbs-table tr:last-child td { border-bottom:none; }
+.badge {
+  display:inline-block; font-size:11px; font-weight:600; padding:3px 10px; border-radius:99px;
+}
+.badge-done { background:rgba(67,233,123,0.15); color:var(--accent3); }
+.badge-wip  { background:rgba(247,151,30,0.15); color:var(--accent4); }
+.badge-todo { background:rgba(255,255,255,0.07); color:var(--text2); }
+.owner-a { font-size:12px; color:var(--accent); font-weight:600; }
+.owner-b { font-size:12px; color:var(--accent2); font-weight:600; }
+
+/* FOOTER */
+footer {
+  text-align:center; padding:40px; color:var(--text2); font-size:13px;
+  border-top:1px solid var(--border); margin-top:40px;
+}
+
+/* TIMELINE DOT */
+.timeline { display:flex; flex-direction:column; gap:0; position:relative; margin-left:20px; }
+.timeline::before { content:''; position:absolute; left:0; top:8px; bottom:8px; width:1px; background:var(--border); }
+.tl-item { display:flex; gap:20px; padding:0 0 32px 0; }
+.tl-dot { width:9px; height:9px; border-radius:50%; background:var(--accent); margin-top:5px; flex-shrink:0; position:relative; left:-4px; }
+.tl-dot.done { background:var(--accent3); }
+.tl-dot.todo { background:var(--border); border:1px solid var(--text2); }
+.tl-week { font-size:11px; color:var(--accent); font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.tl-title { font-size:15px; font-weight:600; margin-bottom:4px; }
+.tl-desc { font-size:13px; color:var(--text2); line-height:1.6; }
+
+/* SCROLL INDICATOR */
+.scroll-hint { position:absolute; bottom:40px; left:50%; transform:translateX(-50%); color:var(--text2); font-size:12px; letter-spacing:1px; text-transform:uppercase; display:flex; flex-direction:column; align-items:center; gap:8px; }
+.scroll-arrow { width:1px; height:40px; background:linear-gradient(to bottom,var(--text2),transparent); }
+
+/* BG GLOW */
+.bg-glow {
+  position:fixed; top:-200px; left:50%; transform:translateX(-50%);
+  width:700px; height:500px;
+  background:radial-gradient(ellipse at center, rgba(108,99,255,0.08) 0%, transparent 70%);
+  pointer-events:none; z-index:0;
+}
+section { position:relative; z-index:1; }
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<nav>
+  <div class="nav-logo">MEF</div>
+  <div class="nav-links">
+    <a href="#hero">홈</a>
+    <a href="#problem">문제 정의</a>
+    <a href="#vision">비전</a>
+    <a href="#arch">아키텍처</a>
+    <a href="#wbs">WBS</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">앱 프로그래밍 중간 발표 · 2026</div>
+  <h1 class="hero-title">My<br><span>English</span><br>Friend</h1>
+  <p class="hero-sub">AI가 함께하는 영어 회화 연습 — 시나리오 생성부터 실시간 대화, 피드백까지</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">팀원 A</span>
+      <span class="hero-meta-value">김령균</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">팀원 B</span>
+      <span class="hero-meta-value">이동희</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">스택</span>
+      <span class="hero-meta-value">Flutter · Claude API</span>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-tag">01 — 문제 정의</div>
+  <h2 class="section-title">영어 말하기,<br>왜 여전히 어려운가</h2>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-icon">🧊</div>
+      <h3>실전 경험 부족</h3>
+      <p>학원이나 앱으로 단어와 문법을 배워도 막상 말하기 상황이 오면 입이 얼어버린다. 반복적인 실전 연습 기회가 절대적으로 부족하다.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">💸</div>
+      <h3>높은 접근 비용</h3>
+      <p>원어민 과외는 1회에 3만~10만원. 말하기 연습을 위한 진입 장벽이 너무 높아 꾸준히 이어가기 어렵다.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">😰</div>
+      <h3>심리적 부담</h3>
+      <p>실수에 대한 두려움, 발음에 대한 수치심. 사람 앞에서 영어를 쓰는 것 자체가 스트레스다.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🔁</div>
+      <h3>피드백 부재</h3>
+      <p>혼자 연습하면 같은 실수를 반복하게 된다. 즉각적이고 구체적인 피드백 없이는 성장하기 어렵다.</p>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-number purple">73%</div>
+      <div class="stat-label">영어 학습자 중 말하기 자신감 부족을 호소하는 비율</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number red">4만원+</div>
+      <div class="stat-label">원어민 화상 영어 1회 평균 비용</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number green">24/7</div>
+      <div class="stat-label">MEF와 함께라면 언제든 연습 가능</div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision">
+  <div class="section-tag">02 — 비전</div>
+  <h2 class="section-title">우리가 만드는 것</h2>
+
+  <div class="vision-big">
+    "언제 어디서나, <em>두려움 없이</em><br>영어로 대화할 수 있는 환경"
+  </div>
+
+  <div class="feature-list">
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div>
+        <h4>🎬 시나리오 생성 (ScenarioAgent)</h4>
+        <p>카페 주문, 비즈니스 미팅, 공항 체크인 등 원하는 상황을 입력하면 AI가 즉석에서 맞춤 시나리오를 만들어준다.</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot" style="background:var(--accent2)"></div>
+      <div>
+        <h4>💬 실시간 대화 (ConversationAgent)</h4>
+        <p>생성된 시나리오 안에서 AI 파트너와 실제 대화를 나눈다. 대화 맥락은 자동으로 유지된다.</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot" style="background:var(--accent3)"></div>
+      <div>
+        <h4>📋 즉각 피드백 (FeedbackAgent)</h4>
+        <p>대화가 끝나면 문법 오류, 표현 개선점, 자연스러움 점수를 JSON 구조로 받아 화면에 표시한다.</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot" style="background:var(--accent4)"></div>
+      <div>
+        <h4>📊 약점 분석 (AnalysisAgent)</h4>
+        <p>누적된 대화 기록을 분석해 반복되는 실수 패턴을 리포트로 제공한다. (유료 기능, 개발 예정)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCH -->
+<section id="arch">
+  <div class="section-tag">03 — 아키텍처</div>
+  <h2 class="section-title">시스템 구성</h2>
+
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+flowchart TD
+    User(["👤 사용자"])
+
+    subgraph App["Flutter 앱"]
+        direction TB
+        UI["화면 레이어\nScreens & Widgets"]
+        Riverpod["상태 관리\nRiverpod Providers"]
+        Services["서비스 레이어\nServices"]
+    end
+
+    subgraph Agents["Claude AI Agents"]
+        direction TB
+        SA["🎬 ScenarioAgent\n시나리오 생성"]
+        CA["💬 ConversationAgent\n실시간 대화"]
+        FA["📋 FeedbackAgent\n피드백 분석"]
+        AA["📊 AnalysisAgent\n약점 분석 (유료)"]
+    end
+
+    Claude["Anthropic Claude API\nclaude-haiku-4-5"]
+
+    User -->|상황 입력| UI
+    UI <--> Riverpod
+    Riverpod <--> Services
+    Services --> SA
+    SA --> CA
+    CA --> FA
+    FA --> AA
+    SA & CA & FA & AA -->|HTTP POST| Claude
+    Claude -->|JSON 응답| SA & CA & FA & AA
+
+    style App fill:#1a1a24,stroke:#6c63ff,stroke-width:1.5px,color:#f0eff8
+    style Agents fill:#1a1a24,stroke:#ff6b6b,stroke-width:1.5px,color:#f0eff8
+    style Claude fill:#6c63ff,stroke:#6c63ff,color:#fff
+    style User fill:#111118,stroke:#8b8aa8,color:#f0eff8
+    </div>
+  </div>
+</section>
+
+<!-- WBS -->
+<section id="wbs">
+  <div class="section-tag">04 — WBS</div>
+  <h2 class="section-title">작업 현황</h2>
+
+  <table class="wbs-table">
+    <thead>
+      <tr>
+        <th>주차</th>
+        <th>작업 항목</th>
+        <th>담당</th>
+        <th>상태</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">11주차</td>
+        <td>ADR-0002 Riverpod 상태관리 결정 문서</td>
+        <td><span class="owner-a">팀원 A</span></td>
+        <td><span class="badge badge-done">완료</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">11주차</td>
+        <td>ADR-0003 백엔드 선택 결정 문서</td>
+        <td><span class="owner-a">팀원 A</span></td>
+        <td><span class="badge badge-done">완료</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">11주차</td>
+        <td>GoRouter 설정 / 앱 기본 구조</td>
+        <td><span class="owner-b">팀원 B</span></td>
+        <td><span class="badge badge-done">완료</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">12주차</td>
+        <td>Claude API 직접 호출 구조 설계 (Supabase 제거)</td>
+        <td><span class="owner-a">팀원 A</span></td>
+        <td><span class="badge badge-done">완료</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">12주차</td>
+        <td>ScenarioAgent 프롬프트 설계 + 서비스 구현</td>
+        <td><span class="owner-a">팀원 A</span></td>
+        <td><span class="badge badge-done">완료</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">12주차</td>
+        <td>상황 입력 화면 / 시나리오 결과 화면 UI</td>
+        <td><span class="owner-a">팀원 A</span></td>
+        <td><span class="badge badge-done">완료</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">12주차</td>
+        <td>모델 / 위젯 공통 컴포넌트 (ChatBubble 등)</td>
+        <td><span class="owner-b">팀원 B</span></td>
+        <td><span class="badge badge-done">완료</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">13주차</td>
+        <td>ConversationAgent + 채팅 화면 구현</td>
+        <td><span class="owner-b">팀원 B</span></td>
+        <td><span class="badge badge-wip">진행중</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">13주차</td>
+        <td>FeedbackAgent + 피드백 화면 구현</td>
+        <td><span class="owner-b">팀원 B</span></td>
+        <td><span class="badge badge-todo">예정</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">13주차</td>
+        <td>대화 기록 화면 (history list / detail)</td>
+        <td><span class="owner-b">팀원 B</span></td>
+        <td><span class="badge badge-todo">예정</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">14주차</td>
+        <td>AnalysisAgent + 약점 분석 화면 (유료)</td>
+        <td><span class="owner-a">팀원 A</span></td>
+        <td><span class="badge badge-todo">예정</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text2);font-size:13px">14주차</td>
+        <td>배포 문서 (docs/deploy.md) 작성</td>
+        <td><span class="owner-a">팀원 A</span></td>
+        <td><span class="badge badge-todo">예정</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:32px; display:flex; gap:12px;">
+    <span style="font-size:13px; color:var(--text2)">범례:</span>
+    <span class="badge badge-done">완료</span>
+    <span class="badge badge-wip">진행중</span>
+    <span class="badge badge-todo">예정</span>
+    <span style="margin-left:12px; font-size:13px; color:var(--text2)">담당:</span>
+    <span class="owner-a">팀원 A</span>
+    <span class="owner-b">팀원 B</span>
+  </div>
+</section>
+
+<footer>
+  <div style="font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--accent); margin-bottom:12px;">MEF</div>
+  <div>My English Friend · 앱 프로그래밍 중간 발표 · 2026</div>
+  <div style="margin-top:8px; font-size:12px;">Flutter × Claude API × Riverpod</div>
+</footer>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'dark',
+  themeVariables: {
+    background: '#1a1a24',
+    primaryColor: '#6c63ff',
+    primaryTextColor: '#f0eff8',
+    primaryBorderColor: '#6c63ff',
+    lineColor: '#8b8aa8',
+    secondaryColor: '#1a1a24',
+    tertiaryColor: '#111118',
+    fontSize: '14px',
+  },
+  flowchart: { curve: 'basis', padding: 20 }
+});
+await mermaid.run();
+</script>
+</body>
+</html>
