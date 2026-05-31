@@ -43,6 +43,7 @@ build/
 .env.local
 .env.*
 lib/constants/supabase_config.dart
+lib/constants/api_config.dart
 android/key.properties
 android/app/*.jks
 

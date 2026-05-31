@@ -1,4 +1,4 @@
-// ScenarioAgent: 사용자 상황 입력 → Claude API 직접 호출 → 시나리오 생성
+// ScenarioAgent: 사용자 상황 입력 → OpenRouter API 호출 → 시나리오 생성
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -8,24 +8,21 @@ import '../models/scenario.dart';
 
 class ScenarioService {
   /// 사용자가 입력한 상황으로 AI 시나리오를 생성한다.
-  ///
-  /// [situation] — 사용자가 입력한 상황 (예: "카페에서 음료 주문")
-  /// [difficulty] — 'beginner' | 'intermediate' | 'advanced'
-  /// [category] — 'daily' | 'business' | 'travel' | 'academic'
   Future<Scenario> generateScenario({
     required String situation,
     required String difficulty,
     required String category,
   }) async {
     final response = await http.post(
-      Uri.parse(ApiConfig.claudeApiUrl),
+      Uri.parse(ApiConfig.apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': ApiConfig.claudeApiKey,
-        'anthropic-version': ApiConfig.anthropicVersion,
+        'Authorization': 'Bearer ${ApiConfig.apiKey}',
+        'HTTP-Referer': 'https://mef-app.com',
+        'X-Title': 'MEF - My English Friend',
       },
       body: jsonEncode({
-        'model': ApiConfig.claudeModel,
+        'model': ApiConfig.model,
         'max_tokens': 1024,
         'messages': [
           {
@@ -36,15 +33,18 @@ class ScenarioService {
       }),
     );
 
+    if (response.statusCode == 429) {
+      throw Exception('서버가 혼잡합니다. 잠시 후 다시 시도해주세요.');
+    }
     if (response.statusCode != 200) {
       throw Exception('시나리오 생성 실패: ${response.statusCode}');
     }
 
-    // Claude 응답에서 텍스트 추출 후 JSON 파싱
+    // OpenRouter 응답 형식: choices[0].message.content
     final body = jsonDecode(response.body) as Map<String, dynamic>;
-    final text = (body['content'] as List).first['text'] as String;
+    final text = (body['choices'] as List).first['message']['content'] as String;
 
-    // 마크다운 코드블록(```json ... ```) 제거
+    // 마크다운 코드블록 제거
     final jsonText = text
         .replaceAll(RegExp(r'```json\s*'), '')
         .replaceAll(RegExp(r'```\s*'), '')
@@ -54,7 +54,6 @@ class ScenarioService {
     return Scenario.fromJson(scenarioJson);
   }
 
-  // ScenarioAgent 시스템 프롬프트
   String _buildPrompt(String situation, String difficulty, String category) {
     return '''
 You are a scenario generator for English conversation practice.
