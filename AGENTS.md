@@ -11,41 +11,55 @@
 
 ---
 
-## 현재 상태 (2026-05-18 기준)
+## 현재 상태 (2026-05-24 기준)
 
 | 영역 | 상태 | 비고 |
 |------|------|------|
 | 기획 문서 | ✅ 완료 | `.planning/` 참고 |
 | 아키텍처 문서 | ✅ 완료 | `docs/architecture.md` 참고 |
-| Flutter 프로젝트 | ✅ 생성됨 | Flutter 3.35.3 / Dart 3.9.2 |
-| lib/ 폴더 구조 | ✅ 완료 | screens, services, models 등 |
-| 서비스 뼈대 | ✅ 완료 | 전부 `TODO` 상태 |
-| ADR 문서 | ⚠️ 부족 | ADR-0001만 있음, 0002·0003 필요 |
-| docs/deploy.md | ❌ 없음 | 과제 +4점 조건 |
-| docs/testing.md | ❌ 없음 | 과제 +4점 조건 |
-| BONUS.md | ❌ 없음 | 가산점 신청용 |
-| **실제 동작 기능** | ❌ 없음 | 개발 0% |
+| Flutter 프로젝트 | ✅ 실행됨 | Flutter 3.35.3 / Dart 3.9.2 |
+| 홈 화면 | ✅ 완료 | 카드형 메뉴 UI |
+| 시나리오 입력/결과 화면 | ✅ 완료 | 팀원 A 구현 |
+| 공통 위젯 3개 | ✅ 완료 | chat_bubble, primary_button, loading_overlay |
+| ADR 문서 | ✅ 완료 | ADR-0001, 0002, 0003 작성됨 |
+| docs/deploy.md | ✅ 완료 | 과제 +4점 조건 충족 |
+| docs/testing.md | ✅ 완료 | 과제 +4점 조건 충족 |
+| BONUS.md | ✅ 초안 완료 | 가산점 신청 트래킹 |
+| **채팅 화면** | ❌ 미구현 | 팀원 B 담당 |
+| **피드백 화면** | ❌ 미구현 | 팀원 B 담당 |
+| **대화 기록 화면** | ❌ 미구현 | 팀원 B 담당 |
 
-**지금 `flutter run`을 하면 Flutter 기본 카운터 앱만 뜬다.**
+### 아키텍처 변경 이력 (중요)
+
+> Supabase 제거 결정 (2026-05-24)
+> Claude API를 `http` 패키지로 **직접 호출**하는 방식으로 변경됨.
+> 데이터는 DB 없이 **Riverpod 메모리**에만 저장 (앱 종료 시 초기화).
+
+| 항목 | 변경 전 | 변경 후 |
+|------|---------|---------|
+| 백엔드 | Supabase | 없음 |
+| AI 호출 | Supabase Edge Function | http 패키지 직접 호출 |
+| 인증 | Supabase Auth | 메모리 Mock (test@mef.com / test1234) |
+| 데이터 저장 | PostgreSQL | Riverpod 메모리 |
+
+### 현재 패키지 (pubspec.yaml)
+
+| 패키지 | 용도 |
+|--------|------|
+| `flutter_riverpod` | 전역 상태 관리 |
+| `http` | Claude API 직접 호출 |
+| `go_router` | 선언적 라우팅 |
 
 ### 수업 일정 (10~15주차)
 
 | 주차 | 목표 | 현재 |
 |------|------|------|
 | 10주차 | 기획·일정 수립 | ✅ 완료 |
-| 11주차 | 설계·환경 구축 | ✅ 문서 완료, Hello World 미확인 |
-| 12주차 | 핵심 기능 1 + **중간 발표** | ❌ 미시작 |
+| 11주차 | 설계·환경 구축 | ✅ 완료 |
+| 12주차 | 핵심 기능 1 + **중간 발표** | 🔄 진행 중 |
 | 13주차 | 핵심 기능 2 + 테스트 | ❌ 미시작 |
 | 14주차 | 마감·배포·문서 | ❌ 미시작 |
 | 15주차 | **최종 발표** | ❌ 미시작 |
-
-### 즉시 해야 할 문서 작업
-
-1. `ADR-0002-state-management.md` — Riverpod 선택 이유
-2. `ADR-0003-backend-choice.md` — Supabase 선택 이유
-3. `docs/deploy.md` — 배포 절차 (과제 +4점 조건)
-4. `docs/testing.md` — 테스트 전략 (과제 +4점 조건)
-5. `BONUS.md` — 가산점 신청 트래킹
 
 ---
 
@@ -54,11 +68,11 @@
 | 레이어 | 기술 |
 |--------|------|
 | 모바일 | Flutter (Dart) |
-| 인증 / DB | Supabase (`supabase_flutter` 패키지) |
-| AI API | Anthropic Claude (Supabase Edge Function 통해 호출) |
+| 인증 / DB | 없음 (Riverpod 메모리만 사용) |
+| AI API | Anthropic Claude (`http` 패키지로 직접 호출) |
 | 상태 관리 | Riverpod (`flutter_riverpod`) |
 | 네비게이션 | go_router |
-| 차트 (유료 분석) | fl_chart |
+| API 설정 | `lib/constants/api_config.dart` |
 
 ---
 
@@ -95,8 +109,9 @@ lib/
 사용자 입력 → ScenarioAgent → ConversationAgent → FeedbackAgent → AnalysisAgent(유료)
 ```
 
-모든 Claude API 호출은 **Supabase Edge Function(TypeScript)** 을 통해 서버에서만 실행된다.
-API 키는 절대 Flutter 클라이언트 코드에 포함하지 않는다.
+Claude API를 `http` 패키지로 **클라이언트에서 직접 호출**한다.
+API 키는 `lib/constants/api_config.dart`의 `claudeApiKey`에 설정.
+> ⚠️ 수업 과제용 임시 방식. 실제 서비스라면 서버 프록시 필수.
 
 ---
 
