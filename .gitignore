@@ -56,3 +56,6 @@ android/app/*.jks
 
 # Misc
 pubspec.lock
+
+
+.md

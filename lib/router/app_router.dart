@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../screens/auth/login_screen.dart';
+import '../screens/auth/signup_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/scenario/scenario_input_screen.dart';
 import '../screens/scenario/scenario_result_screen.dart';
@@ -14,6 +16,8 @@ class AppRoutes {
   AppRoutes._();
 
   static const String home = '/';
+  static const String login = '/login';
+  static const String signUp = '/signup';
   static const String scenarioInput = '/scenario/input';
   static const String scenarioResult = '/scenario/result';
   static const String conversation = '/conversation';
@@ -30,6 +34,14 @@ GoRouter appRouter() {
       GoRoute(
         path: AppRoutes.home,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.login,
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.signUp,
+        builder: (context, state) => const SignUpScreen(),
       ),
       GoRoute(
         path: AppRoutes.scenarioInput,
