@@ -1,66 +1,48 @@
-// 로컬 더미 인증 Provider — Supabase 없이 메모리에서 로그인/회원가입 상태를 관리한다
-// 실제 서버 연동 없이 앱 흐름을 테스트하기 위한 구현
+// 인증 상태 관리 — 메모리 기반 Mock 인증 (Supabase 제거로 로컬 Map 사용)
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/user.dart';
-
-// 앱 실행 동안 유지되는 로컬 사용자 DB (이메일 → 비밀번호)
-// 기본 테스트 계정 포함
-final Map<String, String> _localUsers = {
+// 테스트용 계정 (앱 종료 시 초기화)
+const _mockUsers = {
   'test@mef.com': 'test1234',
 };
 
-// 인증 상태 Notifier — AsyncValue<User?>
-// null = 미로그인, User = 로그인 완료
-class AuthNotifier extends AsyncNotifier<User?> {
+// 인증 상태 Notifier
+class AuthNotifier extends Notifier<AsyncValue<String?>> {
+  // 메모리에 등록된 사용자 저장 (앱 종료 시 초기화)
+  final Map<String, String> _localUsers = Map.from(_mockUsers);
+
   @override
-  Future<User?> build() async => null; // 앱 시작 시 미로그인 상태
+  AsyncValue<String?> build() => const AsyncValue.data(null);
 
-  // 로그인: 로컬 DB에서 이메일/비밀번호 확인
-  Future<void> signIn({
-    required String email,
-    required String password,
-  }) async {
-    state = const AsyncLoading();
+  /// 로그인 — 이메일/비밀번호 확인 후 상태 업데이트
+  Future<void> signIn({required String email, required String password}) async {
+    state = const AsyncValue.loading();
+    await Future.delayed(const Duration(milliseconds: 500)); // 로딩 UX
 
-    // 네트워크 딜레이 시뮬레이션
-    await Future.delayed(const Duration(milliseconds: 600));
-
-    final stored = _localUsers[email];
-    if (stored == null || stored != password) {
-      state = AsyncError('이메일 또는 비밀번호가 올바르지 않습니다', StackTrace.current);
-      return;
+    if (_localUsers[email] == password) {
+      state = AsyncValue.data(email);
+    } else {
+      state = AsyncValue.error('이메일 또는 비밀번호가 올바르지 않습니다.', StackTrace.current);
     }
-
-    state = AsyncData(User(email: email));
   }
 
-  // 회원가입: 로컬 DB에 이메일/비밀번호 저장 후 즉시 로그인
-  Future<void> signUp({
-    required String email,
-    required String password,
-  }) async {
-    state = const AsyncLoading();
-
-    await Future.delayed(const Duration(milliseconds: 600));
+  /// 회원가입 — 중복 이메일 확인 후 등록
+  Future<void> signUp({required String email, required String password}) async {
+    state = const AsyncValue.loading();
+    await Future.delayed(const Duration(milliseconds: 500));
 
     if (_localUsers.containsKey(email)) {
-      state = AsyncError('이미 등록된 이메일입니다', StackTrace.current);
-      return;
+      state = AsyncValue.error('이미 사용 중인 이메일입니다.', StackTrace.current);
+    } else {
+      _localUsers[email] = password;
+      state = AsyncValue.data(email);
     }
-
-    _localUsers[email] = password;
-    state = AsyncData(User(email: email));
   }
 
-  // 로그아웃
-  void signOut() {
-    state = const AsyncData(null);
-  }
+  /// 로그아웃
+  void signOut() => state = const AsyncValue.data(null);
 }
 
-// 전역 Provider — 모든 화면에서 ref.watch(authNotifierProvider)로 접근
-final authNotifierProvider = AsyncNotifierProvider<AuthNotifier, User?>(
-  AuthNotifier.new,
-);
+final authNotifierProvider =
+    NotifierProvider<AuthNotifier, AsyncValue<String?>>(AuthNotifier.new);

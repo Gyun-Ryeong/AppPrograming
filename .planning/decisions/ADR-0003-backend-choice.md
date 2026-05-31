@@ -1,67 +1,65 @@
-# ADR-0003: 백엔드 선택 — Supabase
+# ADR-0003: 백엔드 선택 — 없음 (클라이언트 직접 호출)
 
 - 상태: Accepted
-- 날짜: 2026-05-18
+- 날짜: 2026-05-24
 - 결정자: MEF 팀
 
 ## 배경
 
-MEF 앱에는 아래 백엔드 기능이 필요하다:
-1. 사용자 인증 (회원가입 / 로그인 / 세션 유지)
-2. 데이터 저장 (대화 세션, 메시지, 피드백)
-3. AI API 프록시 (Anthropic Claude API 키를 클라이언트에 노출하지 않기 위한 서버)
+MEF 앱은 AI API 호출과 데이터 저장 기능이 필요하다.
+초기에는 Supabase를 백엔드로 계획했으나, 수업 과제 기간(7주) 내 빠른 프로토타입 완성을 위해 아키텍처를 단순화했다.
 
 ## 고려한 대안
 
-### 대안 A: Firebase (Google)
-- 장점: 문서 풍부, Flutter 공식 SDK 있음, Realtime Database / Firestore
-- 단점: NoSQL 구조 — 관계형 데이터(세션↔메시지↔피드백) 표현 불편, Cloud Functions 콜드스타트 느림, Google 종속성
+### 대안 A: Supabase (초기 계획)
+- 장점: PostgreSQL, Auth 내장, Edge Function으로 API 키 보호
+- 단점: 프로젝트 생성/설정/Edge Function 배포 등 초기 셋업 시간 과다, 7주 일정에 부담
 
-### 대안 B: 직접 서버 (Node.js / Express + PostgreSQL)
-- 장점: 완전한 제어권, 원하는 구조 자유롭게 구성
-- 단점: 서버 인프라 직접 관리, 인증 직접 구현, 7주 안에 완성 불가능한 범위
+### 대안 B: Firebase
+- 장점: Google 생태계, 문서 풍부
+- 단점: NoSQL 구조, 관계형 데이터 표현 불편, 학습 비용
 
-### 대안 C: AWS Amplify
-- 장점: 엔터프라이즈 수준 인프라
-- 단점: 학습 비용 매우 높음, 무료 티어 복잡, 설정 과정 길어 수업 과제에 부적합
+### 대안 C: 직접 서버 (Node.js/Express)
+- 장점: 완전한 제어권
+- 단점: 서버 인프라 구축 시간, 7주 내 완성 불가
 
-### 대안 D: Supabase (선택)
-- 장점: PostgreSQL 기반(관계형 DB), Auth 내장, Edge Function으로 서버리스 API 프록시, 오픈소스, 무료 티어 충분 (500MB DB, 500K Edge Function 요청/월)
-- 단점: Firebase 대비 커뮤니티 규모 작음, Edge Function 콜드스타트 있음
+### 대안 D: 백엔드 없음 + 클라이언트 직접 호출 (선택)
+- 장점: 셋업 시간 0, 즉시 개발 시작 가능, 구조 단순
+- 단점: API 키가 클라이언트에 노출, 데이터가 앱 종료 시 초기화
 
 ## 결정
 
-**Supabase**를 선택한다 (`supabase_flutter: ^2.0.0`).
+**백엔드 없이** Claude API를 `http` 패키지로 **클라이언트에서 직접 호출**한다.
+데이터는 **Riverpod 메모리**에만 저장한다.
 
 ## 이유
 
-1. **관계형 DB**: 세션-메시지-피드백 간 외래키 관계를 PostgreSQL로 자연스럽게 표현
-2. **API 키 보호**: Supabase Edge Function(TypeScript)이 Anthropic API 키를 서버에서만 관리 → 클라이언트 코드에 키 노출 없음
-3. **Auth 내장**: Supabase Auth로 이메일/비밀번호 인증을 3줄로 구현 (`supabase.auth.signInWithPassword()`)
-4. **오픈소스**: Firebase처럼 벤더 락인 없음
-5. **무료 티어**: 수업 과제 기간(7주) 동안 과금 없음
+1. **7주 제약**: 백엔드 셋업보다 핵심 기능(시나리오 생성, 대화, 피드백) 구현에 집중
+2. **수업 과제 목적**: 실제 서비스가 아닌 프로토타입 데모가 목표
+3. **팀 규모**: 2인 팀으로 인프라 관리 부담 최소화
 
 ## 결과
 
 긍정:
-- DB 스키마를 SQL로 직접 관리 (버전 관리 가능)
-- Flutter SDK가 Auth + DB + Storage를 통합 제공
+- 개발 속도 극대화
+- 구조 단순 → 코드 이해·설명 쉬움
 
 부정 / 제약:
-- Supabase URL과 anon key를 `.env` 파일로 관리해야 함 (git 커밋 금지)
-- Edge Function 배포는 Supabase CLI 필요
+- API 키가 `api_config.dart`에 하드코딩 → 발표 시 보안 한계 솔직히 설명 필요
+- 앱 종료 시 모든 데이터 초기화 (대화 기록, 사용자 계정)
+- 실제 서비스 전환 시 Supabase 또는 자체 서버 도입 필요
 
-## DB 스키마 요약
+## 발표 Q&A 대비
 
-```sql
-sessions   -- 대화 세션 (user_id, scenario, status, 시작/종료 시각)
-messages   -- 대화 메시지 (session_id, role, content)
-feedbacks  -- 피드백 결과 (session_id, grammar_errors, expression_suggestions, naturalness_score)
-```
+> "왜 DB가 없나요?"
+→ "수업 과제 기간 7주 내 핵심 기능 구현에 집중하기 위해 백엔드를 최소화했습니다.
+   실제 서비스 전환 시에는 Supabase 또는 자체 서버를 도입할 계획입니다."
+
+> "API 키가 클라이언트에 있는 건 보안 문제 아닌가요?"
+→ "맞습니다. 실제 서비스에서는 서버 프록시를 통해 키를 숨겨야 합니다.
+   현재는 수업 데모용으로만 사용하는 임시 방식입니다."
 
 ## 후속 작업
 
-- [ ] Supabase 프로젝트 생성 (supabase.com)
-- [ ] `lib/main.dart`에 `Supabase.initialize()` 추가
-- [ ] `.env.example` 파일로 URL/키 형식 공유
-- [ ] Edge Function 초안 작성 (Anthropic API 프록시)
+- [ ] `api_config.dart`의 `claudeApiKey`에 실제 키 입력 후 테스트
+- [ ] 발표 시 보안 한계 솔직히 언급 준비

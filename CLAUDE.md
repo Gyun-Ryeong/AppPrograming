@@ -57,8 +57,8 @@
 |------|------|------|
 | +1 | `.planning/00-vision.md`, `01-requirements.md` | ✅ 완료 |
 | +2 | `.planning/02-wbs.md`, `04-schedule.md` | ✅ 완료 |
-| +3 | `docs/architecture.md` + ADR 최소 3개 | ⚠️ ADR-0001만 있음 (0002, 0003 필요) |
-| +4 | `docs/setup.md`, `docs/deploy.md`, `docs/testing.md` | ❌ deploy.md / testing.md 없음 |
+| +3 | `docs/architecture.md` + ADR 최소 3개 | ✅ 완료 |
+| +4 | `docs/setup.md`, `docs/deploy.md`, `docs/testing.md` | ✅ 완료 |
 | +5 | `AGENTS.md` + `README.md` + `.github/agents/` | ✅ 완료 |
 
 **가산점 (+6점 최대):**
@@ -66,13 +66,6 @@
 - +2: 본인만의 부트스트랩 파일 → `AUTHORING.{이름}.md` 작성 필요
 - +1: LLM Wiki 10개 이상 항목 운영
 - +2: 최신 AI Agent 리포트 10분 발표
-
-**즉시 해야 할 것:**
-1. `ADR-0002-state-management.md` (Riverpod 선택 이유)
-2. `ADR-0003-backend-choice.md` (Supabase 선택 이유)
-3. `docs/deploy.md` (배포 절차)
-4. `docs/testing.md` (테스트 전략)
-5. `BONUS.md` (가산점 신청 트래킹)
 
 ---
 
@@ -82,9 +75,9 @@
 
 - [ ] Flutter를 선택한 이유는? (대안 비교 포함) → ADR-0001
 - [ ] Riverpod을 상태관리로 선택한 이유는? → ADR-0002
-- [ ] Supabase를 백엔드로 선택한 이유는? → ADR-0003
+- [ ] 백엔드 없이 Riverpod 메모리만 쓴 이유는? → ADR-0003
 - [ ] 새 화면을 추가하면 어느 폴더에 파일을 만드는가?
-- [ ] AI API 키는 어디에 있고, 왜 클라이언트에 없는가?
+- [ ] Claude API 키는 어디에 있고, 발표 시 보안 이슈를 어떻게 설명할 것인가?
 - [ ] `git clone` 후 한 줄 명령으로 실행되는가?
 - [ ] 빌드가 실패하면 어디부터 확인하는가?
 - [ ] Must 기능 5개를 외워서 말할 수 있는가?
