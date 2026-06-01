@@ -38,10 +38,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           password: _passwordController.text.trim(),
         );
 
-    // 로그인 실패 시 스낵바 표시
     if (!mounted) return;
     final authState = ref.read(authNotifierProvider);
     authState.whenOrNull(
+      // 로그인 성공: 홈 화면으로 이동
+      data: (user) {
+        if (user != null) context.go(AppRoutes.home);
+      },
+      // 로그인 실패: 스낵바로 오류 메시지 표시
       error: (error, _) => ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('로그인 실패: $error')),
       ),
