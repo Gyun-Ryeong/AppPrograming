@@ -1,6 +1,5 @@
 // 앱 전체 라우팅 설정 — go_router 사용
 
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../screens/auth/login_screen.dart';
@@ -10,6 +9,8 @@ import '../screens/scenario/scenario_input_screen.dart';
 import '../screens/scenario/scenario_result_screen.dart';
 import '../screens/analysis/analysis_screen.dart';
 import '../screens/conversation/conversation_screen.dart';
+import '../screens/feedback/feedback_screen.dart';
+import '../screens/history/history_screen.dart';
 import '../models/scenario.dart';
 import '../models/message.dart';
 
@@ -28,12 +29,13 @@ class AppRoutes {
   static const String analysis = '/analysis';
 }
 
-// GoRouter 인스턴스 — 인증 없이 홈에서 바로 시작
+// GoRouter 인스턴스
 GoRouter appRouter() {
   return GoRouter(
     initialLocation: AppRoutes.home,
     routes: [
       GoRoute(
+        name: 'home',
         path: AppRoutes.home,
         builder: (context, state) => const HomeScreen(),
       ),
@@ -46,6 +48,7 @@ GoRouter appRouter() {
         builder: (context, state) => const SignUpScreen(),
       ),
       GoRoute(
+        name: 'scenarioInput',
         path: AppRoutes.scenarioInput,
         builder: (context, state) => const ScenarioInputScreen(),
       ),
@@ -58,59 +61,30 @@ GoRouter appRouter() {
         },
       ),
       GoRoute(
-        path: AppRoutes.analysis,
-        builder: (context, state) => const AnalysisScreen(),
-      ),
-      GoRoute(
         path: AppRoutes.conversation,
         builder: (context, state) {
           final scenario = state.extra as Scenario;
           return ConversationScreen(scenario: scenario);
         },
       ),
-      // TODO: feedback, history 화면은 팀원 B 구현 예정
-      GoRoute(
-        path: AppRoutes.history,
-        builder: (context, state) => const _PlaceholderScreen(title: '대화 기록'),
-      ),
       GoRoute(
         path: AppRoutes.feedback,
         builder: (context, state) {
+          // ConversationScreen에서 {'messages': List<Message>, 'scenario': Scenario} 전달
           final extra = state.extra as Map<String, dynamic>;
           final messages = extra['messages'] as List<Message>;
           final scenario = extra['scenario'] as Scenario;
-          return _PlaceholderScreen(
-            title: '피드백',
-            subtitle: '대화 ${messages.length}개 메시지 · ${scenario.goal}',
-          );
+          return FeedbackScreen(messages: messages, scenario: scenario);
         },
+      ),
+      GoRoute(
+        path: AppRoutes.history,
+        builder: (context, state) => const HistoryScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.analysis,
+        builder: (context, state) => const AnalysisScreen(),
       ),
     ],
   );
-}
-
-// 미구현 화면 임시 플레이스홀더
-class _PlaceholderScreen extends StatelessWidget {
-  final String title;
-  final String? subtitle;
-  const _PlaceholderScreen({required this.title, this.subtitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('$title 화면 — 구현 예정'),
-            if (subtitle != null) ...[
-              const SizedBox(height: 8),
-              Text(subtitle!, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
 }
