@@ -6,8 +6,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
+import '../../models/conversation_session.dart';
 import '../../models/scenario.dart';
 import '../../providers/conversation_provider.dart';
+import '../../providers/history_provider.dart';
 import '../../router/app_router.dart';
 import '../../widgets/chat_bubble.dart';
 import '../../widgets/loading_overlay.dart';
@@ -64,9 +66,20 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> {
     });
   }
 
-  /// 대화 종료 → 피드백 화면으로 이동
+  /// 대화 종료 → 히스토리 저장 후 피드백 화면으로 이동
   void _endConversation() {
     final messages = ref.read(conversationProvider);
+
+    // 대화 기록 저장
+    ref.read(historyProvider.notifier).addSession(
+          ConversationSession(
+            id: DateTime.now().millisecondsSinceEpoch.toString(),
+            scenario: widget.scenario,
+            messages: messages,
+            createdAt: DateTime.now(),
+          ),
+        );
+
     context.go(AppRoutes.feedback, extra: {
       'messages': messages,
       'scenario': widget.scenario,

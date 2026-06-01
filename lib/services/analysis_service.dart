@@ -4,8 +4,6 @@
 import '../models/analysis_report.dart';
 
 class AnalysisService {
-  static const String _functionUrl = 'https://<project>.supabase.co/functions/v1/analysis';
-
   /// 사용자의 누적 피드백 데이터를 분석해 약점 리포트를 반환한다
   Future<AnalysisReport> getAnalysisReport({
     required String userId,
