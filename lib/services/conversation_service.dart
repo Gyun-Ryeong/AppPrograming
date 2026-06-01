@@ -1,4 +1,4 @@
-// ConversationAgent: 시나리오 맥락을 유지하며 OpenRouter API로 실시간 대화 진행
+// ConversationAgent: 시나리오 맥락을 유지하며 Gemini API로 실시간 대화 진행
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -14,23 +14,34 @@ class ConversationService {
     required List<Message> history,
     required String userMessage,
   }) async {
-    // 시스템 프롬프트 + 대화 히스토리 + 새 메시지 조합
-    final messages = [
-      {'role': 'system', 'content': _buildSystemPrompt(scenario)},
-      ...history.map((m) => {'role': m.role, 'content': m.content}),
-      {'role': 'user', 'content': userMessage},
+    // 대화 히스토리를 Gemini 형식으로 변환 (role: user/model)
+    final contents = [
+      ...history.map((m) => {
+            'role': m.isUser ? 'user' : 'model',
+            'parts': [
+              {'text': m.content}
+            ],
+          }),
+      {
+        'role': 'user',
+        'parts': [
+          {'text': userMessage}
+        ],
+      },
     ];
 
+    // 네이티브 Gemini API — 시스템 인스트럭션 + 대화 히스토리 전달
     final response = await http.post(
       Uri.parse(ApiConfig.apiUrl),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${ApiConfig.apiKey}',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'model': ApiConfig.model,
-        'max_tokens': 512,
-        'messages': messages,
+        'system_instruction': {
+          'parts': [
+            {'text': _buildSystemPrompt(scenario)}
+          ],
+        },
+        'contents': contents,
+        'generationConfig': {'maxOutputTokens': 512},
       }),
     );
 
@@ -38,9 +49,9 @@ class ConversationService {
       throw Exception('대화 응답 실패: ${response.statusCode}');
     }
 
-    // OpenRouter 응답 형식: choices[0].message.content
+    // 네이티브 Gemini 응답 형식: candidates[0].content.parts[0].text
     final body = jsonDecode(response.body) as Map<String, dynamic>;
-    return (body['choices'] as List).first['message']['content'] as String;
+    return (body['candidates'] as List).first['content']['parts'][0]['text'] as String;
   }
 
   /// 시나리오 정보를 시스템 프롬프트로 변환

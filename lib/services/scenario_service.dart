@@ -1,4 +1,4 @@
-// ScenarioAgent: 사용자 상황 입력 → OpenRouter API 호출 → 시나리오 생성
+// ScenarioAgent: 사용자 상황 입력 → Gemini API 호출 → 시나리오 생성
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -13,32 +13,22 @@ class ScenarioService {
     required String difficulty,
     required String category,
   }) async {
-    print('=== API 호출 시작 ===');
-    print('URL: ${ApiConfig.apiUrl}');
-    print('Model: ${ApiConfig.model}');
-    print('Key: ${ApiConfig.apiKey.substring(0, 20)}...');
-
+    // 네이티브 Gemini API — API 키를 URL에 포함해 CORS 헤더 없이 호출
     final response = await http.post(
       Uri.parse(ApiConfig.apiUrl),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${ApiConfig.apiKey}',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'model': ApiConfig.model,
-        'max_tokens': 1024,
-        'messages': [
+        'contents': [
           {
             'role': 'user',
-            'content': _buildPrompt(situation, difficulty, category),
+            'parts': [
+              {'text': _buildPrompt(situation, difficulty, category)}
+            ],
           }
         ],
+        'generationConfig': {'maxOutputTokens': 1024},
       }),
     );
-
-    print('=== API 응답 ===');
-    print('Status: ${response.statusCode}');
-    print('Body: ${response.body}');
 
     if (response.statusCode == 429) {
       throw Exception('서버가 혼잡합니다. 잠시 후 다시 시도해주세요.');
@@ -47,11 +37,11 @@ class ScenarioService {
       throw Exception('시나리오 생성 실패: ${response.statusCode}');
     }
 
-    // OpenRouter 응답 형식: choices[0].message.content
+    // 네이티브 Gemini 응답 형식: candidates[0].content.parts[0].text
     final body = jsonDecode(response.body) as Map<String, dynamic>;
-    final text = (body['choices'] as List).first['message']['content'] as String;
+    final text = (body['candidates'] as List).first['content']['parts'][0]['text'] as String;
 
-    // 마크다운 코드블록 제거
+    // 마크다운 코드블록 제거 후 JSON 파싱
     final jsonText = text
         .replaceAll(RegExp(r'```json\s*'), '')
         .replaceAll(RegExp(r'```\s*'), '')

@@ -1,4 +1,4 @@
-// FeedbackAgent: 대화 종료 후 OpenRouter API로 문법/표현/자연스러움 종합 피드백 생성
+// FeedbackAgent: 대화 종료 후 Gemini API로 문법/표현/자연스러움 종합 피드백 생성
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -26,20 +26,20 @@ class FeedbackService {
       );
     }
 
+    // 네이티브 Gemini API — API 키를 URL에 포함해 CORS 헤더 없이 호출
     final response = await http.post(
       Uri.parse(ApiConfig.apiUrl),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${ApiConfig.apiKey}',
-        'HTTP-Referer': 'https://mef-app.com',
-        'X-Title': 'MEF - My English Friend',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'model': ApiConfig.model,
-        'max_tokens': 1024,
-        'messages': [
-          {'role': 'user', 'content': _buildPrompt(userMessages)},
+        'contents': [
+          {
+            'role': 'user',
+            'parts': [
+              {'text': _buildPrompt(userMessages)}
+            ],
+          }
         ],
+        'generationConfig': {'maxOutputTokens': 1024},
       }),
     );
 
@@ -50,10 +50,10 @@ class FeedbackService {
       throw Exception('피드백 생성 실패: ${response.statusCode}');
     }
 
-    // OpenRouter 응답 형식: choices[0].message.content
+    // 네이티브 Gemini 응답 형식: candidates[0].content.parts[0].text
     final body = jsonDecode(response.body) as Map<String, dynamic>;
     final text =
-        (body['choices'] as List).first['message']['content'] as String;
+        (body['candidates'] as List).first['content']['parts'][0]['text'] as String;
 
     // 마크다운 코드블록 제거 후 JSON 파싱
     final jsonText = text
