@@ -249,11 +249,11 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); col
     <div class="hero-meta">
       <div class="hero-meta-item">
         <span class="hero-meta-label">팀원 A</span>
-        <span class="hero-meta-value" style="color:var(--accent)">김령균</span>
+        <span class="hero-meta-value" style="color:var(--accent)">이동희</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">팀원 B</span>
-        <span class="hero-meta-value" style="color:var(--accent2)">이동희</span>
+        <span class="hero-meta-value" style="color:var(--accent2)">김령균</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">프레임워크</span>
@@ -341,25 +341,25 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); col
     <div class="agent-list">
       <div class="agent-card">
         <div class="agent-header"><div class="agent-dot" style="background:var(--accent)"></div><h4>🎬 ScenarioAgent — 시나리오 생성</h4></div>
-        <div class="agent-who">담당: 김령균 · 완료 ✅</div>
+        <div class="agent-who">담당: 이동희 · 완료 ✅</div>
         <p>한국어 상황 입력 → AI가 배경·역할·목표를 JSON으로 자동 생성.</p>
         <p class="agent-ex">입력: "카페 주문" → <span>바리스타 역할 시나리오</span></p>
       </div>
       <div class="agent-card">
         <div class="agent-header"><div class="agent-dot" style="background:var(--accent2)"></div><h4>💬 ConversationAgent — 실시간 대화</h4></div>
-        <div class="agent-who">담당: 이동희 · 완료 ✅</div>
+        <div class="agent-who">담당: 김령균 · 완료 ✅</div>
         <p>시나리오를 바탕으로 AI 파트너와 실시간 영어 대화 진행. 이전 대화 전체를 기억해 맥락 유지.</p>
         <p class="agent-ex">AI는 역할에 맞게 <span>영어로만 응답</span></p>
       </div>
       <div class="agent-card">
         <div class="agent-header"><div class="agent-dot" style="background:var(--accent3)"></div><h4>📋 FeedbackAgent — 즉각 피드백</h4></div>
-        <div class="agent-who">담당: 이동희 · 13주차 예정</div>
+        <div class="agent-who">담당: 김령균 · 13주차 예정</div>
         <p>대화 종료 후 문법 오류, 더 자연스러운 표현, 자연스러움 점수(100점)를 제공.</p>
         <p class="agent-ex">예: <span>"I am go"</span> → "I go" / 점수: 78점</p>
       </div>
       <div class="agent-card">
         <div class="agent-header"><div class="agent-dot" style="background:var(--accent4)"></div><h4>📊 AnalysisAgent <span class="badge-plan">유료·14주차</span></h4></div>
-        <div class="agent-who">담당: 김령균 · 14주차 예정</div>
+        <div class="agent-who">담당: 이동희 · 14주차 예정</div>
         <p>누적 대화 기록을 분석해 반복되는 실수 패턴을 개인화 리포트로 제공.</p>
         <p class="agent-ex">예: <span>"3인칭 단수 's' 누락"</span>이 70% 이상</p>
       </div>
@@ -462,7 +462,7 @@ flowchart TD
     <p class="section-desc">A는 시나리오 흐름과 핵심 AI 서비스를, B는 앱 구조와 대화 기능을 담당해 병렬로 개발했다.</p>
     <div class="role-grid">
       <div class="role-card a">
-        <div class="role-name a">김령균 (팀원 A)</div>
+        <div class="role-name a">이동희 (팀원 A)</div>
         <div class="role-sub">시나리오 흐름 · ScenarioAgent · 화면 UI · ADR 문서</div>
         <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>홈 · 로그인 · 회원가입 화면</h5><p>Mock 인증(test@mef.com)으로 로그인 흐름 구현.</p></div></div>
         <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>시나리오 입력 · 결과 화면</h5><p>상황 입력, 난이도/카테고리 선택 UI. AI 호출 결과 카드 표시.</p></div></div>
@@ -471,7 +471,7 @@ flowchart TD
         <div class="role-item"><div class="role-dot" style="background:var(--text2);opacity:0.4"></div><div class="role-item-body"><h5 style="color:var(--text2)">AnalysisAgent (14주차)</h5><p style="color:var(--text2)">유료 기능. 누적 피드백 데이터 분석.</p></div></div>
       </div>
       <div class="role-card b">
-        <div class="role-name b">이동희 (팀원 B)</div>
+        <div class="role-name b">김령균 (팀원 B)</div>
         <div class="role-sub">앱 구조 · ConversationAgent · 공통 위젯 · 라우팅</div>
         <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>go_router 설정 / 앱 기본 구조</h5><p>화면 간 이동 경로 정의. 팀원 A 화면과 충돌 없이 연동.</p></div></div>
         <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>ConversationAgent + 채팅 화면</h5><p>시나리오를 받아 AI와 실시간 채팅. 대화 기록 전체를 API에 전달해 맥락 유지.</p></div></div>
@@ -542,15 +542,15 @@ flowchart TD
     <table class="wbs-table">
       <thead><tr><th>주차</th><th>작업 항목</th><th>담당</th><th>상태</th></tr></thead>
       <tbody>
-        <tr><td style="color:var(--text2)">11주차</td><td>ADR-0001 Flutter · ADR-0002 Riverpod · ADR-0003 백엔드</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">11주차</td><td>GoRouter 설정 / 앱 기본 구조 / 공통 위젯 3개</td><td><span class="owner-b">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">12주차</td><td>홈 · 로그인 · 회원가입 · 시나리오 입력/결과 · 분석 화면</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">12주차</td><td>ScenarioAgent 프롬프트 설계 + 서비스 구현</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">12주차</td><td>ConversationAgent + 채팅 화면 · auth · conversation provider</td><td><span class="owner-b">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">13주차</td><td>FeedbackAgent + 피드백 화면 구현</td><td><span class="owner-b">이동희</span></td><td><span class="badge badge-todo">예정</span></td></tr>
-        <tr><td style="color:var(--text2)">13주차</td><td>대화 기록 목록 / 상세 화면</td><td><span class="owner-b">이동희</span></td><td><span class="badge badge-todo">예정</span></td></tr>
-        <tr><td style="color:var(--text2)">14주차</td><td>AnalysisAgent + 약점 분석 화면 (유료 기능)</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-todo">예정</span></td></tr>
-        <tr><td style="color:var(--text2)">14주차</td><td>배포 문서 (docs/deploy.md)</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-todo">예정</span></td></tr>
+        <tr><td style="color:var(--text2)">11주차</td><td>ADR-0001 Flutter · ADR-0002 Riverpod · ADR-0003 백엔드</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">11주차</td><td>GoRouter 설정 / 앱 기본 구조 / 공통 위젯 3개</td><td><span class="owner-b">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">12주차</td><td>홈 · 로그인 · 회원가입 · 시나리오 입력/결과 · 분석 화면</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">12주차</td><td>ScenarioAgent 프롬프트 설계 + 서비스 구현</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">12주차</td><td>ConversationAgent + 채팅 화면 · auth · conversation provider</td><td><span class="owner-b">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">13주차</td><td>FeedbackAgent + 피드백 화면 구현</td><td><span class="owner-b">김령균</span></td><td><span class="badge badge-todo">예정</span></td></tr>
+        <tr><td style="color:var(--text2)">13주차</td><td>대화 기록 목록 / 상세 화면</td><td><span class="owner-b">김령균</span></td><td><span class="badge badge-todo">예정</span></td></tr>
+        <tr><td style="color:var(--text2)">14주차</td><td>AnalysisAgent + 약점 분석 화면 (유료 기능)</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-todo">예정</span></td></tr>
+        <tr><td style="color:var(--text2)">14주차</td><td>배포 문서 (docs/deploy.md)</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-todo">예정</span></td></tr>
       </tbody>
     </table>
     <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
@@ -558,8 +558,8 @@ flowchart TD
       <span class="badge badge-done">완료</span>
       <span class="badge badge-todo">예정</span>
       <span style="margin-left:12px;font-size:11px;color:var(--text2)">담당:</span>
-      <span class="owner-a">김령균 (A)</span>
-      <span class="owner-b">이동희 (B)</span>
+      <span class="owner-a">이동희 (A)</span>
+      <span class="owner-b">김령균 (B)</span>
     </div>
   </div>
 
