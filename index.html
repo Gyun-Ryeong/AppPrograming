@@ -21,228 +21,199 @@
   --card-r: 16px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
+html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); color:var(--text); font-family:'Pretendard','Apple SD Gothic Neo',sans-serif; }
+
+/* SLIDE CONTAINER */
+.slides { width:100%; height:100vh; position:relative; }
+.slide {
+  position:absolute; top:0; left:0; width:100%; height:100vh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:60px 80px; overflow-y:auto;
+  opacity:0; pointer-events:none;
+  transition:opacity 0.4s ease, transform 0.4s ease;
+  transform:translateX(60px);
 }
-nav {
-  position: fixed; top:0; left:0; right:0; z-index:100;
+.slide.active {
+  opacity:1; pointer-events:all; transform:translateX(0);
+}
+.slide.prev { transform:translateX(-60px); opacity:0; pointer-events:none; }
+
+/* NAV */
+.nav-bar {
+  position:fixed; top:0; left:0; right:0; z-index:100;
   display:flex; align-items:center; justify-content:space-between;
-  padding: 14px 40px;
-  background: rgba(10,10,15,0.88);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  padding:14px 32px;
+  background:rgba(10,10,15,0.88);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
 }
 .nav-logo { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; color:var(--accent); }
-.nav-links { display:flex; gap:20px; }
-.nav-links a { color:var(--text2); text-decoration:none; font-size:12px; transition:color .2s; }
-.nav-links a:hover { color:var(--text); }
-
-section {
-  min-height:100vh; display:flex; flex-direction:column; justify-content:center;
-  padding:100px 60px 60px; max-width:1100px; margin:0 auto; position:relative; z-index:1;
+.nav-dots { display:flex; gap:8px; align-items:center; }
+.nav-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:var(--border); border:1px solid var(--text2);
+  cursor:pointer; transition:all .2s;
 }
+.nav-dot.active { background:var(--accent); border-color:var(--accent); transform:scale(1.3); }
+.nav-page { font-size:12px; color:var(--text2); }
+
+/* ARROWS */
+.arrow {
+  position:fixed; top:50%; transform:translateY(-50%);
+  width:48px; height:48px; border-radius:50%;
+  background:var(--surface); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; z-index:100; transition:all .2s;
+  color:var(--text2); font-size:20px; user-select:none;
+}
+.arrow:hover { background:var(--surface2); border-color:var(--accent); color:var(--accent); }
+.arrow.left { left:16px; }
+.arrow.right { right:16px; }
+.arrow.disabled { opacity:0.2; pointer-events:none; }
+
+/* BG GLOW */
+.bg-glow {
+  position:fixed; top:-200px; left:50%; transform:translateX(-50%);
+  width:700px; height:500px;
+  background:radial-gradient(ellipse at center, rgba(108,99,255,0.08) 0%, transparent 70%);
+  pointer-events:none; z-index:0;
+}
+
+/* COMMON */
 .section-tag { font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:10px; }
 .section-title {
   font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(28px,4.5vw,48px); font-weight:700; letter-spacing:-1.5px; line-height:1.1;
+  font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-1.5px; line-height:1.1;
   margin-bottom:12px;
 }
-.section-desc { font-size:14px; color:var(--text2); line-height:1.8; margin-bottom:32px; max-width:660px; }
+.section-desc { font-size:14px; color:var(--text2); line-height:1.8; margin-bottom:28px; max-width:680px; }
 
 /* HERO */
-#hero { justify-content:center; align-items:flex-start; }
 .hero-tag {
   display:inline-block; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase;
   color:var(--accent); border:1px solid rgba(108,99,255,0.3); padding:6px 14px; border-radius:99px; margin-bottom:20px;
 }
-.hero-title {
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(46px,7vw,78px); font-weight:700; line-height:1.0; letter-spacing:-3px;
-}
+.hero-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(48px,7vw,80px); font-weight:700; line-height:1.0; letter-spacing:-3px; }
 .hero-title span { color:var(--accent); }
-.hero-value {
-  margin-top:20px; font-size:20px; font-weight:600; color:var(--text);
-  line-height:1.5;
-}
+.hero-value { margin-top:16px; font-size:18px; font-weight:600; line-height:1.5; }
 .hero-value em { color:var(--accent3); font-style:normal; }
-.hero-sub { font-size:14px; color:var(--text2); margin-top:10px; line-height:1.7; max-width:560px; }
-.hero-meta { display:flex; gap:24px; margin-top:36px; flex-wrap:wrap; }
+.hero-sub { font-size:14px; color:var(--text2); margin-top:8px; line-height:1.7; max-width:560px; }
+.hero-meta { display:flex; gap:28px; margin-top:32px; flex-wrap:wrap; }
 .hero-meta-item { display:flex; flex-direction:column; gap:4px; }
 .hero-meta-label { font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; }
 .hero-meta-value { font-size:13px; font-weight:600; }
-.scroll-hint {
-  position:absolute; bottom:36px; left:60px;
-  color:var(--text2); font-size:11px; letter-spacing:1px; text-transform:uppercase;
-  display:flex; flex-direction:column; align-items:center; gap:8px;
-}
-.scroll-arrow { width:1px; height:32px; background:linear-gradient(to bottom,var(--text2),transparent); }
 
 /* PROBLEM */
-.problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px; }
-.problem-card {
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r);
-  padding:22px; transition:border-color .2s;
-}
-.problem-card:hover { border-color:rgba(108,99,255,0.3); }
-.problem-icon { font-size:26px; margin-bottom:10px; }
-.problem-card h3 { font-size:14px; font-weight:600; margin-bottom:6px; }
+.problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.problem-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:20px; }
+.problem-icon { font-size:24px; margin-bottom:10px; }
+.problem-card h3 { font-size:14px; font-weight:600; margin-bottom:5px; }
 .problem-card p { font-size:12px; color:var(--text2); line-height:1.7; }
-.problem-card .solve { font-size:11px; color:var(--accent3); margin-top:8px; font-weight:600; }
+.problem-card .solve { font-size:11px; color:var(--accent3); margin-top:7px; font-weight:600; }
 .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.stat-card { background:var(--surface2); border:1px solid var(--border); border-radius:var(--card-r); padding:18px; text-align:center; }
-.stat-number { font-family:'Space Grotesk',sans-serif; font-size:34px; font-weight:700; }
+.stat-card { background:var(--surface2); border:1px solid var(--border); border-radius:var(--card-r); padding:16px; text-align:center; }
+.stat-number { font-family:'Space Grotesk',sans-serif; font-size:32px; font-weight:700; }
 .stat-number.purple { color:var(--accent); }
 .stat-number.red { color:var(--accent2); }
 .stat-number.green { color:var(--accent3); }
-.stat-label { font-size:11px; color:var(--text2); margin-top:4px; line-height:1.5; }
+.stat-label { font-size:11px; color:var(--text2); margin-top:3px; line-height:1.5; }
 
 /* SCENARIO */
-#scenario { min-height:auto; padding-bottom:60px; }
-.scenario-box {
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r);
-  padding:32px; margin-bottom:20px;
-}
-.scenario-situation {
-  display:inline-block; font-size:11px; font-weight:600; letter-spacing:1px;
-  text-transform:uppercase; color:var(--accent4); margin-bottom:16px;
-}
-.scenario-title { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; margin-bottom:20px; }
-.scenario-flow { display:flex; flex-direction:column; gap:12px; }
-.scenario-step { display:flex; gap:14px; align-items:flex-start; }
-.step-badge {
-  flex-shrink:0; width:28px; height:28px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:11px; font-weight:700;
-}
+.scenario-box { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:24px; margin-bottom:16px; }
+.scenario-situation { display:inline-block; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--accent4); margin-bottom:12px; }
+.scenario-title { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:16px; }
+.scenario-flow { display:flex; flex-direction:column; gap:10px; }
+.scenario-step { display:flex; gap:12px; align-items:flex-start; }
+.step-badge { flex-shrink:0; width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; }
 .step-badge.user { background:rgba(108,99,255,0.2); color:var(--accent); }
 .step-badge.ai { background:rgba(255,107,107,0.2); color:var(--accent2); }
 .step-badge.sys { background:rgba(67,233,123,0.2); color:var(--accent3); }
-.scenario-step p { font-size:13px; line-height:1.6; padding-top:4px; }
-.scenario-step p span { color:var(--text2); font-size:11px; margin-left:6px; }
-.scenario-meta { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.scenario-meta-card {
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:12px; padding:16px;
-}
-.scenario-meta-card h4 { font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
-.scenario-meta-card p { font-size:13px; font-weight:600; }
+.scenario-step p { font-size:12px; line-height:1.6; padding-top:4px; }
+.scenario-step p span { color:var(--text2); font-size:11px; margin-left:5px; }
+.scenario-meta { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.scenario-meta-card { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px; }
+.scenario-meta-card h4 { font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; }
+.scenario-meta-card p { font-size:12px; font-weight:600; }
 
-/* VISION */
-.vision-big {
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(20px,3vw,32px); font-weight:700; line-height:1.3; letter-spacing:-0.5px;
-  border-left:3px solid var(--accent); padding-left:22px; margin-bottom:32px;
-}
+/* AGENT */
+.vision-big { font-family:'Space Grotesk',sans-serif; font-size:clamp(18px,2.5vw,30px); font-weight:700; line-height:1.3; border-left:3px solid var(--accent); padding-left:20px; margin-bottom:28px; }
 .vision-big em { color:var(--accent); font-style:normal; }
 .agent-list { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.agent-card {
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:20px;
-}
-.agent-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.agent-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:18px; }
+.agent-header { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
 .agent-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
 .agent-card h4 { font-size:13px; font-weight:600; }
 .agent-card .agent-who { font-size:11px; color:var(--text2); margin-bottom:6px; }
 .agent-card p { font-size:12px; color:var(--text2); line-height:1.7; }
-.agent-card .agent-ex { font-size:11px; margin-top:8px; color:var(--text); }
+.agent-card .agent-ex { font-size:11px; margin-top:7px; color:var(--text); }
 .agent-card .agent-ex span { color:var(--accent3); font-weight:600; }
 .badge-plan { display:inline-block; font-size:9px; padding:2px 7px; border-radius:99px; background:rgba(255,255,255,0.07); color:var(--text2); margin-left:5px; }
 
 /* ARCH */
-#arch { min-height:auto; padding-bottom:60px; }
-.arch-wrap { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
-.mermaid-wrap {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:var(--card-r); padding:22px; overflow:auto;
-}
-.arch-desc { display:flex; flex-direction:column; gap:12px; }
-.arch-layer { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 18px; }
-.arch-layer .layer-tag { font-size:10px; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
-.arch-layer h4 { font-size:13px; font-weight:600; margin-bottom:3px; }
-.arch-layer p { font-size:12px; color:var(--text2); line-height:1.6; }
+.arch-wrap { display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start; }
+.mermaid-wrap { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:20px; overflow:auto; }
+.arch-desc { display:flex; flex-direction:column; gap:10px; }
+.arch-layer { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 16px; }
+.arch-layer .layer-tag { font-size:10px; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:3px; }
+.arch-layer h4 { font-size:12px; font-weight:600; margin-bottom:2px; }
+.arch-layer p { font-size:11px; color:var(--text2); line-height:1.6; }
 
 /* ADR */
-#adr { min-height:auto; padding-bottom:60px; }
 .adr-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-.adr-card {
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:22px;
-}
-.adr-num { font-size:10px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
-.adr-card h3 { font-size:14px; font-weight:700; margin-bottom:12px; }
-.adr-row { margin-bottom:10px; }
-.adr-row h4 { font-size:11px; color:var(--text2); letter-spacing:0.5px; margin-bottom:3px; }
+.adr-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:20px; }
+.adr-num { font-size:10px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:7px; }
+.adr-card h3 { font-size:14px; font-weight:700; margin-bottom:10px; }
+.adr-row { margin-bottom:8px; }
+.adr-row h4 { font-size:10px; color:var(--text2); margin-bottom:2px; }
 .adr-row p { font-size:12px; line-height:1.6; }
-.adr-chosen { font-size:13px; font-weight:700; color:var(--accent3); margin-bottom:4px; }
+.adr-chosen { font-size:13px; font-weight:700; color:var(--accent3); margin-bottom:3px; }
 
 /* ROLE */
-#role { min-height:auto; padding-bottom:60px; }
-.role-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-.role-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:26px; }
+.role-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.role-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:24px; }
 .role-card.a { border-top:3px solid var(--accent); }
 .role-card.b { border-top:3px solid var(--accent2); }
 .role-name { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; margin-bottom:2px; }
 .role-name.a { color:var(--accent); }
 .role-name.b { color:var(--accent2); }
-.role-sub { font-size:11px; color:var(--text2); margin-bottom:16px; line-height:1.5; }
-.role-item { display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; }
+.role-sub { font-size:11px; color:var(--text2); margin-bottom:14px; }
+.role-item { display:flex; gap:10px; margin-bottom:10px; }
 .role-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:4px; }
-.role-item-body h5 { font-size:12px; font-weight:600; margin-bottom:2px; }
-.role-item-body p { font-size:11px; color:var(--text2); line-height:1.6; }
+.role-item-body h5 { font-size:12px; font-weight:600; margin-bottom:1px; }
+.role-item-body p { font-size:11px; color:var(--text2); line-height:1.5; }
 
 /* AI HONESTY */
-#ai { min-height:auto; padding-bottom:60px; }
-.ai-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; }
-.ai-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:22px; }
+.ai-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
+.ai-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:20px; }
 .ai-card h3 { font-size:13px; font-weight:600; margin-bottom:10px; }
-.ai-item { display:flex; gap:10px; margin-bottom:10px; font-size:12px; line-height:1.6; }
-.ai-tag {
-  flex-shrink:0; font-size:10px; font-weight:700; padding:2px 8px; border-radius:99px;
-  height:fit-content; margin-top:2px;
-}
+.ai-item { display:flex; gap:10px; margin-bottom:9px; font-size:12px; line-height:1.6; }
+.ai-tag { flex-shrink:0; font-size:10px; font-weight:700; padding:2px 8px; border-radius:99px; height:fit-content; margin-top:2px; }
 .ai-tag.made { background:rgba(108,99,255,0.2); color:var(--accent); }
 .ai-tag.review { background:rgba(67,233,123,0.2); color:var(--accent3); }
-.ai-quote {
-  background:var(--surface2); border-left:3px solid var(--accent3);
-  border-radius:0 12px 12px 0; padding:16px 20px; font-size:13px; line-height:1.7; color:var(--text);
-}
+.ai-quote { background:var(--surface2); border-left:3px solid var(--accent3); border-radius:0 12px 12px 0; padding:14px 18px; font-size:13px; line-height:1.7; }
 
 /* DEMO */
-#demo { min-height:auto; padding-bottom:60px; }
-.demo-steps { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-bottom:24px; position:relative; }
-.demo-steps::before {
-  content:''; position:absolute; top:26px; left:10%; right:10%; height:1px;
-  background:linear-gradient(to right, var(--accent), var(--accent2));
-}
+.demo-steps { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-bottom:20px; position:relative; }
+.demo-steps::before { content:''; position:absolute; top:24px; left:10%; right:10%; height:1px; background:linear-gradient(to right, var(--accent), var(--accent2)); }
 .demo-step { text-align:center; padding:0 6px; position:relative; z-index:1; }
-.step-circle {
-  width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-  margin:0 auto 10px; font-size:16px; border:2px solid var(--border); background:var(--surface);
-}
+.step-circle { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-size:16px; border:2px solid var(--border); background:var(--surface); }
 .step-circle.done { border-color:var(--accent3); background:rgba(67,233,123,0.1); }
 .step-circle.plan { border-color:var(--text2); opacity:0.5; }
 .demo-step h4 { font-size:11px; font-weight:600; margin-bottom:3px; }
 .demo-step p { font-size:10px; color:var(--text2); line-height:1.5; }
 .demo-info { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.demo-info-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:18px; }
-.demo-info-card h4 { font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--text2); margin-bottom:10px; }
+.demo-info-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:16px; }
+.demo-info-card h4 { font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--text2); margin-bottom:8px; }
 .demo-info-card p { font-size:12px; line-height:1.8; }
 .demo-info-card code { font-size:11px; color:var(--accent3); background:rgba(67,233,123,0.08); padding:2px 5px; border-radius:4px; }
 
 /* WBS */
-#wbs { min-height:auto; padding-bottom:80px; }
-.progress-bar-wrap { background:var(--surface2); border-radius:99px; height:7px; margin-bottom:6px; overflow:hidden; }
+.progress-bar-wrap { background:var(--surface2); border-radius:99px; height:6px; margin-bottom:5px; overflow:hidden; }
 .progress-bar { height:100%; border-radius:99px; background:linear-gradient(to right, var(--accent), var(--accent3)); }
-.progress-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--text2); margin-bottom:24px; }
+.progress-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--text2); margin-bottom:20px; }
 .wbs-table { width:100%; border-collapse:collapse; font-size:12px; }
-.wbs-table th {
-  text-align:left; padding:9px 12px; font-size:10px; letter-spacing:1px; text-transform:uppercase;
-  color:var(--text2); border-bottom:1px solid var(--border);
-}
-.wbs-table td { padding:11px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.wbs-table th { text-align:left; padding:8px 12px; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--text2); border-bottom:1px solid var(--border); }
+.wbs-table td { padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
 .wbs-table tr:last-child td { border-bottom:none; }
 .badge { display:inline-block; font-size:10px; font-weight:600; padding:3px 10px; border-radius:99px; }
 .badge-done { background:rgba(67,233,123,0.15); color:var(--accent3); }
@@ -250,666 +221,414 @@ section {
 .owner-a { font-size:11px; color:var(--accent); font-weight:600; }
 .owner-b { font-size:11px; color:var(--accent2); font-weight:600; }
 
-footer {
-  text-align:center; padding:40px; color:var(--text2); font-size:12px;
-  border-top:1px solid var(--border); margin-top:40px;
-}
-.bg-glow {
-  position:fixed; top:-200px; left:50%; transform:translateX(-50%);
-  width:700px; height:500px;
-  background:radial-gradient(ellipse at center, rgba(108,99,255,0.08) 0%, transparent 70%);
-  pointer-events:none; z-index:0;
-}
+/* KEYBOARD HINT */
+.key-hint { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); font-size:11px; color:var(--text2); display:flex; gap:8px; align-items:center; }
+.key { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:2px 8px; font-size:10px; }
 </style>
 </head>
 <body>
 <div class="bg-glow"></div>
 
-<nav>
+<div class="nav-bar">
   <div class="nav-logo">MEF</div>
-  <div class="nav-links">
-    <a href="#hero">홈</a>
-    <a href="#problem">문제</a>
-    <a href="#scenario">시나리오</a>
-    <a href="#vision">솔루션</a>
-    <a href="#arch">아키텍처</a>
-    <a href="#adr">기술선택</a>
-    <a href="#role">역할</a>
-    <a href="#ai">AI활용</a>
-    <a href="#demo">데모</a>
-    <a href="#wbs">WBS</a>
-  </div>
-</nav>
+  <div class="nav-dots" id="navDots"></div>
+  <div class="nav-page" id="navPage">1 / 10</div>
+</div>
 
-<!-- 01 HERO -->
-<section id="hero">
-  <div class="hero-tag">앱 프로그래밍 중간 발표 · 2026</div>
-  <h1 class="hero-title">My<br><span>English</span><br>Friend</h1>
-  <p class="hero-value">
-    <em>영어가 두려운 사람</em>이 AI와 대화하며 말하기 자신감을 키우는 앱
-  </p>
-  <p class="hero-sub">
-    원하는 상황을 입력하면 AI가 시나리오를 만들고, 실제 영어로 대화하며, 끝나면 피드백을 준다.
-    비용 없이, 부담 없이, 언제든지.
-  </p>
-  <div class="hero-meta">
-    <div class="hero-meta-item">
-      <span class="hero-meta-label">팀원 A</span>
-      <span class="hero-meta-value" style="color:var(--accent)">김령균</span>
-    </div>
-    <div class="hero-meta-item">
-      <span class="hero-meta-label">팀원 B</span>
-      <span class="hero-meta-value" style="color:var(--accent2)">이동희</span>
-    </div>
-    <div class="hero-meta-item">
-      <span class="hero-meta-label">프레임워크</span>
-      <span class="hero-meta-value">Flutter 3.35 (Windows)</span>
-    </div>
-    <div class="hero-meta-item">
-      <span class="hero-meta-label">AI 모델</span>
-      <span class="hero-meta-value">Llama 3.3 70B (OpenRouter)</span>
-    </div>
-    <div class="hero-meta-item">
-      <span class="hero-meta-label">상태 관리</span>
-      <span class="hero-meta-value">Riverpod + go_router</span>
-    </div>
-  </div>
-  <div class="scroll-hint">
-    <span>scroll</span>
-    <div class="scroll-arrow"></div>
-  </div>
-</section>
+<button class="arrow left" id="arrowLeft" onclick="prevSlide()">&#8592;</button>
+<button class="arrow right" id="arrowRight" onclick="nextSlide()">&#8594;</button>
 
-<!-- 02 PROBLEM -->
-<section id="problem">
-  <div class="section-tag">01 — 문제 정의</div>
-  <h2 class="section-title">영어 말하기,<br>왜 여전히 어려운가</h2>
-  <p class="section-desc">
-    한국인의 영어 실력은 읽기·쓰기에 비해 말하기가 현저히 낮다.
-    원인은 단순하다 — 안전하게 반복 연습할 공간이 없다.
-    MEF는 비용·심리적 부담·피드백 부재, 세 가지를 동시에 해결한다.
-  </p>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <div class="problem-icon">🧊</div>
-      <h3>실전 경험 부족</h3>
-      <p>단어와 문법을 알아도 실제 대화 상황이 오면 입이 얼어버린다. 일상에서 영어를 쓸 기회 자체가 없다.</p>
-      <p class="solve">→ 언제든 원하는 상황으로 연습 가능</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">💸</div>
-      <h3>높은 접근 비용</h3>
-      <p>원어민 화상 영어는 1회에 3~10만원. 꾸준히 이어가려면 한 달에 수십만 원이 필요하다.</p>
-      <p class="solve">→ 무료 AI 모델로 비용 장벽 제거</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">😰</div>
-      <h3>심리적 부담</h3>
-      <p>실수에 대한 두려움, 발음에 대한 수치심. 사람 앞에서 영어를 쓰는 것 자체가 스트레스다.</p>
-      <p class="solve">→ AI 상대라 부담 없이 반복 연습 가능</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">🔁</div>
-      <h3>피드백 부재</h3>
-      <p>혼자 연습하면 같은 실수를 반복하게 된다. 잘못된 표현이 굳어버리는 악순환이 이어진다.</p>
-      <p class="solve">→ 대화 후 문법·표현 피드백을 즉시 제공</p>
-    </div>
-  </div>
-  <div class="stat-row">
-    <div class="stat-card">
-      <div class="stat-number purple">73%</div>
-      <div class="stat-label">영어 학습자 중<br>말하기 자신감 부족</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number red">4만원+</div>
-      <div class="stat-label">원어민 화상 영어<br>1회 평균 비용</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number green">24/7</div>
-      <div class="stat-label">MEF와 함께라면<br>언제든 연습 가능</div>
-    </div>
-  </div>
-</section>
+<div class="slides" id="slides">
 
-<!-- 03 SCENARIO -->
-<section id="scenario">
-  <div class="section-tag">02 — 사용자 시나리오</div>
-  <h2 class="section-title">실제로 어떻게 쓰이는가</h2>
-  <p class="section-desc">
-    해외여행을 앞둔 대학생 지수가 카페에서 음료를 주문하는 연습을 하고 싶다.
-    영어가 서툴고 틀릴까봐 두렵지만, MEF로는 부담 없이 시작할 수 있다.
-  </p>
-  <div class="scenario-box">
-    <div class="scenario-situation">📍 상황: 뉴욕 카페에서 음료 주문하기 · 중급 · 일상</div>
-    <div class="scenario-title">지수의 MEF 첫 번째 연습</div>
-    <div class="scenario-flow">
-      <div class="scenario-step">
-        <div class="step-badge sys">앱</div>
-        <p>지수가 "카페에서 음료 주문하기"를 입력하고 난이도 <strong>중급</strong>, 카테고리 <strong>일상</strong>을 선택한다.</p>
+  <!-- SLIDE 1: HERO -->
+  <div class="slide active">
+    <div class="hero-tag">앱 프로그래밍 중간 발표 · 2026</div>
+    <h1 class="hero-title">My<br><span>English</span><br>Friend</h1>
+    <p class="hero-value"><em>영어가 두려운 사람</em>이 AI와 대화하며 말하기 자신감을 키우는 앱</p>
+    <p class="hero-sub">원하는 상황을 입력하면 AI가 시나리오를 만들고, 실제 영어로 대화하며, 끝나면 피드백을 준다. 비용 없이, 부담 없이, 언제든지.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">팀원 A</span>
+        <span class="hero-meta-value" style="color:var(--accent)">김령균</span>
       </div>
-      <div class="scenario-step">
-        <div class="step-badge sys">AI</div>
-        <p>ScenarioAgent가 시나리오를 생성한다. <span>배경: 뉴욕 바쁜 카페 / 지수 역할: 커스텀 음료를 주문하는 고객 / AI 역할: 바리스타</span></p>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">팀원 B</span>
+        <span class="hero-meta-value" style="color:var(--accent2)">이동희</span>
       </div>
-      <div class="scenario-step">
-        <div class="step-badge ai">AI</div>
-        <p><strong>"Hi there! What can I get started for you today?"</strong> <span>바리스타 역할로 대화 시작</span></p>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">프레임워크</span>
+        <span class="hero-meta-value">Flutter 3.35 (Windows)</span>
       </div>
-      <div class="scenario-step">
-        <div class="step-badge user">지수</div>
-        <p><strong>"Um… I want a latte, please."</strong> <span>조금 어색하지만 용기내서 답변</span></p>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">AI 모델</span>
+        <span class="hero-meta-value">Gemini (Google AI Studio)</span>
       </div>
-      <div class="scenario-step">
-        <div class="step-badge ai">AI</div>
-        <p><strong>"Sure! What size would you like — small, medium, or large? And would you like any flavor shots?"</strong></p>
-      </div>
-      <div class="scenario-step">
-        <div class="step-badge user">지수</div>
-        <p><strong>"Large, please. And… can I get vanilla?"</strong></p>
-      </div>
-      <div class="scenario-step">
-        <div class="step-badge sys">종료 후</div>
-        <p>FeedbackAgent가 분석: <strong>자연스러움 점수 78점</strong> / "I want" → "I'd like"이 더 자연스러운 표현 / 전반적으로 좋은 대화. <span>(13주차 구현 예정)</span></p>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">상태 관리</span>
+        <span class="hero-meta-value">Riverpod + go_router</span>
       </div>
     </div>
   </div>
-  <div class="scenario-meta">
-    <div class="scenario-meta-card">
-      <h4>입력</h4>
-      <p>"카페에서 음료 주문하기"</p>
-    </div>
-    <div class="scenario-meta-card">
-      <h4>AI가 자동 설정</h4>
-      <p>배경 · 역할 · 대화 목표</p>
-    </div>
-    <div class="scenario-meta-card">
-      <h4>결과</h4>
-      <p>실전 영어 대화 + 피드백</p>
-    </div>
-  </div>
-</section>
 
-<!-- 04 VISION -->
-<section id="vision">
-  <div class="section-tag">03 — 솔루션</div>
-  <h2 class="section-title">어떻게 해결하는가</h2>
-  <p class="section-desc">
-    MEF는 역할이 다른 4개의 AI Agent로 구성된다.
-    각 Agent는 대화의 다른 단계를 담당하며, 사용자가 입력한 상황 하나로 전체 학습 흐름이 자동으로 만들어진다.
-  </p>
-  <div class="vision-big">
-    "상황 입력 하나로<br><em>시나리오 → 대화 → 피드백</em>까지 자동"
-  </div>
-  <div class="agent-list">
-    <div class="agent-card">
-      <div class="agent-header">
-        <div class="agent-dot" style="background:var(--accent)"></div>
-        <h4>🎬 ScenarioAgent — 시나리오 생성</h4>
+  <!-- SLIDE 2: PROBLEM -->
+  <div class="slide">
+    <div class="section-tag">01 — 문제 정의</div>
+    <h2 class="section-title">영어 말하기,<br>왜 여전히 어려운가</h2>
+    <p class="section-desc">한국인의 영어 말하기 실력이 낮은 원인은 단순하다 — 안전하게 반복 연습할 공간이 없다. MEF는 비용·심리적 부담·피드백 부재를 동시에 해결한다.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">🧊</div>
+        <h3>실전 경험 부족</h3>
+        <p>단어와 문법을 알아도 실제 대화 상황이 오면 입이 얼어버린다. 일상에서 영어를 쓸 기회 자체가 없다.</p>
+        <p class="solve">→ 언제든 원하는 상황으로 연습 가능</p>
       </div>
-      <div class="agent-who">담당: 김령균 · 구현 완료 ✅</div>
-      <p>한국어 상황 입력 → AI가 영어 대화 시나리오(배경·역할·목표)를 JSON으로 자동 생성.</p>
-      <p class="agent-ex">입력: "카페 주문" → <span>바리스타 역할 시나리오 생성</span></p>
+      <div class="problem-card">
+        <div class="problem-icon">💸</div>
+        <h3>높은 접근 비용</h3>
+        <p>원어민 화상 영어는 1회에 3~10만원. 꾸준히 이어가려면 한 달에 수십만 원이 필요하다.</p>
+        <p class="solve">→ 무료 AI 모델로 비용 장벽 제거</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">😰</div>
+        <h3>심리적 부담</h3>
+        <p>실수에 대한 두려움, 발음에 대한 수치심. 사람 앞에서 영어를 쓰는 것 자체가 스트레스다.</p>
+        <p class="solve">→ AI 상대라 부담 없이 반복 연습 가능</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🔁</div>
+        <h3>피드백 부재</h3>
+        <p>혼자 연습하면 같은 실수를 반복하게 된다. 잘못된 표현이 굳어버리는 악순환이 이어진다.</p>
+        <p class="solve">→ 대화 후 문법·표현 피드백을 즉시 제공</p>
+      </div>
     </div>
-    <div class="agent-card">
-      <div class="agent-header">
-        <div class="agent-dot" style="background:var(--accent2)"></div>
-        <h4>💬 ConversationAgent — 실시간 대화</h4>
-      </div>
-      <div class="agent-who">담당: 이동희 · 구현 완료 ✅</div>
-      <p>시나리오를 바탕으로 AI 파트너와 실시간 영어 대화 진행. 이전 대화 전체를 기억해 자연스러운 맥락 유지.</p>
-      <p class="agent-ex">AI는 역할에 맞게 <span>영어로만 응답</span></p>
-    </div>
-    <div class="agent-card">
-      <div class="agent-header">
-        <div class="agent-dot" style="background:var(--accent3)"></div>
-        <h4>📋 FeedbackAgent — 즉각 피드백</h4>
-      </div>
-      <div class="agent-who">담당: 이동희 · 13주차 예정</div>
-      <p>대화 종료 후 문법 오류, 더 자연스러운 표현, 자연스러움 점수(100점)를 구조화된 JSON으로 제공.</p>
-      <p class="agent-ex">예: <span>"I am go"</span> → "I go" / 점수: 78점</p>
-    </div>
-    <div class="agent-card">
-      <div class="agent-header">
-        <div class="agent-dot" style="background:var(--accent4)"></div>
-        <h4>📊 AnalysisAgent — 약점 분석 <span class="badge-plan">유료·14주차</span></h4>
-      </div>
-      <div class="agent-who">담당: 김령균 · 14주차 예정</div>
-      <p>누적 대화 기록을 분석해 반복되는 실수 패턴을 개인화 리포트로 제공.</p>
-      <p class="agent-ex">예: <span>"3인칭 단수 's' 누락"</span>이 70% 이상 반복</p>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-number purple">73%</div><div class="stat-label">영어 학습자 중 말하기 자신감 부족</div></div>
+      <div class="stat-card"><div class="stat-number red">4만원+</div><div class="stat-label">원어민 화상 영어 1회 평균 비용</div></div>
+      <div class="stat-card"><div class="stat-number green">24/7</div><div class="stat-label">MEF와 함께라면 언제든 연습 가능</div></div>
     </div>
   </div>
-</section>
 
-<!-- 05 ARCH -->
-<section id="arch">
-  <div class="section-tag">04 — 아키텍처</div>
-  <h2 class="section-title">시스템은 어떻게 구성되어 있나</h2>
-  <p class="section-desc">레이어드 아키텍처로 화면·상태·서비스·AI를 분리했다. Flutter 앱이 직접 OpenRouter API를 호출하며 별도 서버는 없다.</p>
-  <div class="arch-wrap">
-    <div class="mermaid-wrap">
-      <pre class="mermaid">
+  <!-- SLIDE 3: SCENARIO -->
+  <div class="slide">
+    <div class="section-tag">02 — 사용자 시나리오</div>
+    <h2 class="section-title">실제로 어떻게 쓰이는가</h2>
+    <p class="section-desc">해외여행을 앞둔 대학생 지수가 카페에서 음료를 주문하는 연습을 하고 싶다. 영어가 서툴고 틀릴까봐 두렵지만, MEF로는 부담 없이 시작할 수 있다.</p>
+    <div class="scenario-box">
+      <div class="scenario-situation">📍 상황: 뉴욕 카페에서 음료 주문하기 · 중급 · 일상</div>
+      <div class="scenario-title">지수의 MEF 첫 번째 연습</div>
+      <div class="scenario-flow">
+        <div class="scenario-step"><div class="step-badge sys">앱</div><p>지수가 "카페에서 음료 주문하기"를 입력하고 난이도 <strong>중급</strong>, 카테고리 <strong>일상</strong>을 선택한다.</p></div>
+        <div class="scenario-step"><div class="step-badge sys">AI</div><p>ScenarioAgent가 시나리오를 생성한다. <span>배경: 뉴욕 바쁜 카페 / 지수 역할: 고객 / AI 역할: 바리스타</span></p></div>
+        <div class="scenario-step"><div class="step-badge ai">AI</div><p><strong>"Hi there! What can I get started for you today?"</strong></p></div>
+        <div class="scenario-step"><div class="step-badge user">지수</div><p><strong>"Um… I want a latte, please."</strong></p></div>
+        <div class="scenario-step"><div class="step-badge ai">AI</div><p><strong>"Sure! What size would you like? And would you like any flavor shots?"</strong></p></div>
+        <div class="scenario-step"><div class="step-badge sys">종료</div><p>FeedbackAgent 분석: <strong>자연스러움 78점</strong> / "I want" → "I'd like" 추천 <span>(13주차 예정)</span></p></div>
+      </div>
+    </div>
+    <div class="scenario-meta">
+      <div class="scenario-meta-card"><h4>입력</h4><p>"카페에서 음료 주문하기"</p></div>
+      <div class="scenario-meta-card"><h4>AI 자동 설정</h4><p>배경 · 역할 · 대화 목표</p></div>
+      <div class="scenario-meta-card"><h4>결과</h4><p>실전 영어 대화 + 피드백</p></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: SOLUTION -->
+  <div class="slide">
+    <div class="section-tag">03 — 솔루션</div>
+    <h2 class="section-title">어떻게 해결하는가</h2>
+    <p class="section-desc">MEF는 역할이 다른 4개의 AI Agent로 구성된다. 사용자가 입력한 상황 하나로 전체 학습 흐름이 자동으로 만들어진다.</p>
+    <div class="vision-big">"상황 입력 하나로<br><em>시나리오 → 대화 → 피드백</em>까지 자동"</div>
+    <div class="agent-list">
+      <div class="agent-card">
+        <div class="agent-header"><div class="agent-dot" style="background:var(--accent)"></div><h4>🎬 ScenarioAgent — 시나리오 생성</h4></div>
+        <div class="agent-who">담당: 김령균 · 완료 ✅</div>
+        <p>한국어 상황 입력 → AI가 배경·역할·목표를 JSON으로 자동 생성.</p>
+        <p class="agent-ex">입력: "카페 주문" → <span>바리스타 역할 시나리오</span></p>
+      </div>
+      <div class="agent-card">
+        <div class="agent-header"><div class="agent-dot" style="background:var(--accent2)"></div><h4>💬 ConversationAgent — 실시간 대화</h4></div>
+        <div class="agent-who">담당: 이동희 · 완료 ✅</div>
+        <p>시나리오를 바탕으로 AI 파트너와 실시간 영어 대화 진행. 이전 대화 전체를 기억해 맥락 유지.</p>
+        <p class="agent-ex">AI는 역할에 맞게 <span>영어로만 응답</span></p>
+      </div>
+      <div class="agent-card">
+        <div class="agent-header"><div class="agent-dot" style="background:var(--accent3)"></div><h4>📋 FeedbackAgent — 즉각 피드백</h4></div>
+        <div class="agent-who">담당: 이동희 · 13주차 예정</div>
+        <p>대화 종료 후 문법 오류, 더 자연스러운 표현, 자연스러움 점수(100점)를 제공.</p>
+        <p class="agent-ex">예: <span>"I am go"</span> → "I go" / 점수: 78점</p>
+      </div>
+      <div class="agent-card">
+        <div class="agent-header"><div class="agent-dot" style="background:var(--accent4)"></div><h4>📊 AnalysisAgent <span class="badge-plan">유료·14주차</span></h4></div>
+        <div class="agent-who">담당: 김령균 · 14주차 예정</div>
+        <p>누적 대화 기록을 분석해 반복되는 실수 패턴을 개인화 리포트로 제공.</p>
+        <p class="agent-ex">예: <span>"3인칭 단수 's' 누락"</span>이 70% 이상</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: ARCH -->
+  <div class="slide">
+    <div class="section-tag">04 — 아키텍처</div>
+    <h2 class="section-title">시스템은 어떻게 구성되어 있나</h2>
+    <p class="section-desc">레이어드 아키텍처로 화면·상태·서비스·AI를 분리했다. Flutter 앱이 직접 Google AI Studio API를 호출하며 별도 서버는 없다.</p>
+    <div class="arch-wrap">
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
 flowchart TD
     User(["👤 사용자"])
-
-    subgraph Presentation["Presentation Layer\n화면 & 위젯"]
-        UI["Screens · Widgets"]
+    subgraph Presentation["Presentation Layer"]
+        UI["Screens & Widgets"]
     end
-
-    subgraph Application["Application Layer\n상태 & 흐름"]
+    subgraph Application["Application Layer"]
         Riverpod["Riverpod Providers"]
     end
-
-    subgraph Domain["Domain Layer\n비즈니스 규칙"]
-        Services["Services · Agents"]
+    subgraph Domain["Domain Layer"]
+        Services["Services & Agents"]
     end
-
-    subgraph Data["Data Layer\n외부 데이터"]
-        API["OpenRouter API\nLlama 3.3 70B"]
+    subgraph Data["Data Layer"]
+        API["Google AI Studio\nGemini Flash"]
     end
-
     User --> UI
     UI <--> Riverpod
     Riverpod <--> Services
     Services -->|HTTP POST| API
     API -->|JSON| Services
-
     style Presentation fill:#1a1a24,stroke:#6c63ff,stroke-width:1.5px,color:#f0eff8
     style Application fill:#1a1a24,stroke:#ff6b6b,stroke-width:1.5px,color:#f0eff8
     style Domain fill:#1a1a24,stroke:#43e97b,stroke-width:1.5px,color:#f0eff8
     style Data fill:#1a1a24,stroke:#f7971e,stroke-width:1.5px,color:#f0eff8
     style User fill:#111118,stroke:#8b8aa8,color:#f0eff8
-      </pre>
-    </div>
-    <div class="arch-desc">
-      <div class="arch-layer">
-        <div class="layer-tag" style="color:var(--accent)">Presentation Layer</div>
-        <h4>화면 & 위젯</h4>
-        <p>사용자가 직접 보고 조작하는 UI. 홈·시나리오·채팅·피드백 화면. 데이터를 직접 처리하지 않고 상태만 반영한다.</p>
+        </pre>
       </div>
-      <div class="arch-layer">
-        <div class="layer-tag" style="color:var(--accent2)">Application Layer</div>
-        <h4>상태 & 흐름 (Riverpod)</h4>
-        <p>화면 간 데이터 공유와 로딩·성공·실패 상태 관리. 별도 DB 없이 메모리(Riverpod)에 저장.</p>
-      </div>
-      <div class="arch-layer">
-        <div class="layer-tag" style="color:var(--accent3)">Domain Layer</div>
-        <h4>비즈니스 규칙 (Services)</h4>
-        <p>각 Agent별 서비스 파일 분리. 프롬프트 설계, JSON 파싱, 오류 처리 등 핵심 로직이 여기에 있다.</p>
-      </div>
-      <div class="arch-layer">
-        <div class="layer-tag" style="color:var(--accent4)">Data Layer</div>
-        <h4>외부 데이터 (OpenRouter API)</h4>
-        <p>HTTP POST로 OpenRouter API 호출. 응답 JSON을 파싱해 Domain Layer로 전달. API 키는 로컬 설정 파일로 관리.</p>
+      <div class="arch-desc">
+        <div class="arch-layer">
+          <div class="layer-tag" style="color:var(--accent)">Presentation Layer</div>
+          <h4>화면 & 위젯</h4>
+          <p>사용자가 보고 조작하는 UI. 데이터를 직접 처리하지 않고 상태만 반영.</p>
+        </div>
+        <div class="arch-layer">
+          <div class="layer-tag" style="color:var(--accent2)">Application Layer</div>
+          <h4>상태 & 흐름 (Riverpod)</h4>
+          <p>화면 간 데이터 공유와 로딩·성공·실패 상태 관리. 메모리에 저장.</p>
+        </div>
+        <div class="arch-layer">
+          <div class="layer-tag" style="color:var(--accent3)">Domain Layer</div>
+          <h4>비즈니스 규칙 (Services)</h4>
+          <p>Agent별 서비스 파일 분리. 프롬프트 설계, JSON 파싱, 오류 처리.</p>
+        </div>
+        <div class="arch-layer">
+          <div class="layer-tag" style="color:var(--accent4)">Data Layer</div>
+          <h4>외부 데이터 (Google AI Studio)</h4>
+          <p>HTTP POST로 Gemini API 호출. JSON 응답을 파싱해 Domain Layer로 전달.</p>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- 06 ADR -->
-<section id="adr">
-  <div class="section-tag">05 — 기술 선택 근거 (ADR)</div>
-  <h2 class="section-title">왜 이 기술을 선택했나</h2>
-  <p class="section-desc">기술 선택의 이유를 ADR(Architecture Decision Record) 문서로 기록했다. 대안과 비교해 우리 프로젝트에 가장 맞는 것을 선택했다.</p>
-  <div class="adr-grid">
-    <div class="adr-card">
-      <div class="adr-num">ADR-0001</div>
-      <h3>플랫폼 선택</h3>
-      <div class="adr-row">
-        <h4>결정</h4>
-        <p class="adr-chosen">Flutter</p>
+  <!-- SLIDE 6: ADR -->
+  <div class="slide">
+    <div class="section-tag">05 — 기술 선택 근거 (ADR)</div>
+    <h2 class="section-title">왜 이 기술을 선택했나</h2>
+    <p class="section-desc">기술 선택의 이유를 ADR(Architecture Decision Record) 문서로 기록했다. 대안과 비교해 우리 프로젝트에 가장 맞는 것을 선택했다.</p>
+    <div class="adr-grid">
+      <div class="adr-card">
+        <div class="adr-num">ADR-0001</div>
+        <h3>플랫폼 선택</h3>
+        <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Flutter</p></div>
+        <div class="adr-row"><h4>대안</h4><p>React Native, Android(Kotlin), iOS(Swift)</p></div>
+        <div class="adr-row"><h4>이유</h4><p>하나의 코드로 멀티플랫폼 지원. Dart가 초급자도 배우기 쉽고 빠른 프로토타이핑에 적합.</p></div>
       </div>
-      <div class="adr-row">
-        <h4>대안</h4>
-        <p>React Native, Android(Kotlin), iOS(Swift)</p>
+      <div class="adr-card">
+        <div class="adr-num">ADR-0002</div>
+        <h3>상태 관리</h3>
+        <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Riverpod</p></div>
+        <div class="adr-row"><h4>대안</h4><p>Provider, BLoC, GetX</p></div>
+        <div class="adr-row"><h4>이유</h4><p>Provider의 context 의존 문제 해결. AsyncValue로 로딩·성공·실패 3상태를 깔끔하게 처리.</p></div>
       </div>
-      <div class="adr-row">
-        <h4>이유</h4>
-        <p>하나의 코드로 여러 플랫폼 지원. Dart 언어가 초급자도 배우기 쉬움. UI 커스텀이 자유롭고 빠른 프로토타이핑에 적합.</p>
-      </div>
-    </div>
-    <div class="adr-card">
-      <div class="adr-num">ADR-0002</div>
-      <h3>상태 관리</h3>
-      <div class="adr-row">
-        <h4>결정</h4>
-        <p class="adr-chosen">Riverpod</p>
-      </div>
-      <div class="adr-row">
-        <h4>대안</h4>
-        <p>Provider, BLoC, GetX</p>
-      </div>
-      <div class="adr-row">
-        <h4>이유</h4>
-        <p>Provider의 context 의존 문제를 해결. 컴파일 타임 안전성 보장. 로딩·성공·실패 3상태를 AsyncValue로 깔끔하게 처리.</p>
-      </div>
-    </div>
-    <div class="adr-card">
-      <div class="adr-num">ADR-0003</div>
-      <h3>백엔드 & AI</h3>
-      <div class="adr-row">
-        <h4>결정</h4>
-        <p class="adr-chosen">OpenRouter (서버 없음)</p>
-      </div>
-      <div class="adr-row">
-        <h4>대안</h4>
-        <p>Supabase + Edge Function, Firebase, 직접 서버</p>
-      </div>
-      <div class="adr-row">
-        <h4>이유</h4>
-        <p>프로토타입 단계에서 서버 구축 불필요. Llama 3.3 70B 무료 모델로 비용 없이 AI 기능 구현 가능. 앱에서 직접 HTTP 호출.</p>
+      <div class="adr-card">
+        <div class="adr-num">ADR-0003</div>
+        <h3>백엔드 & AI</h3>
+        <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Google AI Studio (서버 없음)</p></div>
+        <div class="adr-row"><h4>대안</h4><p>Supabase + Edge Function, Firebase, OpenRouter</p></div>
+        <div class="adr-row"><h4>이유</h4><p>Gemini Flash 무료 1,500 req/일. 컨텍스트 100만 토큰으로 RAG에도 적합. 서버 없이 직접 호출.</p></div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- 07 ROLE -->
-<section id="role">
-  <div class="section-tag">06 — 역할 분담</div>
-  <h2 class="section-title">누가 무엇을 만들었나</h2>
-  <p class="section-desc">A는 시나리오 흐름과 핵심 AI 서비스를, B는 앱 구조와 대화 기능을 담당해 병렬로 개발했다.</p>
-  <div class="role-grid">
-    <div class="role-card a">
-      <div class="role-name a">김령균 (팀원 A)</div>
-      <div class="role-sub">시나리오 흐름 · ScenarioAgent · 화면 UI · ADR 문서</div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--accent)"></div>
-        <div class="role-item-body">
-          <h5>홈 · 로그인 · 회원가입 화면</h5>
-          <p>앱 진입점. Mock 인증(test@mef.com)으로 로그인 흐름 구현.</p>
-        </div>
+  <!-- SLIDE 7: ROLE -->
+  <div class="slide">
+    <div class="section-tag">06 — 역할 분담</div>
+    <h2 class="section-title">누가 무엇을 만들었나</h2>
+    <p class="section-desc">A는 시나리오 흐름과 핵심 AI 서비스를, B는 앱 구조와 대화 기능을 담당해 병렬로 개발했다.</p>
+    <div class="role-grid">
+      <div class="role-card a">
+        <div class="role-name a">김령균 (팀원 A)</div>
+        <div class="role-sub">시나리오 흐름 · ScenarioAgent · 화면 UI · ADR 문서</div>
+        <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>홈 · 로그인 · 회원가입 화면</h5><p>Mock 인증(test@mef.com)으로 로그인 흐름 구현.</p></div></div>
+        <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>시나리오 입력 · 결과 화면</h5><p>상황 입력, 난이도/카테고리 선택 UI. AI 호출 결과 카드 표시.</p></div></div>
+        <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>ScenarioAgent 프롬프트 설계 + 서비스</h5><p>핵심 AI 호출 로직. JSON 응답 파싱 및 마크다운 처리.</p></div></div>
+        <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>ADR 기술 결정 문서 (0001·0002·0003)</h5><p>플랫폼·상태관리·백엔드 선택 이유 문서화.</p></div></div>
+        <div class="role-item"><div class="role-dot" style="background:var(--text2);opacity:0.4"></div><div class="role-item-body"><h5 style="color:var(--text2)">AnalysisAgent (14주차)</h5><p style="color:var(--text2)">유료 기능. 누적 피드백 데이터 분석.</p></div></div>
       </div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--accent)"></div>
-        <div class="role-item-body">
-          <h5>시나리오 입력 · 결과 화면</h5>
-          <p>상황 입력, 난이도/카테고리 선택 UI. ScenarioAgent 호출 결과를 카드로 표시.</p>
-        </div>
-      </div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--accent)"></div>
-        <div class="role-item-body">
-          <h5>ScenarioAgent 프롬프트 설계 + 서비스 구현</h5>
-          <p>핵심 AI 호출 로직. JSON 응답 파싱 및 마크다운 코드블록 처리 포함.</p>
-        </div>
-      </div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--accent)"></div>
-        <div class="role-item-body">
-          <h5>ADR 기술 결정 문서 (0001·0002·0003)</h5>
-          <p>플랫폼·상태관리·백엔드 선택 이유를 문서화.</p>
-        </div>
-      </div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--text2); opacity:0.4"></div>
-        <div class="role-item-body">
-          <h5 style="color:var(--text2)">AnalysisAgent · 약점 분석 화면 (14주차)</h5>
-          <p style="color:var(--text2)">유료 기능. 누적 피드백 데이터 분석.</p>
-        </div>
-      </div>
-    </div>
-    <div class="role-card b">
-      <div class="role-name b">이동희 (팀원 B)</div>
-      <div class="role-sub">앱 구조 · ConversationAgent · 공통 위젯 · 라우팅</div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--accent2)"></div>
-        <div class="role-item-body">
-          <h5>go_router 설정 / 앱 기본 구조</h5>
-          <p>화면 간 이동 경로 정의. 팀원 A 화면과 충돌 없이 연동.</p>
-        </div>
-      </div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--accent2)"></div>
-        <div class="role-item-body">
-          <h5>ConversationAgent + 채팅 화면</h5>
-          <p>시나리오 데이터를 받아 AI와 실시간 채팅. 대화 기록 전체를 API에 전달해 맥락 유지.</p>
-        </div>
-      </div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--accent2)"></div>
-        <div class="role-item-body">
-          <h5>공통 위젯 3개</h5>
-          <p>ChatBubble · PrimaryButton · LoadingOverlay. 두 팀원이 함께 사용.</p>
-        </div>
-      </div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--accent2)"></div>
-        <div class="role-item-body">
-          <h5>auth_provider · conversation_provider</h5>
-          <p>인증 상태와 대화 기록을 앱 전체에서 공유. Riverpod StateNotifier로 구현.</p>
-        </div>
-      </div>
-      <div class="role-item">
-        <div class="role-dot" style="background:var(--text2); opacity:0.4"></div>
-        <div class="role-item-body">
-          <h5 style="color:var(--text2)">FeedbackAgent · 피드백·기록 화면 (13주차)</h5>
-          <p style="color:var(--text2)">대화 종료 후 피드백 분석 및 과거 대화 기록 조회.</p>
-        </div>
+      <div class="role-card b">
+        <div class="role-name b">이동희 (팀원 B)</div>
+        <div class="role-sub">앱 구조 · ConversationAgent · 공통 위젯 · 라우팅</div>
+        <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>go_router 설정 / 앱 기본 구조</h5><p>화면 간 이동 경로 정의. 팀원 A 화면과 충돌 없이 연동.</p></div></div>
+        <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>ConversationAgent + 채팅 화면</h5><p>시나리오를 받아 AI와 실시간 채팅. 대화 기록 전체를 API에 전달해 맥락 유지.</p></div></div>
+        <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>공통 위젯 3개</h5><p>ChatBubble · PrimaryButton · LoadingOverlay.</p></div></div>
+        <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>auth_provider · conversation_provider</h5><p>인증 상태와 대화 기록 앱 전체 공유. Riverpod StateNotifier로 구현.</p></div></div>
+        <div class="role-item"><div class="role-dot" style="background:var(--text2);opacity:0.4"></div><div class="role-item-body"><h5 style="color:var(--text2)">FeedbackAgent · 피드백·기록 화면 (13주차)</h5><p style="color:var(--text2)">대화 종료 후 피드백 분석 및 기록 조회.</p></div></div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- 08 AI HONESTY -->
-<section id="ai">
-  <div class="section-tag">07 — AI 활용 솔직성</div>
-  <h2 class="section-title">AI가 만든 것 vs 우리가 한 것</h2>
-  <p class="section-desc">
-    이 프로젝트는 Claude Code(AI 코딩 어시스턴트)를 적극 활용했다.
-    AI가 생성한 코드를 그냥 쓴 게 아니라, 이해하고 검토하고 수정하는 방식으로 개발했다.
-  </p>
-  <div class="ai-grid">
-    <div class="ai-card">
-      <h3>🤖 AI(Claude Code)가 생성한 것</h3>
-      <div class="ai-item">
-        <span class="ai-tag made">AI</span>
-        <p>디렉토리 구조 제안 및 초기 파일 생성 (lib/ 전체 뼈대)</p>
+  <!-- SLIDE 8: AI HONESTY -->
+  <div class="slide">
+    <div class="section-tag">07 — AI 활용 솔직성</div>
+    <h2 class="section-title">AI가 만든 것 vs 우리가 한 것</h2>
+    <p class="section-desc">이 프로젝트는 Claude Code(AI 코딩 어시스턴트)를 적극 활용했다. AI가 생성한 코드를 그냥 쓴 게 아니라, 이해하고 검토하고 수정하는 방식으로 개발했다.</p>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <h3>🤖 AI(Claude Code)가 생성한 것</h3>
+        <div class="ai-item"><span class="ai-tag made">AI</span><p>디렉토리 구조 제안 및 초기 파일 생성 (lib/ 전체 뼈대)</p></div>
+        <div class="ai-item"><span class="ai-tag made">AI</span><p>화면 위젯 초안 코드 (login_screen, scenario_input_screen 등)</p></div>
+        <div class="ai-item"><span class="ai-tag made">AI</span><p>API 호출 로직 초안 (scenario_service.dart)</p></div>
+        <div class="ai-item"><span class="ai-tag made">AI</span><p>ADR 문서 초안, 이 발표자료</p></div>
       </div>
-      <div class="ai-item">
-        <span class="ai-tag made">AI</span>
-        <p>화면 위젯 초안 코드 (login_screen, scenario_input_screen 등)</p>
-      </div>
-      <div class="ai-item">
-        <span class="ai-tag made">AI</span>
-        <p>Claude/OpenRouter API 호출 로직 초안 (scenario_service.dart)</p>
-      </div>
-      <div class="ai-item">
-        <span class="ai-tag made">AI</span>
-        <p>ADR 문서 초안, 이 발표자료</p>
+      <div class="ai-card">
+        <h3>✅ 우리가 검토·수정·결정한 것</h3>
+        <div class="ai-item"><span class="ai-tag review">검토</span><p>ScenarioAgent 프롬프트 설계 — 출력 형식과 역할 지시문을 직접 작성·수정</p></div>
+        <div class="ai-item"><span class="ai-tag review">검토</span><p>JSON 파싱 오류 처리 — 마크다운 코드블록 제거 로직 직접 디버깅</p></div>
+        <div class="ai-item"><span class="ai-tag review">결정</span><p>Supabase → OpenRouter → Google AI Studio 아키텍처 변경 결정</p></div>
+        <div class="ai-item"><span class="ai-tag review">검토</span><p>모든 생성 코드를 직접 읽고 동작 방식 이해 후 병합</p></div>
       </div>
     </div>
-    <div class="ai-card">
-      <h3>✅ 우리가 검토·수정·결정한 것</h3>
-      <div class="ai-item">
-        <span class="ai-tag review">검토</span>
-        <p>ScenarioAgent 프롬프트 설계 — 출력 형식과 역할 지시문을 직접 작성·수정</p>
-      </div>
-      <div class="ai-item">
-        <span class="ai-tag review">검토</span>
-        <p>JSON 파싱 오류 처리 — 마크다운 코드블록 제거 로직을 직접 디버깅</p>
-      </div>
-      <div class="ai-item">
-        <span class="ai-tag review">결정</span>
-        <p>Supabase → OpenRouter 직접 호출로 아키텍처 변경 결정</p>
-      </div>
-      <div class="ai-item">
-        <span class="ai-tag review">검토</span>
-        <p>모든 생성 코드를 직접 읽고 동작 방식 이해 후 병합</p>
-      </div>
+    <div class="ai-quote">
+      "AI가 코드를 생성했고, 저희는 <strong>왜 이렇게 동작하는지 이해하고, 프롬프트와 로직을 직접 수정</strong>했습니다. AI는 도구였고, 설계와 판단은 저희가 했습니다."
     </div>
   </div>
-  <div class="ai-quote">
-    "AI가 코드를 생성했고, 저희는 <strong>왜 이렇게 동작하는지 이해하고, 프롬프트와 로직을 직접 수정</strong>했습니다.
-    AI는 도구였고, 설계와 판단은 저희가 했습니다."
-  </div>
-</section>
 
-<!-- 09 DEMO -->
-<section id="demo">
-  <div class="section-tag">08 — 데모 흐름</div>
-  <h2 class="section-title">현재 이렇게 동작한다</h2>
-  <p class="section-desc">홈 화면부터 AI와의 영어 대화까지 전체 흐름이 연결되어 있다. 피드백 화면은 13주차에 추가 예정.</p>
-  <div class="demo-steps">
-    <div class="demo-step">
-      <div class="step-circle done">🏠</div>
-      <h4>앱 실행</h4>
-      <p>홈 화면 진입.<br>Mock 로그인.</p>
+  <!-- SLIDE 9: DEMO -->
+  <div class="slide">
+    <div class="section-tag">08 — 데모 흐름</div>
+    <h2 class="section-title">현재 이렇게 동작한다</h2>
+    <p class="section-desc">홈 화면부터 AI와의 영어 대화까지 전체 흐름이 연결되어 있다. 피드백 화면은 13주차에 추가 예정.</p>
+    <div class="demo-steps">
+      <div class="demo-step"><div class="step-circle done">🏠</div><h4>앱 실행</h4><p>홈 화면 진입.<br>Mock 로그인.</p></div>
+      <div class="demo-step"><div class="step-circle done">✍️</div><h4>상황 입력</h4><p>한국어로 상황 입력.<br>난이도·카테고리 선택.</p></div>
+      <div class="demo-step"><div class="step-circle done">🎬</div><h4>시나리오 생성</h4><p>AI가 배경·역할·목표<br>자동 설정.</p></div>
+      <div class="demo-step"><div class="step-circle done">💬</div><h4>영어 대화</h4><p>AI 파트너와<br>실시간 채팅.</p></div>
+      <div class="demo-step"><div class="step-circle plan">📋</div><h4>피드백</h4><p>문법·표현 개선<br>(13주차 예정)</p></div>
     </div>
-    <div class="demo-step">
-      <div class="step-circle done">✍️</div>
-      <h4>상황 입력</h4>
-      <p>한국어로 상황 입력.<br>난이도·카테고리 선택.</p>
-    </div>
-    <div class="demo-step">
-      <div class="step-circle done">🎬</div>
-      <h4>시나리오 생성</h4>
-      <p>AI가 배경·역할·목표<br>자동 설정.</p>
-    </div>
-    <div class="demo-step">
-      <div class="step-circle done">💬</div>
-      <h4>영어 대화</h4>
-      <p>AI 파트너와<br>실시간 채팅.</p>
-    </div>
-    <div class="demo-step">
-      <div class="step-circle plan">📋</div>
-      <h4>피드백</h4>
-      <p>문법·표현 개선<br>(13주차 예정)</p>
+    <div class="demo-info">
+      <div class="demo-info-card">
+        <h4>실행 방법</h4>
+        <p>Flutter 웹은 CORS 문제로 API 호출 불가.<br><code>flutter run -d windows</code> 로 Windows 앱 실행.<br><br><code>api_config.dart</code> 에 Google AI Studio API 키 입력 필요. (보안상 git에 포함 안 됨)</p>
+      </div>
+      <div class="demo-info-card">
+        <h4>데모 입력 예시</h4>
+        <p>상황: <code>"카페에서 음료 주문하기"</code><br>난이도: <code>intermediate</code><br>카테고리: <code>daily</code><br><br>→ AI가 <code>바리스타</code> 역할을 맡아 영어로 주문을 받기 시작.</p>
+      </div>
     </div>
   </div>
-  <div class="demo-info">
-    <div class="demo-info-card">
-      <h4>실행 방법</h4>
-      <p>
-        Flutter 웹은 CORS 문제로 API 호출 불가.<br>
-        <code>flutter run -d windows</code> 로 Windows 앱 실행.<br><br>
-        <code>api_config.dart</code> 에 OpenRouter API 키 입력 필요.<br>
-        (보안상 git에 포함 안 됨 — 각자 로컬 생성)
-      </p>
-    </div>
-    <div class="demo-info-card">
-      <h4>데모 입력 예시</h4>
-      <p>
-        상황: <code>"카페에서 음료 주문하기"</code><br>
-        난이도: <code>intermediate</code><br>
-        카테고리: <code>daily</code><br><br>
-        → AI가 <code>바리스타</code> 역할을 맡아<br>영어로 주문을 받기 시작.
-      </p>
-    </div>
-  </div>
-</section>
 
-<!-- 10 WBS -->
-<section id="wbs">
-  <div class="section-tag">09 — WBS</div>
-  <h2 class="section-title">작업 현황</h2>
-  <p class="section-desc">전체 9개 항목 중 5개 완료(55%). 핵심 기능인 시나리오 생성과 채팅은 중간 발표 기준 완성 상태. 13·14주차에 피드백·분석 기능을 추가한다.</p>
-  <div class="progress-bar-wrap">
-    <div class="progress-bar" style="width:55%"></div>
+  <!-- SLIDE 10: WBS -->
+  <div class="slide">
+    <div class="section-tag">09 — WBS</div>
+    <h2 class="section-title">작업 현황</h2>
+    <p class="section-desc">전체 9개 항목 중 5개 완료(55%). 핵심 기능인 시나리오 생성과 채팅은 완성. 13·14주차에 피드백·분석 기능을 추가한다.</p>
+    <div class="progress-bar-wrap"><div class="progress-bar" style="width:55%"></div></div>
+    <div class="progress-labels"><span>0%</span><span style="color:var(--accent3);font-weight:600">현재 55% 완료</span><span>100%</span></div>
+    <table class="wbs-table">
+      <thead><tr><th>주차</th><th>작업 항목</th><th>담당</th><th>상태</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--text2)">11주차</td><td>ADR-0001 Flutter · ADR-0002 Riverpod · ADR-0003 백엔드</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">11주차</td><td>GoRouter 설정 / 앱 기본 구조 / 공통 위젯 3개</td><td><span class="owner-b">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">12주차</td><td>홈 · 로그인 · 회원가입 · 시나리오 입력/결과 · 분석 화면</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">12주차</td><td>ScenarioAgent 프롬프트 설계 + 서비스 구현</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">12주차</td><td>ConversationAgent + 채팅 화면 · auth · conversation provider</td><td><span class="owner-b">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td style="color:var(--text2)">13주차</td><td>FeedbackAgent + 피드백 화면 구현</td><td><span class="owner-b">이동희</span></td><td><span class="badge badge-todo">예정</span></td></tr>
+        <tr><td style="color:var(--text2)">13주차</td><td>대화 기록 목록 / 상세 화면</td><td><span class="owner-b">이동희</span></td><td><span class="badge badge-todo">예정</span></td></tr>
+        <tr><td style="color:var(--text2)">14주차</td><td>AnalysisAgent + 약점 분석 화면 (유료 기능)</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-todo">예정</span></td></tr>
+        <tr><td style="color:var(--text2)">14주차</td><td>배포 문서 (docs/deploy.md)</td><td><span class="owner-a">김령균</span></td><td><span class="badge badge-todo">예정</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <span style="font-size:11px;color:var(--text2)">범례:</span>
+      <span class="badge badge-done">완료</span>
+      <span class="badge badge-todo">예정</span>
+      <span style="margin-left:12px;font-size:11px;color:var(--text2)">담당:</span>
+      <span class="owner-a">김령균 (A)</span>
+      <span class="owner-b">이동희 (B)</span>
+    </div>
   </div>
-  <div class="progress-labels">
-    <span>0%</span>
-    <span style="color:var(--accent3); font-weight:600">현재 55% 완료</span>
-    <span>100%</span>
-  </div>
-  <table class="wbs-table">
-    <thead>
-      <tr>
-        <th>주차</th>
-        <th>작업 항목</th>
-        <th>담당</th>
-        <th>상태</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="color:var(--text2)">11주차</td>
-        <td>ADR-0001 Flutter 플랫폼 선택 · ADR-0002 Riverpod · ADR-0003 백엔드</td>
-        <td><span class="owner-a">김령균</span></td>
-        <td><span class="badge badge-done">완료</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--text2)">11주차</td>
-        <td>GoRouter 설정 / 앱 기본 구조 / 공통 위젯 3개</td>
-        <td><span class="owner-b">이동희</span></td>
-        <td><span class="badge badge-done">완료</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--text2)">12주차</td>
-        <td>홈 · 로그인 · 회원가입 · 시나리오 입력/결과 · 분석 화면</td>
-        <td><span class="owner-a">김령균</span></td>
-        <td><span class="badge badge-done">완료</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--text2)">12주차</td>
-        <td>ScenarioAgent 프롬프트 설계 + 서비스 구현</td>
-        <td><span class="owner-a">김령균</span></td>
-        <td><span class="badge badge-done">완료</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--text2)">12주차</td>
-        <td>ConversationAgent + 채팅 화면 · auth · conversation provider</td>
-        <td><span class="owner-b">이동희</span></td>
-        <td><span class="badge badge-done">완료</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--text2)">13주차</td>
-        <td>FeedbackAgent + 피드백 화면 구현</td>
-        <td><span class="owner-b">이동희</span></td>
-        <td><span class="badge badge-todo">예정</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--text2)">13주차</td>
-        <td>대화 기록 목록 / 상세 화면</td>
-        <td><span class="owner-b">이동희</span></td>
-        <td><span class="badge badge-todo">예정</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--text2)">14주차</td>
-        <td>AnalysisAgent + 약점 분석 화면 (유료 기능)</td>
-        <td><span class="owner-a">김령균</span></td>
-        <td><span class="badge badge-todo">예정</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--text2)">14주차</td>
-        <td>배포 문서 (docs/deploy.md)</td>
-        <td><span class="owner-a">김령균</span></td>
-        <td><span class="badge badge-todo">예정</span></td>
-      </tr>
-    </tbody>
-  </table>
-  <div style="margin-top:18px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-    <span style="font-size:11px; color:var(--text2)">범례:</span>
-    <span class="badge badge-done">완료</span>
-    <span class="badge badge-todo">예정</span>
-    <span style="margin-left:12px; font-size:11px; color:var(--text2)">담당:</span>
-    <span class="owner-a">김령균 (A)</span>
-    <span class="owner-b">이동희 (B)</span>
-  </div>
-</section>
 
-<footer>
-  <div style="font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; color:var(--accent); margin-bottom:10px;">MEF — My English Friend</div>
-  <div>앱 프로그래밍 중간 발표 · 2026 · 김령균 · 이동희</div>
-  <div style="margin-top:8px; font-size:11px; color:var(--text2)">Flutter 3.35 · OpenRouter (Llama 3.3 70B) · Riverpod · go_router</div>
-</footer>
+</div><!-- /slides -->
+
+<div class="key-hint">
+  <span class="key">←</span> 이전
+  <span class="key">→</span> 다음
+  <span style="margin-left:8px">또는 화살표 버튼 클릭</span>
+</div>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
 mermaid.initialize({
-  startOnLoad: false,
-  theme: 'dark',
-  themeVariables: {
-    background: '#1a1a24',
-    primaryColor: '#6c63ff',
-    primaryTextColor: '#f0eff8',
-    primaryBorderColor: '#6c63ff',
-    lineColor: '#8b8aa8',
-    secondaryColor: '#1a1a24',
-    tertiaryColor: '#111118',
-    fontSize: '13px',
-  },
-  flowchart: { curve: 'basis', padding: 16 }
+  startOnLoad: false, theme: 'dark',
+  themeVariables: { background:'#1a1a24', primaryColor:'#6c63ff', primaryTextColor:'#f0eff8', primaryBorderColor:'#6c63ff', lineColor:'#8b8aa8', secondaryColor:'#1a1a24', tertiaryColor:'#111118', fontSize:'12px' },
+  flowchart: { curve:'basis', padding:12 }
 });
 await mermaid.run();
+</script>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+
+const navDots = document.getElementById('navDots');
+const navPage = document.getElementById('navPage');
+const arrowLeft = document.getElementById('arrowLeft');
+const arrowRight = document.getElementById('arrowRight');
+
+// 도트 생성
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goTo(i);
+  navDots.appendChild(dot);
+});
+
+function goTo(idx) {
+  slides[current].classList.remove('active');
+  slides[current].classList.add('prev');
+  setTimeout(() => slides[current].classList.remove('prev'), 400);
+
+  current = idx;
+  slides[current].classList.add('active');
+
+  // 도트 업데이트
+  document.querySelectorAll('.nav-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+  navPage.textContent = `${current + 1} / ${total}`;
+
+  // 화살표 상태
+  arrowLeft.classList.toggle('disabled', current === 0);
+  arrowRight.classList.toggle('disabled', current === total - 1);
+}
+
+window.prevSlide = () => { if (current > 0) goTo(current - 1); };
+window.nextSlide = () => { if (current < total - 1) goTo(current + 1); };
+
+// 키보드
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') prevSlide();
+  if (e.key === 'ArrowRight') nextSlide();
+});
+
+// 초기화
+arrowLeft.classList.add('disabled');
 </script>
 </body>
 </html>
