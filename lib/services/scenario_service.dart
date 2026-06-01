@@ -13,6 +13,11 @@ class ScenarioService {
     required String difficulty,
     required String category,
   }) async {
+    print('=== API 호출 시작 ===');
+    print('URL: ${ApiConfig.apiUrl}');
+    print('Model: ${ApiConfig.model}');
+    print('Key: ${ApiConfig.apiKey.substring(0, 20)}...');
+
     final response = await http.post(
       Uri.parse(ApiConfig.apiUrl),
       headers: {
@@ -32,6 +37,10 @@ class ScenarioService {
         ],
       }),
     );
+
+    print('=== API 응답 ===');
+    print('Status: ${response.statusCode}');
+    print('Body: ${response.body}');
 
     if (response.statusCode == 429) {
       throw Exception('서버가 혼잡합니다. 잠시 후 다시 시도해주세요.');

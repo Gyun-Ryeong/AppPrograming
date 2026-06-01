@@ -31,6 +31,20 @@
 - 모든 의사결정에 "왜 이걸 선택했는가" 이유 명시
 - 아키텍처 문서에 Mermaid 다이어그램 포함
 
+## ADR 현황 및 미작성 목록
+
+작성 완료:
+- ADR-0001: Flutter 선택 (모바일 프레임워크)
+- ADR-0002: Riverpod 선택 (상태 관리)
+- ADR-0003: 백엔드 없음 결정 (Supabase 제거)
+
+**반드시 추가 작성해야 할 ADR:**
+- ADR-0004: 인증 방식 → Mock 인증 선택 (메모리 Map, test@mef.com/test1234)
+- ADR-0005: AI API 제공자 → OpenRouter 선택 (무료 모델, Anthropic 직접 대신)
+
+새로운 기술 결정이 생기면 ADR-0006부터 순서대로 추가할 것.
+파일 위치: `.planning/decisions/ADR-NNNN-{kebab-title}.md`
+
 ## 디렉토리 구조 원칙
 - .planning/ — AI Agent가 생성하는 계획 문서
 - docs/      — 사람이 읽는 문서 (setup, deploy, testing)
@@ -109,6 +123,22 @@ git pull origin main
 ```
 팀원 A와 같은 main 브랜치에서 작업하므로 항상 최신 상태로 시작할 것.
 브랜치 없이 pull → 작업 → push 단순 흐름으로 유지.
+
+## Git 푸시 전 필수 체크리스트
+
+푸시 전 반드시 아래 파일들이 .gitignore에 포함되어 있는지 확인할 것:
+
+- `lib/constants/api_config.dart` — OpenRouter API 키
+- `lib/constants/supabase_config.dart` — Supabase 설정 (미사용이어도 유지)
+- `android/key.properties` — 서명 키 비밀번호
+- `android/app/*.jks` — 서명 키스토어
+- `.env`, `.env.*` — 환경변수 파일
+
+확인 명령:
+```
+git status
+```
+위 파일들이 "Changes to be committed"에 포함되어 있으면 절대 푸시하지 말 것.
 
 ---
 
