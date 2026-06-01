@@ -26,8 +26,6 @@ class ConversationService {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${ApiConfig.apiKey}',
-        'HTTP-Referer': 'https://mef-app.com',
-        'X-Title': 'MEF - My English Friend',
       },
       body: jsonEncode({
         'model': ApiConfig.model,
