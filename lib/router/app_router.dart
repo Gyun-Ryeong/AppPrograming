@@ -32,7 +32,7 @@ class AppRoutes {
 // GoRouter 인스턴스
 GoRouter appRouter() {
   return GoRouter(
-    initialLocation: AppRoutes.home,
+    initialLocation: AppRoutes.login,
     routes: [
       GoRoute(
         name: 'home',
