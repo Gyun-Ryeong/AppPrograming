@@ -5,9 +5,6 @@
 class SupabaseConfig {
   SupabaseConfig._(); // 인스턴스 생성 방지
 
-  // supabase.com → 프로젝트 → Settings → API → Project URL
-  static const String url = 'YOUR_SUPABASE_URL';
-
-  // supabase.com → 프로젝트 → Settings → API → anon public key
-  static const String anonKey = 'YOUR_SUPABASE_ANON_KEY';
+  static const String supabaseUrl = 'https://xxxx.supabase.co';
+  static const String supabaseAnonKey = 'eyJhbGci...';
 }
