@@ -5,375 +5,309 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MEF — My English Friend</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0f;
-  --surface: #111118;
-  --surface2: #1a1a24;
-  --border: rgba(255,255,255,0.08);
-  --text: #f0eff8;
-  --text2: #8b8aa8;
-  --accent: #6c63ff;
-  --accent2: #ff6b6b;
-  --accent3: #43e97b;
-  --accent4: #f7971e;
-  --card-r: 16px;
+  --bg:#0a0a0f; --surface:#111118; --surface2:#1a1a24;
+  --border:rgba(255,255,255,0.08); --text:#f0eff8; --text2:#9b9ab8;
+  --a:#6c63ff; --a2:#ff6b6b; --a3:#43e97b; --a4:#f7971e;
+  --r:14px; --fn:'Noto Sans KR','Apple SD Gothic Neo',sans-serif; --fe:'Nunito',sans-serif;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); color:var(--text); font-family:'Pretendard','Apple SD Gothic Neo',sans-serif; }
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--fn);}
 
-/* SLIDE CONTAINER */
-.slides { width:100%; height:100vh; position:relative; }
-.slide {
-  position:absolute; top:0; left:0; width:100%; height:100vh;
-  display:flex; flex-direction:column; justify-content:center;
-  padding:60px 80px; overflow-y:auto;
-  opacity:0; pointer-events:none;
-  transition:opacity 0.4s ease, transform 0.4s ease;
-  transform:translateX(60px);
+.slides{width:100%;height:100vh;position:relative;}
+.slide{
+  position:absolute;top:0;left:0;width:100%;height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:68px 80px 44px;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease,transform .3s ease;
+  transform:translateX(60px);overflow-y:auto;
 }
-.slide.active {
-  opacity:1; pointer-events:all; transform:translateX(0);
-}
-.slide.prev { transform:translateX(-60px); opacity:0; pointer-events:none; }
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0);}
+.slide.prev{transform:translateX(-60px);opacity:0;pointer-events:none;}
 
-/* NAV */
-.nav-bar {
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 32px;
-  background:rgba(10,10,15,0.88);
-  backdrop-filter:blur(12px);
+.nav-bar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 36px;
+  background:rgba(10,10,15,0.92);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
 }
-.nav-logo { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; color:var(--accent); }
-.nav-dots { display:flex; gap:8px; align-items:center; }
-.nav-dot {
-  width:7px; height:7px; border-radius:50%;
-  background:var(--border); border:1px solid var(--text2);
-  cursor:pointer; transition:all .2s;
-}
-.nav-dot.active { background:var(--accent); border-color:var(--accent); transform:scale(1.3); }
-.nav-page { font-size:12px; color:var(--text2); }
+.nav-logo{font-family:var(--fe);font-size:18px;font-weight:900;color:var(--a);}
+.nav-dots{display:flex;gap:8px;align-items:center;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);cursor:pointer;transition:all .2s;}
+.nav-dot.active{background:var(--a);transform:scale(1.4);}
+.nav-page{font-size:13px;font-weight:700;color:var(--text2);font-family:var(--fe);}
 
-/* ARROWS */
-.arrow {
-  position:fixed; top:50%; transform:translateY(-50%);
-  width:48px; height:48px; border-radius:50%;
-  background:var(--surface); border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; z-index:100; transition:all .2s;
-  color:var(--text2); font-size:20px; user-select:none;
+.arrow{
+  position:fixed;top:50%;transform:translateY(-50%);
+  width:44px;height:44px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:100;transition:all .2s;
+  color:var(--text2);font-size:18px;user-select:none;
 }
-.arrow:hover { background:var(--surface2); border-color:var(--accent); color:var(--accent); }
-.arrow.left { left:16px; }
-.arrow.right { right:16px; }
-.arrow.disabled { opacity:0.2; pointer-events:none; }
+.arrow:hover{background:var(--a);border-color:var(--a);color:#fff;}
+.arrow.left{left:16px;} .arrow.right{right:16px;}
+.arrow.disabled{opacity:0.2;pointer-events:none;}
 
-/* BG GLOW */
-.bg-glow {
-  position:fixed; top:-200px; left:50%; transform:translateX(-50%);
-  width:700px; height:500px;
-  background:radial-gradient(ellipse at center, rgba(108,99,255,0.08) 0%, transparent 70%);
-  pointer-events:none; z-index:0;
+.bg-glow{
+  position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+  width:800px;height:500px;
+  background:radial-gradient(ellipse at center,rgba(108,99,255,0.09) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
 }
 
 /* COMMON */
-.section-tag { font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:10px; }
-.section-title {
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-1.5px; line-height:1.1;
-  margin-bottom:12px;
-}
-.section-desc { font-size:14px; color:var(--text2); line-height:1.8; margin-bottom:28px; max-width:680px; }
+.tag{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
+.stitle{font-family:var(--fe);font-size:clamp(30px,4vw,48px);font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:12px;}
+.sdesc{font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:22px;max-width:700px;}
 
 /* HERO */
-.hero-tag {
-  display:inline-block; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase;
-  color:var(--accent); border:1px solid rgba(108,99,255,0.3); padding:6px 14px; border-radius:99px; margin-bottom:20px;
-}
-.hero-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(48px,7vw,80px); font-weight:700; line-height:1.0; letter-spacing:-3px; }
-.hero-title span { color:var(--accent); }
-.hero-value { margin-top:16px; font-size:18px; font-weight:600; line-height:1.5; }
-.hero-value em { color:var(--accent3); font-style:normal; }
-.hero-sub { font-size:14px; color:var(--text2); margin-top:8px; line-height:1.7; max-width:560px; }
-.hero-meta { display:flex; gap:28px; margin-top:32px; flex-wrap:wrap; }
-.hero-meta-item { display:flex; flex-direction:column; gap:4px; }
-.hero-meta-label { font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; }
-.hero-meta-value { font-size:13px; font-weight:600; }
+.hero-eyebrow{display:inline-block;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--a);border:1.5px solid rgba(108,99,255,0.35);padding:6px 16px;border-radius:99px;margin-bottom:18px;}
+.hero-title{font-family:var(--fe);font-size:clamp(48px,7vw,80px);font-weight:900;line-height:0.95;letter-spacing:-3px;margin-bottom:16px;}
+.hero-title span{color:var(--a);}
+.hero-value{font-size:18px;font-weight:700;line-height:1.5;margin-bottom:10px;}
+.hero-value em{color:var(--a3);font-style:normal;}
+.hero-sub{font-size:16px;color:var(--text2);line-height:1.7;max-width:560px;margin-bottom:26px;}
+.hero-chips{display:flex;gap:10px;flex-wrap:wrap;}
+.chip{background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:8px 16px;font-size:14px;font-weight:600;}
+.chip span{color:var(--text2);font-weight:400;margin-right:5px;font-size:12px;}
 
 /* PROBLEM */
-.problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
-.problem-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:20px; }
-.problem-icon { font-size:24px; margin-bottom:10px; }
-.problem-card h3 { font-size:14px; font-weight:600; margin-bottom:5px; }
-.problem-card p { font-size:12px; color:var(--text2); line-height:1.7; }
-.problem-card .solve { font-size:11px; color:var(--accent3); margin-top:7px; font-weight:600; }
-.stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.stat-card { background:var(--surface2); border:1px solid var(--border); border-radius:var(--card-r); padding:16px; text-align:center; }
-.stat-number { font-family:'Space Grotesk',sans-serif; font-size:32px; font-weight:700; }
-.stat-number.purple { color:var(--accent); }
-.stat-number.red { color:var(--accent2); }
-.stat-number.green { color:var(--accent3); }
-.stat-label { font-size:11px; color:var(--text2); margin-top:3px; line-height:1.5; }
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.prob-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.prob-icon{font-size:26px;margin-bottom:10px;}
+.prob-card h3{font-size:16px;font-weight:700;margin-bottom:6px;}
+.prob-card p{font-size:14px;color:var(--text2);line-height:1.6;}
+.prob-card .solve{font-size:13px;color:var(--a3);margin-top:8px;font-weight:700;}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center;}
+.stat-num{font-family:var(--fe);font-size:36px;font-weight:900;}
+.stat-num.p{color:var(--a);} .stat-num.r{color:var(--a2);} .stat-num.g{color:var(--a3);}
+.stat-lbl{font-size:13px;color:var(--text2);margin-top:5px;line-height:1.5;}
 
 /* SCENARIO */
-.scenario-box { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:24px; margin-bottom:16px; }
-.scenario-situation { display:inline-block; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--accent4); margin-bottom:12px; }
-.scenario-title { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:16px; }
-.scenario-flow { display:flex; flex-direction:column; gap:10px; }
-.scenario-step { display:flex; gap:12px; align-items:flex-start; }
-.step-badge { flex-shrink:0; width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; }
-.step-badge.user { background:rgba(108,99,255,0.2); color:var(--accent); }
-.step-badge.ai { background:rgba(255,107,107,0.2); color:var(--accent2); }
-.step-badge.sys { background:rgba(67,233,123,0.2); color:var(--accent3); }
-.scenario-step p { font-size:12px; line-height:1.6; padding-top:4px; }
-.scenario-step p span { color:var(--text2); font-size:11px; margin-left:5px; }
-.scenario-meta { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-.scenario-meta-card { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px; }
-.scenario-meta-card h4 { font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; }
-.scenario-meta-card p { font-size:12px; font-weight:600; }
+.sc-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:14px;}
+.sc-sit{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--a4);margin-bottom:10px;}
+.sc-title{font-family:var(--fe);font-size:18px;font-weight:800;margin-bottom:14px;}
+.sc-flow{display:flex;flex-direction:column;gap:10px;}
+.sc-step{display:flex;gap:12px;align-items:flex-start;}
+.sc-badge{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.sc-badge.u{background:rgba(108,99,255,0.2);color:var(--a);}
+.sc-badge.a{background:rgba(255,107,107,0.2);color:var(--a2);}
+.sc-badge.s{background:rgba(67,233,123,0.2);color:var(--a3);}
+.sc-step p{font-size:14px;line-height:1.6;padding-top:4px;}
+.sc-step p span{color:var(--text2);font-size:12px;margin-left:5px;}
+.sc-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.sc-meta-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.sc-meta-card h4{font-size:11px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;font-weight:700;}
+.sc-meta-card p{font-size:15px;font-weight:700;}
 
-/* AGENT */
-.vision-big { font-family:'Space Grotesk',sans-serif; font-size:clamp(18px,2.5vw,30px); font-weight:700; line-height:1.3; border-left:3px solid var(--accent); padding-left:20px; margin-bottom:28px; }
-.vision-big em { color:var(--accent); font-style:normal; }
-.agent-list { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.agent-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:18px; }
-.agent-header { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
-.agent-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.agent-card h4 { font-size:13px; font-weight:600; }
-.agent-card .agent-who { font-size:11px; color:var(--text2); margin-bottom:6px; }
-.agent-card p { font-size:12px; color:var(--text2); line-height:1.7; }
-.agent-card .agent-ex { font-size:11px; margin-top:7px; color:var(--text); }
-.agent-card .agent-ex span { color:var(--accent3); font-weight:600; }
-.badge-plan { display:inline-block; font-size:9px; padding:2px 7px; border-radius:99px; background:rgba(255,255,255,0.07); color:var(--text2); margin-left:5px; }
+/* SOLUTION */
+.vision-q{font-family:var(--fe);font-size:clamp(18px,2.5vw,30px);font-weight:800;line-height:1.3;border-left:3px solid var(--a);padding-left:20px;margin-bottom:22px;}
+.vision-q em{color:var(--a);font-style:normal;}
+.agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.agent-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.agent-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.agent-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.agent-card h4{font-size:15px;font-weight:700;}
+.agent-card .who{font-size:12px;color:var(--a3);margin-bottom:7px;font-weight:600;}
+.agent-card p{font-size:13px;color:var(--text2);line-height:1.6;}
+.agent-card .ex{font-size:12px;margin-top:8px;color:var(--text);}
+.agent-card .ex em{color:var(--a3);font-style:normal;font-weight:700;}
 
-/* ARCH */
-.arch-wrap { display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start; }
-.mermaid-wrap { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:20px; overflow:auto; }
-.arch-desc { display:flex; flex-direction:column; gap:10px; }
-.arch-layer { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 16px; }
-.arch-layer .layer-tag { font-size:10px; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:3px; }
-.arch-layer h4 { font-size:12px; font-weight:600; margin-bottom:2px; }
-.arch-layer p { font-size:11px; color:var(--text2); line-height:1.6; }
+/* ARCH — 5페이지: 살짝 작게 */
+.arch-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;}
+.mermaid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;overflow:hidden;}
+.arch-layers{display:flex;flex-direction:column;gap:12px;}
+.arch-layer{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;}
+.arch-layer .ltag{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.arch-layer h4{font-size:17px;font-weight:700;margin-bottom:5px;}
+.arch-layer p{font-size:14px;color:var(--text2);line-height:1.6;}
 
-/* ADR */
-.adr-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-.adr-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:20px; }
-.adr-num { font-size:10px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:7px; }
-.adr-card h3 { font-size:14px; font-weight:700; margin-bottom:10px; }
-.adr-row { margin-bottom:8px; }
-.adr-row h4 { font-size:10px; color:var(--text2); margin-bottom:2px; }
-.adr-row p { font-size:12px; line-height:1.6; }
-.adr-chosen { font-size:13px; font-weight:700; color:var(--accent3); margin-bottom:3px; }
+/* ADR — 6페이지: 크게 */
+.adr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.adr-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;}
+.adr-num{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--a);margin-bottom:8px;}
+.adr-card h3{font-size:20px;font-weight:800;margin-bottom:14px;font-family:var(--fe);}
+.adr-row{margin-bottom:10px;}
+.adr-row h4{font-size:12px;color:var(--text2);font-weight:600;margin-bottom:3px;}
+.adr-row p{font-size:14px;line-height:1.6;}
+.adr-chosen{font-size:18px;font-weight:800;color:var(--a3);margin-bottom:4px;font-family:var(--fe);}
 
-/* ROLE */
-.role-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-.role-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:24px; }
-.role-card.a { border-top:3px solid var(--accent); }
-.role-card.b { border-top:3px solid var(--accent2); }
-.role-name { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; margin-bottom:2px; }
-.role-name.a { color:var(--accent); }
-.role-name.b { color:var(--accent2); }
-.role-sub { font-size:11px; color:var(--text2); margin-bottom:14px; }
-.role-item { display:flex; gap:10px; margin-bottom:10px; }
-.role-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:4px; }
-.role-item-body h5 { font-size:12px; font-weight:600; margin-bottom:1px; }
-.role-item-body p { font-size:11px; color:var(--text2); line-height:1.5; }
+/* ROLE — 7페이지: 크게 */
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.role-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;}
+.role-card.a{border-top:3px solid var(--a);} .role-card.b{border-top:3px solid var(--a2);}
+.role-name{font-family:var(--fe);font-size:22px;font-weight:900;margin-bottom:4px;}
+.role-name.a{color:var(--a);} .role-name.b{color:var(--a2);}
+.role-sub{font-size:14px;color:var(--text2);margin-bottom:16px;}
+.role-item{display:flex;gap:10px;margin-bottom:14px;}
+.rdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.role-item h5{font-size:15px;font-weight:700;margin-bottom:3px;}
+.role-item p{font-size:13px;color:var(--text2);line-height:1.5;}
 
 /* AI HONESTY */
-.ai-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
-.ai-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--card-r); padding:20px; }
-.ai-card h3 { font-size:13px; font-weight:600; margin-bottom:10px; }
-.ai-item { display:flex; gap:10px; margin-bottom:9px; font-size:12px; line-height:1.6; }
-.ai-tag { flex-shrink:0; font-size:10px; font-weight:700; padding:2px 8px; border-radius:99px; height:fit-content; margin-top:2px; }
-.ai-tag.made { background:rgba(108,99,255,0.2); color:var(--accent); }
-.ai-tag.review { background:rgba(67,233,123,0.2); color:var(--accent3); }
-.ai-quote { background:var(--surface2); border-left:3px solid var(--accent3); border-radius:0 12px 12px 0; padding:14px 18px; font-size:13px; line-height:1.7; }
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.ai-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.ai-card h3{font-size:16px;font-weight:700;margin-bottom:12px;}
+.ai-item{display:flex;gap:10px;margin-bottom:10px;font-size:14px;line-height:1.5;}
+.ai-tag{flex-shrink:0;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;height:fit-content;margin-top:2px;font-family:var(--fe);}
+.ai-tag.made{background:rgba(108,99,255,0.2);color:var(--a);}
+.ai-tag.check{background:rgba(67,233,123,0.2);color:var(--a3);}
+.ai-quote{background:var(--surface2);border-left:3px solid var(--a3);border-radius:0 12px 12px 0;padding:14px 20px;font-size:14px;line-height:1.7;font-weight:500;}
 
 /* DEMO */
-.demo-steps { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-bottom:20px; position:relative; }
-.demo-steps::before { content:''; position:absolute; top:24px; left:10%; right:10%; height:1px; background:linear-gradient(to right, var(--accent), var(--accent2)); }
-.demo-step { text-align:center; padding:0 6px; position:relative; z-index:1; }
-.step-circle { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-size:16px; border:2px solid var(--border); background:var(--surface); }
-.step-circle.done { border-color:var(--accent3); background:rgba(67,233,123,0.1); }
-.step-circle.plan { border-color:var(--text2); opacity:0.5; }
-.demo-step h4 { font-size:11px; font-weight:600; margin-bottom:3px; }
-.demo-step p { font-size:10px; color:var(--text2); line-height:1.5; }
-.demo-info { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.demo-info-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:16px; }
-.demo-info-card h4 { font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--text2); margin-bottom:8px; }
-.demo-info-card p { font-size:12px; line-height:1.8; }
-.demo-info-card code { font-size:11px; color:var(--accent3); background:rgba(67,233,123,0.08); padding:2px 5px; border-radius:4px; }
+.demo-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:20px;position:relative;}
+.demo-steps::before{content:'';position:absolute;top:22px;left:10%;right:10%;height:2px;background:linear-gradient(to right,var(--a),var(--a2));}
+.demo-step{text-align:center;padding:0 4px;position:relative;z-index:1;}
+.step-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:16px;border:2px solid var(--border);background:var(--surface);}
+.step-circle.done{border-color:var(--a3);background:rgba(67,233,123,0.12);}
+.demo-step h4{font-size:12px;font-weight:700;margin-bottom:3px;}
+.demo-step p{font-size:11px;color:var(--text2);line-height:1.4;}
+.demo-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.demo-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.demo-card h4{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:8px;}
+.demo-card p{font-size:13px;line-height:1.7;}
+.demo-card code{font-size:12px;color:var(--a3);background:rgba(67,233,123,0.1);padding:1px 6px;border-radius:4px;font-family:monospace;}
 
 /* WBS */
-.progress-bar-wrap { background:var(--surface2); border-radius:99px; height:6px; margin-bottom:5px; overflow:hidden; }
-.progress-bar { height:100%; border-radius:99px; background:linear-gradient(to right, var(--accent), var(--accent3)); }
-.progress-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--text2); margin-bottom:20px; }
-.wbs-table { width:100%; border-collapse:collapse; font-size:12px; }
-.wbs-table th { text-align:left; padding:8px 12px; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--text2); border-bottom:1px solid var(--border); }
-.wbs-table td { padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
-.wbs-table tr:last-child td { border-bottom:none; }
-.badge { display:inline-block; font-size:10px; font-weight:600; padding:3px 10px; border-radius:99px; }
-.badge-done { background:rgba(67,233,123,0.15); color:var(--accent3); }
-.badge-todo { background:rgba(255,255,255,0.07); color:var(--text2); }
-.owner-a { font-size:11px; color:var(--accent); font-weight:600; }
-.owner-b { font-size:11px; color:var(--accent2); font-weight:600; }
+.prog-wrap{background:var(--surface2);border-radius:99px;height:8px;margin-bottom:5px;overflow:hidden;}
+.prog-bar{height:100%;border-radius:99px;background:linear-gradient(to right,var(--a),var(--a3));}
+.prog-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:16px;font-weight:600;}
+.wbs-table{width:100%;border-collapse:collapse;font-size:13px;}
+.wbs-table th{text-align:left;padding:8px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);border-bottom:1px solid var(--border);font-weight:700;}
+.wbs-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.wbs-table tr:last-child td{border-bottom:none;}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;font-family:var(--fe);}
+.b-done{background:rgba(67,233,123,0.15);color:var(--a3);}
+.b-todo{background:rgba(255,255,255,0.07);color:var(--text2);}
+.oa{font-size:12px;color:var(--a);font-weight:700;}
+.ob{font-size:12px;color:var(--a2);font-weight:700;}
+.score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px;}
+.score-card{background:var(--surface);border:1px solid var(--a3);border-radius:10px;padding:12px;text-align:center;}
+.score-num{font-family:var(--fe);font-size:22px;font-weight:900;color:var(--a3);}
+.score-lbl{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.4;}
 
-/* KEYBOARD HINT */
-.key-hint { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); font-size:11px; color:var(--text2); display:flex; gap:8px; align-items:center; }
-.key { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:2px 8px; font-size:10px; }
+.key-hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--text2);display:flex;gap:8px;align-items:center;}
+.key{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:2px 10px;font-size:11px;font-family:var(--fe);}
 </style>
 </head>
 <body>
 <div class="bg-glow"></div>
 
-<div class="nav-bar">
+<nav class="nav-bar">
   <div class="nav-logo">MEF</div>
   <div class="nav-dots" id="navDots"></div>
   <div class="nav-page" id="navPage">1 / 10</div>
-</div>
-
+</nav>
 <button class="arrow left" id="arrowLeft" onclick="prevSlide()">&#8592;</button>
 <button class="arrow right" id="arrowRight" onclick="nextSlide()">&#8594;</button>
 
-<div class="slides" id="slides">
+<div class="slides">
 
-  <!-- SLIDE 1: HERO -->
-  <div class="slide active">
-    <div class="hero-tag">앱 프로그래밍 중간 발표 · 2026</div>
-    <h1 class="hero-title">My<br><span>English</span><br>Friend</h1>
-    <p class="hero-value"><em>영어가 두려운 사람</em>이 AI와 대화하며 말하기 자신감을 키우는 앱</p>
-    <p class="hero-sub">원하는 상황을 입력하면 AI가 시나리오를 만들고, 실제 영어로 대화하며, 끝나면 피드백을 준다. 비용 없이, 부담 없이, 언제든지.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">팀원 A</span>
-        <span class="hero-meta-value" style="color:var(--accent)">이동희</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">팀원 B</span>
-        <span class="hero-meta-value" style="color:var(--accent2)">김령균</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">프레임워크</span>
-        <span class="hero-meta-value">Flutter 3.35 (Windows)</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">AI 모델</span>
-        <span class="hero-meta-value">Gemini (Google AI Studio)</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">상태 관리</span>
-        <span class="hero-meta-value">Riverpod + go_router</span>
-      </div>
+<!-- 1. HERO -->
+<div class="slide active">
+  <div class="hero-eyebrow">앱 프로그래밍 중간 발표 · 2026</div>
+  <h1 class="hero-title">My<br><span>English</span><br>Friend</h1>
+  <p class="hero-value"><em>영어가 두려운 사람</em>이 AI와 대화하며 말하기 자신감을 키우는 앱</p>
+  <p class="hero-sub">상황을 입력하면 AI가 파트너가 되어 실전 영어를 연습하고, 대화 후 문법·표현 피드백을 제공한다.</p>
+  <div class="hero-chips">
+    <div class="chip"><span>팀원 A</span>이동희</div>
+    <div class="chip"><span>팀원 B</span>김령균</div>
+    <div class="chip"><span>Framework</span>Flutter 3.44.1</div>
+    <div class="chip"><span>AI</span>Gemini 2.5 Flash</div>
+    <div class="chip"><span>State</span>Riverpod + go_router</div>
+    <div class="chip"><span>진행률</span>95% 완료</div>
+  </div>
+</div>
+
+<!-- 2. PROBLEM -->
+<div class="slide">
+  <div class="tag">01 — 문제 정의</div>
+  <h2 class="stitle">영어 말하기, 왜 여전히 어려운가</h2>
+  <p class="sdesc">안전하게 반복 연습할 공간이 없다. MEF는 비용·심리적 부담·피드백 부재를 동시에 해결한다.</p>
+  <div class="prob-grid">
+    <div class="prob-card"><div class="prob-icon">🧊</div><h3>실전 경험 부족</h3><p>단어와 문법을 알아도 실제 대화 상황이 오면 입이 얼어버린다. 일상에서 영어를 쓸 기회 자체가 없다.</p><p class="solve">→ 언제든 원하는 상황으로 연습 가능</p></div>
+    <div class="prob-card"><div class="prob-icon">💸</div><h3>높은 접근 비용</h3><p>원어민 화상 영어는 1회에 3~10만원. 꾸준히 이어가려면 한 달에 수십만 원이 필요하다.</p><p class="solve">→ 무료 AI 모델로 비용 장벽 제거</p></div>
+    <div class="prob-card"><div class="prob-icon">😰</div><h3>심리적 부담</h3><p>실수에 대한 두려움, 발음에 대한 수치심. 사람 앞에서 영어를 쓰는 것 자체가 스트레스다.</p><p class="solve">→ AI 상대라 부담 없이 반복 연습 가능</p></div>
+    <div class="prob-card"><div class="prob-icon">🔁</div><h3>피드백 부재</h3><p>혼자 연습하면 같은 실수를 반복하게 된다. 잘못된 표현이 굳어버리는 악순환이 이어진다.</p><p class="solve">→ 대화 후 문법·표현 피드백을 즉시 제공</p></div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num p">73%</div><div class="stat-lbl">영어 학습자 중<br>말하기 자신감 부족</div></div>
+    <div class="stat-card"><div class="stat-num r">4만원+</div><div class="stat-lbl">원어민 화상 영어<br>1회 평균 비용</div></div>
+    <div class="stat-card"><div class="stat-num g">24/7</div><div class="stat-lbl">MEF와 함께라면<br>언제든 연습 가능</div></div>
+  </div>
+</div>
+
+<!-- 3. SCENARIO -->
+<div class="slide">
+  <div class="tag">02 — 사용자 시나리오</div>
+  <h2 class="stitle">실제로 어떻게 쓰이는가</h2>
+  <p class="sdesc">해외여행을 앞둔 대학생 지수가 카페에서 음료를 주문하는 연습을 한다. 영어가 서툴지만 MEF로 부담 없이 시작할 수 있다.</p>
+  <div class="sc-box">
+    <div class="sc-sit">📍 상황: 뉴욕 카페에서 음료 주문하기 · 중급 · 일상</div>
+    <div class="sc-title">지수의 MEF 첫 번째 연습</div>
+    <div class="sc-flow">
+      <div class="sc-step"><div class="sc-badge s">앱</div><p>"카페에서 음료 주문하기" 입력 → 난이도 <strong>중급</strong>, 카테고리 <strong>일상</strong> 선택</p></div>
+      <div class="sc-step"><div class="sc-badge s">AI</div><p>ScenarioAgent가 시나리오 생성 <span>배경: 뉴욕 카페 / 지수: 고객 / AI: 바리스타</span></p></div>
+      <div class="sc-step"><div class="sc-badge a">AI</div><p><strong>"Hi there! What can I get started for you today?"</strong></p></div>
+      <div class="sc-step"><div class="sc-badge u">지수</div><p><strong>"Um… I want a latte, please."</strong></p></div>
+      <div class="sc-step"><div class="sc-badge a">AI</div><p><strong>"Sure! What size would you like? And any flavor shots?"</strong></p></div>
+      <div class="sc-step"><div class="sc-badge s">피드백</div><p>FeedbackAgent: <strong>자연스러움 78점</strong> / "I want" → "I'd like" 추천 ✅ 구현 완료</p></div>
     </div>
   </div>
+  <div class="sc-meta">
+    <div class="sc-meta-card"><h4>입력</h4><p>"카페에서 음료 주문하기"</p></div>
+    <div class="sc-meta-card"><h4>AI 자동 설정</h4><p>배경 · 역할 · 목표</p></div>
+    <div class="sc-meta-card"><h4>결과</h4><p>실전 영어 + 피드백 + 분석</p></div>
+  </div>
+</div>
 
-  <!-- SLIDE 2: PROBLEM -->
-  <div class="slide">
-    <div class="section-tag">01 — 문제 정의</div>
-    <h2 class="section-title">영어 말하기,<br>왜 여전히 어려운가</h2>
-    <p class="section-desc">한국인의 영어 말하기 실력이 낮은 원인은 단순하다 — 안전하게 반복 연습할 공간이 없다. MEF는 비용·심리적 부담·피드백 부재를 동시에 해결한다.</p>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="problem-icon">🧊</div>
-        <h3>실전 경험 부족</h3>
-        <p>단어와 문법을 알아도 실제 대화 상황이 오면 입이 얼어버린다. 일상에서 영어를 쓸 기회 자체가 없다.</p>
-        <p class="solve">→ 언제든 원하는 상황으로 연습 가능</p>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">💸</div>
-        <h3>높은 접근 비용</h3>
-        <p>원어민 화상 영어는 1회에 3~10만원. 꾸준히 이어가려면 한 달에 수십만 원이 필요하다.</p>
-        <p class="solve">→ 무료 AI 모델로 비용 장벽 제거</p>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">😰</div>
-        <h3>심리적 부담</h3>
-        <p>실수에 대한 두려움, 발음에 대한 수치심. 사람 앞에서 영어를 쓰는 것 자체가 스트레스다.</p>
-        <p class="solve">→ AI 상대라 부담 없이 반복 연습 가능</p>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">🔁</div>
-        <h3>피드백 부재</h3>
-        <p>혼자 연습하면 같은 실수를 반복하게 된다. 잘못된 표현이 굳어버리는 악순환이 이어진다.</p>
-        <p class="solve">→ 대화 후 문법·표현 피드백을 즉시 제공</p>
-      </div>
+<!-- 4. SOLUTION -->
+<div class="slide">
+  <div class="tag">03 — 솔루션</div>
+  <h2 class="stitle">4개 AI Agent로 어떻게 해결하는가</h2>
+  <div class="vision-q">"상황 입력 하나로 <em>시나리오 → 대화 → 피드백 → 분석</em>까지 자동"</div>
+  <div class="agent-grid">
+    <div class="agent-card">
+      <div class="agent-head"><div class="agent-dot" style="background:var(--a)"></div><h4>🎬 ScenarioAgent</h4></div>
+      <div class="who">이동희 담당 · ✅ 완성</div>
+      <p>한국어 상황 → AI가 배경·역할·목표를 JSON으로 자동 생성.</p>
+      <p class="ex">입력: "카페 주문" → <em>바리스타 역할 시나리오</em></p>
     </div>
-    <div class="stat-row">
-      <div class="stat-card"><div class="stat-number purple">73%</div><div class="stat-label">영어 학습자 중 말하기 자신감 부족</div></div>
-      <div class="stat-card"><div class="stat-number red">4만원+</div><div class="stat-label">원어민 화상 영어 1회 평균 비용</div></div>
-      <div class="stat-card"><div class="stat-number green">24/7</div><div class="stat-label">MEF와 함께라면 언제든 연습 가능</div></div>
+    <div class="agent-card">
+      <div class="agent-head"><div class="agent-dot" style="background:var(--a2)"></div><h4>💬 ConversationAgent</h4></div>
+      <div class="who">김령균 담당 · ✅ 완성</div>
+      <p>시나리오 기반 실시간 영어 대화. 이전 대화 전체를 기억해 맥락 유지.</p>
+      <p class="ex">AI는 역할에 맞게 <em>영어로만 응답</em></p>
+    </div>
+    <div class="agent-card">
+      <div class="agent-head"><div class="agent-dot" style="background:var(--a3)"></div><h4>📋 FeedbackAgent</h4></div>
+      <div class="who">김령균 담당 · ✅ 완성</div>
+      <p>대화 종료 후 문법 오류, 자연스러운 표현, 점수(100점)를 JSON으로 제공.</p>
+      <p class="ex">예: <em>"I am go"</em> → "I go" / 점수: 78점</p>
+    </div>
+    <div class="agent-card">
+      <div class="agent-head"><div class="agent-dot" style="background:var(--a4)"></div><h4>📊 AnalysisAgent</h4></div>
+      <div class="who">이동희 + 김령균 · ✅ 완성</div>
+      <p>누적 대화 기록을 분석해 반복 실수 패턴을 개인화 리포트로 제공.</p>
+      <p class="ex">예: <em>"3인칭 단수 's' 누락"</em>이 70% 이상 반복</p>
     </div>
   </div>
+</div>
 
-  <!-- SLIDE 3: SCENARIO -->
-  <div class="slide">
-    <div class="section-tag">02 — 사용자 시나리오</div>
-    <h2 class="section-title">실제로 어떻게 쓰이는가</h2>
-    <p class="section-desc">해외여행을 앞둔 대학생 지수가 카페에서 음료를 주문하는 연습을 하고 싶다. 영어가 서툴고 틀릴까봐 두렵지만, MEF로는 부담 없이 시작할 수 있다.</p>
-    <div class="scenario-box">
-      <div class="scenario-situation">📍 상황: 뉴욕 카페에서 음료 주문하기 · 중급 · 일상</div>
-      <div class="scenario-title">지수의 MEF 첫 번째 연습</div>
-      <div class="scenario-flow">
-        <div class="scenario-step"><div class="step-badge sys">앱</div><p>지수가 "카페에서 음료 주문하기"를 입력하고 난이도 <strong>중급</strong>, 카테고리 <strong>일상</strong>을 선택한다.</p></div>
-        <div class="scenario-step"><div class="step-badge sys">AI</div><p>ScenarioAgent가 시나리오를 생성한다. <span>배경: 뉴욕 바쁜 카페 / 지수 역할: 고객 / AI 역할: 바리스타</span></p></div>
-        <div class="scenario-step"><div class="step-badge ai">AI</div><p><strong>"Hi there! What can I get started for you today?"</strong></p></div>
-        <div class="scenario-step"><div class="step-badge user">지수</div><p><strong>"Um… I want a latte, please."</strong></p></div>
-        <div class="scenario-step"><div class="step-badge ai">AI</div><p><strong>"Sure! What size would you like? And would you like any flavor shots?"</strong></p></div>
-        <div class="scenario-step"><div class="step-badge sys">종료</div><p>FeedbackAgent 분석: <strong>자연스러움 78점</strong> / "I want" → "I'd like" 추천 <span>(13주차 예정)</span></p></div>
-      </div>
-    </div>
-    <div class="scenario-meta">
-      <div class="scenario-meta-card"><h4>입력</h4><p>"카페에서 음료 주문하기"</p></div>
-      <div class="scenario-meta-card"><h4>AI 자동 설정</h4><p>배경 · 역할 · 대화 목표</p></div>
-      <div class="scenario-meta-card"><h4>결과</h4><p>실전 영어 대화 + 피드백</p></div>
-    </div>
-  </div>
-
-  <!-- SLIDE 4: SOLUTION -->
-  <div class="slide">
-    <div class="section-tag">03 — 솔루션</div>
-    <h2 class="section-title">어떻게 해결하는가</h2>
-    <p class="section-desc">MEF는 역할이 다른 4개의 AI Agent로 구성된다. 사용자가 입력한 상황 하나로 전체 학습 흐름이 자동으로 만들어진다.</p>
-    <div class="vision-big">"상황 입력 하나로<br><em>시나리오 → 대화 → 피드백</em>까지 자동"</div>
-    <div class="agent-list">
-      <div class="agent-card">
-        <div class="agent-header"><div class="agent-dot" style="background:var(--accent)"></div><h4>🎬 ScenarioAgent — 시나리오 생성</h4></div>
-        <div class="agent-who">담당: 이동희 · 완료 ✅</div>
-        <p>한국어 상황 입력 → AI가 배경·역할·목표를 JSON으로 자동 생성.</p>
-        <p class="agent-ex">입력: "카페 주문" → <span>바리스타 역할 시나리오</span></p>
-      </div>
-      <div class="agent-card">
-        <div class="agent-header"><div class="agent-dot" style="background:var(--accent2)"></div><h4>💬 ConversationAgent — 실시간 대화</h4></div>
-        <div class="agent-who">담당: 김령균 · 완료 ✅</div>
-        <p>시나리오를 바탕으로 AI 파트너와 실시간 영어 대화 진행. 이전 대화 전체를 기억해 맥락 유지.</p>
-        <p class="agent-ex">AI는 역할에 맞게 <span>영어로만 응답</span></p>
-      </div>
-      <div class="agent-card">
-        <div class="agent-header"><div class="agent-dot" style="background:var(--accent3)"></div><h4>📋 FeedbackAgent — 즉각 피드백</h4></div>
-        <div class="agent-who">담당: 김령균 · 13주차 예정</div>
-        <p>대화 종료 후 문법 오류, 더 자연스러운 표현, 자연스러움 점수(100점)를 제공.</p>
-        <p class="agent-ex">예: <span>"I am go"</span> → "I go" / 점수: 78점</p>
-      </div>
-      <div class="agent-card">
-        <div class="agent-header"><div class="agent-dot" style="background:var(--accent4)"></div><h4>📊 AnalysisAgent <span class="badge-plan">유료·14주차</span></h4></div>
-        <div class="agent-who">담당: 이동희 · 14주차 예정</div>
-        <p>누적 대화 기록을 분석해 반복되는 실수 패턴을 개인화 리포트로 제공.</p>
-        <p class="agent-ex">예: <span>"3인칭 단수 's' 누락"</span>이 70% 이상</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 5: ARCH -->
-  <div class="slide">
-    <div class="section-tag">04 — 아키텍처</div>
-    <h2 class="section-title">시스템은 어떻게 구성되어 있나</h2>
-    <p class="section-desc">레이어드 아키텍처로 화면·상태·서비스·AI를 분리했다. Flutter 앱이 직접 Google AI Studio API를 호출하며 별도 서버는 없다.</p>
-    <div class="arch-wrap">
-      <div class="mermaid-wrap">
-        <pre class="mermaid">
+<!-- 5. ARCH -->
+<div class="slide" style="overflow:hidden;">
+  <div class="tag">04 — 아키텍처</div>
+  <h2 class="stitle">시스템은 어떻게 구성되어 있나</h2>
+  <p class="sdesc">레이어드 아키텍처로 화면·상태·서비스·AI를 분리했다. Flutter 앱이 직접 Gemini API를 호출하며 별도 서버는 없다.</p>
+  <div class="arch-wrap">
+    <div class="mermaid-wrap" style="display:flex;align-items:center;justify-content:center;">
+      <pre class="mermaid">
 flowchart TD
     User(["👤 사용자"])
     subgraph Presentation["Presentation Layer"]
@@ -386,7 +320,7 @@ flowchart TD
         Services["Services & Agents"]
     end
     subgraph Data["Data Layer"]
-        API["Google AI Studio\nGemini Flash"]
+        API["Gemini 2.5 Flash\nGoogle AI Studio"]
     end
     User --> UI
     UI <--> Riverpod
@@ -398,236 +332,200 @@ flowchart TD
     style Domain fill:#1a1a24,stroke:#43e97b,stroke-width:1.5px,color:#f0eff8
     style Data fill:#1a1a24,stroke:#f7971e,stroke-width:1.5px,color:#f0eff8
     style User fill:#111118,stroke:#8b8aa8,color:#f0eff8
-        </pre>
-      </div>
-      <div class="arch-desc">
-        <div class="arch-layer">
-          <div class="layer-tag" style="color:var(--accent)">Presentation Layer</div>
-          <h4>화면 & 위젯</h4>
-          <p>사용자가 보고 조작하는 UI. 데이터를 직접 처리하지 않고 상태만 반영.</p>
-        </div>
-        <div class="arch-layer">
-          <div class="layer-tag" style="color:var(--accent2)">Application Layer</div>
-          <h4>상태 & 흐름 (Riverpod)</h4>
-          <p>화면 간 데이터 공유와 로딩·성공·실패 상태 관리. 메모리에 저장.</p>
-        </div>
-        <div class="arch-layer">
-          <div class="layer-tag" style="color:var(--accent3)">Domain Layer</div>
-          <h4>비즈니스 규칙 (Services)</h4>
-          <p>Agent별 서비스 파일 분리. 프롬프트 설계, JSON 파싱, 오류 처리.</p>
-        </div>
-        <div class="arch-layer">
-          <div class="layer-tag" style="color:var(--accent4)">Data Layer</div>
-          <h4>외부 데이터 (Google AI Studio)</h4>
-          <p>HTTP POST로 Gemini API 호출. JSON 응답을 파싱해 Domain Layer로 전달.</p>
-        </div>
-      </div>
+      </pre>
+    </div>
+    <div class="arch-layers">
+      <div class="arch-layer"><div class="ltag" style="color:var(--a)">Presentation</div><h4>screens/</h4><p>UI만 담당, 로직 없음. 총 8개 화면.</p></div>
+      <div class="arch-layer"><div class="ltag" style="color:var(--a2)">Application</div><h4>providers/ — Riverpod</h4><p>AsyncValue로 로딩·성공·에러 3상태를 선언적으로 처리. 메모리 저장.</p></div>
+      <div class="arch-layer"><div class="ltag" style="color:var(--a3)">Domain</div><h4>services/ — AI Agent 호출</h4><p>Agent별 서비스 파일 분리. 프롬프트 설계, JSON 파싱. 화면에서 직접 호출 금지.</p></div>
+      <div class="arch-layer"><div class="ltag" style="color:var(--a4)">Data</div><h4>models/ + Gemini API</h4><p>Scenario, Feedback, AnalysisReport 데이터 구조. HTTP POST로 직접 호출.</p></div>
     </div>
   </div>
+</div>
 
-  <!-- SLIDE 6: ADR -->
-  <div class="slide">
-    <div class="section-tag">05 — 기술 선택 근거 (ADR)</div>
-    <h2 class="section-title">왜 이 기술을 선택했나</h2>
-    <p class="section-desc">기술 선택의 이유를 ADR(Architecture Decision Record) 문서로 기록했다. 대안과 비교해 우리 프로젝트에 가장 맞는 것을 선택했다.</p>
-    <div class="adr-grid">
-      <div class="adr-card">
-        <div class="adr-num">ADR-0001</div>
-        <h3>플랫폼 선택</h3>
-        <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Flutter</p></div>
-        <div class="adr-row"><h4>대안</h4><p>React Native, Android(Kotlin), iOS(Swift)</p></div>
-        <div class="adr-row"><h4>이유</h4><p>하나의 코드로 멀티플랫폼 지원. Dart가 초급자도 배우기 쉽고 빠른 프로토타이핑에 적합.</p></div>
-      </div>
-      <div class="adr-card">
-        <div class="adr-num">ADR-0002</div>
-        <h3>상태 관리</h3>
-        <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Riverpod</p></div>
-        <div class="adr-row"><h4>대안</h4><p>Provider, BLoC, GetX</p></div>
-        <div class="adr-row"><h4>이유</h4><p>Provider의 context 의존 문제 해결. AsyncValue로 로딩·성공·실패 3상태를 깔끔하게 처리.</p></div>
-      </div>
-      <div class="adr-card">
-        <div class="adr-num">ADR-0003</div>
-        <h3>백엔드 & AI</h3>
-        <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Google AI Studio (서버 없음)</p></div>
-        <div class="adr-row"><h4>대안</h4><p>Supabase + Edge Function, Firebase, OpenRouter</p></div>
-        <div class="adr-row"><h4>이유</h4><p>Gemini Flash 무료 1,500 req/일. 컨텍스트 100만 토큰으로 RAG에도 적합. 서버 없이 직접 호출.</p></div>
-      </div>
+<!-- 6. ADR -->
+<div class="slide">
+  <div class="tag">05 — 기술 선택 근거 (ADR)</div>
+  <h2 class="stitle">왜 이 기술을 선택했나</h2>
+  <p class="sdesc">기술 선택의 이유를 ADR(Architecture Decision Record) 문서로 기록했다. 대안과 비교해 프로젝트에 가장 맞는 것을 선택했다.</p>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">ADR-0001</div>
+      <h3>플랫폼 선택</h3>
+      <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Flutter</p></div>
+      <div class="adr-row"><h4>대안</h4><p>React Native, Android(Kotlin), iOS(Swift)</p></div>
+      <div class="adr-row"><h4>이유</h4><p>단일 코드로 Android·iOS·Web 동시 지원. JS Bridge 없이 네이티브 컴파일 → 실시간 채팅 UI에 유리.</p></div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">ADR-0002</div>
+      <h3>상태 관리</h3>
+      <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Riverpod</p></div>
+      <div class="adr-row"><h4>대안</h4><p>Provider, BLoC, GetX</p></div>
+      <div class="adr-row"><h4>이유</h4><p>Provider의 context 의존 문제 해결. AsyncValue로 로딩·성공·에러 3상태를 선언적으로 처리 가능.</p></div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">ADR-0003</div>
+      <h3>백엔드 & AI</h3>
+      <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Gemini 2.5 Flash</p></div>
+      <div class="adr-row"><h4>대안</h4><p>Supabase, Firebase, OpenRouter</p></div>
+      <div class="adr-row"><h4>이유</h4><p>MVP 우선, 서버 없이 직접 호출. 무료 티어로 개발 가능. API 키는 추후 서버 프록시로 보호 예정.</p></div>
     </div>
   </div>
+</div>
 
-  <!-- SLIDE 7: ROLE -->
-  <div class="slide">
-    <div class="section-tag">06 — 역할 분담</div>
-    <h2 class="section-title">누가 무엇을 만들었나</h2>
-    <p class="section-desc">A는 시나리오 흐름과 핵심 AI 서비스를, B는 앱 구조와 대화 기능을 담당해 병렬로 개발했다.</p>
-    <div class="role-grid">
-      <div class="role-card a">
-        <div class="role-name a">이동희 (팀원 A)</div>
-        <div class="role-sub">시나리오 흐름 · ScenarioAgent · 화면 UI · ADR 문서</div>
-        <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>홈 · 로그인 · 회원가입 화면</h5><p>Mock 인증(test@mef.com)으로 로그인 흐름 구현.</p></div></div>
-        <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>시나리오 입력 · 결과 화면</h5><p>상황 입력, 난이도/카테고리 선택 UI. AI 호출 결과 카드 표시.</p></div></div>
-        <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>ScenarioAgent 프롬프트 설계 + 서비스</h5><p>핵심 AI 호출 로직. JSON 응답 파싱 및 마크다운 처리.</p></div></div>
-        <div class="role-item"><div class="role-dot" style="background:var(--accent)"></div><div class="role-item-body"><h5>ADR 기술 결정 문서 (0001·0002·0003)</h5><p>플랫폼·상태관리·백엔드 선택 이유 문서화.</p></div></div>
-        <div class="role-item"><div class="role-dot" style="background:var(--text2);opacity:0.4"></div><div class="role-item-body"><h5 style="color:var(--text2)">AnalysisAgent (14주차)</h5><p style="color:var(--text2)">유료 기능. 누적 피드백 데이터 분석.</p></div></div>
-      </div>
-      <div class="role-card b">
-        <div class="role-name b">김령균 (팀원 B)</div>
-        <div class="role-sub">앱 구조 · ConversationAgent · 공통 위젯 · 라우팅</div>
-        <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>go_router 설정 / 앱 기본 구조</h5><p>화면 간 이동 경로 정의. 팀원 A 화면과 충돌 없이 연동.</p></div></div>
-        <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>ConversationAgent + 채팅 화면</h5><p>시나리오를 받아 AI와 실시간 채팅. 대화 기록 전체를 API에 전달해 맥락 유지.</p></div></div>
-        <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>공통 위젯 3개</h5><p>ChatBubble · PrimaryButton · LoadingOverlay.</p></div></div>
-        <div class="role-item"><div class="role-dot" style="background:var(--accent2)"></div><div class="role-item-body"><h5>auth_provider · conversation_provider</h5><p>인증 상태와 대화 기록 앱 전체 공유. Riverpod StateNotifier로 구현.</p></div></div>
-        <div class="role-item"><div class="role-dot" style="background:var(--text2);opacity:0.4"></div><div class="role-item-body"><h5 style="color:var(--text2)">FeedbackAgent · 피드백·기록 화면 (13주차)</h5><p style="color:var(--text2)">대화 종료 후 피드백 분석 및 기록 조회.</p></div></div>
-      </div>
+<!-- 7. ROLE -->
+<div class="slide">
+  <div class="tag">06 — 역할 분담</div>
+  <h2 class="stitle">누가 무엇을 만들었나</h2>
+  <p class="sdesc">A는 시나리오·분석 흐름과 핵심 AI 서비스를, B는 앱 구조·대화·피드백 기능을 담당해 병렬로 개발했다.</p>
+  <div class="role-grid">
+    <div class="role-card a">
+      <div class="role-name a">이동희 (팀원 A)</div>
+      <div class="role-sub">ScenarioAgent · 화면 설계 · ADR 문서 · AnalysisAgent</div>
+      <div class="role-item"><div class="rdot" style="background:var(--a)"></div><div><h5>로그인 · 회원가입 · 시나리오 입력/결과 화면</h5><p>Mock 인증(test@mef.com). 상황 입력·난이도·카테고리 선택 UI.</p></div></div>
+      <div class="role-item"><div class="rdot" style="background:var(--a)"></div><div><h5>ScenarioAgent 프롬프트 설계 + 서비스 구현</h5><p>핵심 AI 호출 로직. JSON 파싱 및 마크다운 처리.</p></div></div>
+      <div class="role-item"><div class="rdot" style="background:var(--a)"></div><div><h5>AnalysisAgent + 약점 분석 화면 ✅</h5><p>누적 피드백 데이터 분석. 재분석 오류 수정 완료.</p></div></div>
+      <div class="role-item"><div class="rdot" style="background:var(--a)"></div><div><h5>ADR 문서 5개 + deploy.md 복구</h5><p>기술 선택 근거 문서화.</p></div></div>
+    </div>
+    <div class="role-card b">
+      <div class="role-name b">김령균 (팀원 B)</div>
+      <div class="role-sub">앱 구조 · ConversationAgent · FeedbackAgent · 대화 기록</div>
+      <div class="role-item"><div class="rdot" style="background:var(--a2)"></div><div><h5>go_router 설정 / 앱 기본 구조 / 공통 위젯</h5><p>화면 간 이동 경로 정의. ChatBubble · PrimaryButton · LoadingOverlay.</p></div></div>
+      <div class="role-item"><div class="rdot" style="background:var(--a2)"></div><div><h5>ConversationAgent + 채팅 화면 ✅</h5><p>실시간 채팅. 대화 기록 전체를 API에 전달해 맥락 유지.</p></div></div>
+      <div class="role-item"><div class="rdot" style="background:var(--a2)"></div><div><h5>FeedbackAgent + 피드백 화면 ✅</h5><p>문법 오류·표현 개선·점수 분석. maxOutputTokens 2048.</p></div></div>
+      <div class="role-item"><div class="rdot" style="background:var(--a2)"></div><div><h5>대화 기록 목록 / 상세 화면 ✅</h5><p>카드 탭 시 과거 대화 내용 다시 보기 가능.</p></div></div>
     </div>
   </div>
+</div>
 
-  <!-- SLIDE 8: AI HONESTY -->
-  <div class="slide">
-    <div class="section-tag">07 — AI 활용 솔직성</div>
-    <h2 class="section-title">AI가 만든 것 vs 우리가 한 것</h2>
-    <p class="section-desc">이 프로젝트는 Claude Code(AI 코딩 어시스턴트)를 적극 활용했다. AI가 생성한 코드를 그냥 쓴 게 아니라, 이해하고 검토하고 수정하는 방식으로 개발했다.</p>
-    <div class="ai-grid">
-      <div class="ai-card">
-        <h3>🤖 AI(Claude Code)가 생성한 것</h3>
-        <div class="ai-item"><span class="ai-tag made">AI</span><p>디렉토리 구조 제안 및 초기 파일 생성 (lib/ 전체 뼈대)</p></div>
-        <div class="ai-item"><span class="ai-tag made">AI</span><p>화면 위젯 초안 코드 (login_screen, scenario_input_screen 등)</p></div>
-        <div class="ai-item"><span class="ai-tag made">AI</span><p>API 호출 로직 초안 (scenario_service.dart)</p></div>
-        <div class="ai-item"><span class="ai-tag made">AI</span><p>ADR 문서 초안, 이 발표자료</p></div>
-      </div>
-      <div class="ai-card">
-        <h3>✅ 우리가 검토·수정·결정한 것</h3>
-        <div class="ai-item"><span class="ai-tag review">검토</span><p>ScenarioAgent 프롬프트 설계 — 출력 형식과 역할 지시문을 직접 작성·수정</p></div>
-        <div class="ai-item"><span class="ai-tag review">검토</span><p>JSON 파싱 오류 처리 — 마크다운 코드블록 제거 로직 직접 디버깅</p></div>
-        <div class="ai-item"><span class="ai-tag review">결정</span><p>Supabase → OpenRouter → Google AI Studio 아키텍처 변경 결정</p></div>
-        <div class="ai-item"><span class="ai-tag review">검토</span><p>모든 생성 코드를 직접 읽고 동작 방식 이해 후 병합</p></div>
-      </div>
+<!-- 8. AI HONESTY -->
+<div class="slide">
+  <div class="tag">07 — AI 활용 솔직성</div>
+  <h2 class="stitle">AI가 만든 것 vs 우리가 한 것</h2>
+  <p class="sdesc">Claude Code를 적극 활용했다. AI가 생성한 코드를 그냥 쓴 게 아니라, 이해하고 검토하고 수정하는 방식으로 개발했다.</p>
+  <div class="ai-grid">
+    <div class="ai-card">
+      <h3>🤖 AI(Claude Code)가 생성한 것</h3>
+      <div class="ai-item"><span class="ai-tag made">AI</span><p>디렉토리 구조 제안 및 초기 파일 생성 (lib/ 전체 뼈대)</p></div>
+      <div class="ai-item"><span class="ai-tag made">AI</span><p>화면 위젯 초안 코드 (login_screen, scenario_input_screen 등)</p></div>
+      <div class="ai-item"><span class="ai-tag made">AI</span><p>API 호출 로직 초안 (scenario_service.dart 등)</p></div>
+      <div class="ai-item"><span class="ai-tag made">AI</span><p>ADR 문서 초안, 발표자료, 대본</p></div>
     </div>
-    <div class="ai-quote">
-      "AI가 코드를 생성했고, 저희는 <strong>왜 이렇게 동작하는지 이해하고, 프롬프트와 로직을 직접 수정</strong>했습니다. AI는 도구였고, 설계와 판단은 저희가 했습니다."
+    <div class="ai-card">
+      <h3>✅ 우리가 검토·수정·결정한 것</h3>
+      <div class="ai-item"><span class="ai-tag check">검토</span><p>ScenarioAgent 프롬프트 설계 — 출력 형식과 역할 지시문 직접 작성</p></div>
+      <div class="ai-item"><span class="ai-tag check">검토</span><p>JSON 파싱 오류 처리 — maxOutputTokens 조정 및 마크다운 제거 로직</p></div>
+      <div class="ai-item"><span class="ai-tag check">결정</span><p>Supabase → OpenRouter → Gemini 아키텍처 변경 결정</p></div>
+      <div class="ai-item"><span class="ai-tag check">검토</span><p>모든 코드 직접 읽고 이해 후 병합. flutter analyze 오류 0개.</p></div>
     </div>
   </div>
+  <div class="ai-quote">"AI가 코드를 생성했고, 저희는 <strong>왜 이렇게 동작하는지 이해하고, 프롬프트와 로직을 직접 수정</strong>했습니다. AI는 도구였고, 설계와 판단은 저희가 했습니다."</div>
+</div>
 
-  <!-- SLIDE 9: DEMO -->
-  <div class="slide">
-    <div class="section-tag">08 — 데모 흐름</div>
-    <h2 class="section-title">현재 이렇게 동작한다</h2>
-    <p class="section-desc">홈 화면부터 AI와의 영어 대화까지 전체 흐름이 연결되어 있다. 피드백 화면은 13주차에 추가 예정.</p>
-    <div class="demo-steps">
-      <div class="demo-step"><div class="step-circle done">🏠</div><h4>앱 실행</h4><p>홈 화면 진입.<br>Mock 로그인.</p></div>
-      <div class="demo-step"><div class="step-circle done">✍️</div><h4>상황 입력</h4><p>한국어로 상황 입력.<br>난이도·카테고리 선택.</p></div>
-      <div class="demo-step"><div class="step-circle done">🎬</div><h4>시나리오 생성</h4><p>AI가 배경·역할·목표<br>자동 설정.</p></div>
-      <div class="demo-step"><div class="step-circle done">💬</div><h4>영어 대화</h4><p>AI 파트너와<br>실시간 채팅.</p></div>
-      <div class="demo-step"><div class="step-circle plan">📋</div><h4>피드백</h4><p>문법·표현 개선<br>(13주차 예정)</p></div>
+<!-- 9. DEMO -->
+<div class="slide">
+  <div class="tag">08 — 데모 흐름</div>
+  <h2 class="stitle">현재 이렇게 동작한다</h2>
+  <p class="sdesc">로그인부터 약점 분석까지 전체 흐름 100% 연결 완료. 발표 당일 Chrome에서 바로 시연 가능.</p>
+  <div class="demo-steps">
+    <div class="demo-step"><div class="step-circle done">🔐</div><h4>로그인</h4><p>test@mef.com<br>test1234</p></div>
+    <div class="demo-step"><div class="step-circle done">✍️</div><h4>상황 입력</h4><p>한국어 입력<br>난이도·카테고리</p></div>
+    <div class="demo-step"><div class="step-circle done">🎬</div><h4>시나리오</h4><p>AI가 배경·역할<br>자동 설정</p></div>
+    <div class="demo-step"><div class="step-circle done">💬</div><h4>영어 대화</h4><p>AI 파트너와<br>실시간 채팅</p></div>
+    <div class="demo-step"><div class="step-circle done">📋</div><h4>피드백·분석</h4><p>문법·점수·<br>약점 패턴</p></div>
+  </div>
+  <div class="demo-info">
+    <div class="demo-card">
+      <h4>실행 방법</h4>
+      <p><code>git pull origin main</code><br>
+      <code>api_config.dart</code> 직접 생성 (git 제외)<br>
+      <code>flutter run -d chrome</code><br>
+      ⚠️ 하루 20회 무료 제한 — 당일 아껴서 사용</p>
     </div>
-    <div class="demo-info">
-      <div class="demo-info-card">
-        <h4>실행 방법</h4>
-        <p>Flutter 웹은 CORS 문제로 API 호출 불가.<br><code>flutter run -d windows</code> 로 Windows 앱 실행.<br><br><code>api_config.dart</code> 에 Google AI Studio API 키 입력 필요. (보안상 git에 포함 안 됨)</p>
-      </div>
-      <div class="demo-info-card">
-        <h4>데모 입력 예시</h4>
-        <p>상황: <code>"카페에서 음료 주문하기"</code><br>난이도: <code>intermediate</code><br>카테고리: <code>daily</code><br><br>→ AI가 <code>바리스타</code> 역할을 맡아 영어로 주문을 받기 시작.</p>
-      </div>
+    <div class="demo-card">
+      <h4>데모 입력 예시</h4>
+      <p>상황: <code>"카페에서 음료 주문하기"</code><br>
+      난이도: <code>intermediate</code><br>
+      카테고리: <code>daily</code><br>
+      → AI가 <code>바리스타</code> 역할로 영어 대화 시작</p>
     </div>
   </div>
+</div>
 
-  <!-- SLIDE 10: WBS -->
-  <div class="slide">
-    <div class="section-tag">09 — WBS</div>
-    <h2 class="section-title">작업 현황</h2>
-    <p class="section-desc">전체 9개 항목 중 5개 완료(55%). 핵심 기능인 시나리오 생성과 채팅은 완성. 13·14주차에 피드백·분석 기능을 추가한다.</p>
-    <div class="progress-bar-wrap"><div class="progress-bar" style="width:55%"></div></div>
-    <div class="progress-labels"><span>0%</span><span style="color:var(--accent3);font-weight:600">현재 55% 완료</span><span>100%</span></div>
-    <table class="wbs-table">
-      <thead><tr><th>주차</th><th>작업 항목</th><th>담당</th><th>상태</th></tr></thead>
-      <tbody>
-        <tr><td style="color:var(--text2)">11주차</td><td>ADR-0001 Flutter · ADR-0002 Riverpod · ADR-0003 백엔드</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">11주차</td><td>GoRouter 설정 / 앱 기본 구조 / 공통 위젯 3개</td><td><span class="owner-b">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">12주차</td><td>홈 · 로그인 · 회원가입 · 시나리오 입력/결과 · 분석 화면</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">12주차</td><td>ScenarioAgent 프롬프트 설계 + 서비스 구현</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">12주차</td><td>ConversationAgent + 채팅 화면 · auth · conversation provider</td><td><span class="owner-b">김령균</span></td><td><span class="badge badge-done">완료</span></td></tr>
-        <tr><td style="color:var(--text2)">13주차</td><td>FeedbackAgent + 피드백 화면 구현</td><td><span class="owner-b">김령균</span></td><td><span class="badge badge-todo">예정</span></td></tr>
-        <tr><td style="color:var(--text2)">13주차</td><td>대화 기록 목록 / 상세 화면</td><td><span class="owner-b">김령균</span></td><td><span class="badge badge-todo">예정</span></td></tr>
-        <tr><td style="color:var(--text2)">14주차</td><td>AnalysisAgent + 약점 분석 화면 (유료 기능)</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-todo">예정</span></td></tr>
-        <tr><td style="color:var(--text2)">14주차</td><td>배포 문서 (docs/deploy.md)</td><td><span class="owner-a">이동희</span></td><td><span class="badge badge-todo">예정</span></td></tr>
-      </tbody>
-    </table>
-    <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-      <span style="font-size:11px;color:var(--text2)">범례:</span>
-      <span class="badge badge-done">완료</span>
-      <span class="badge badge-todo">예정</span>
-      <span style="margin-left:12px;font-size:11px;color:var(--text2)">담당:</span>
-      <span class="owner-a">이동희 (A)</span>
-      <span class="owner-b">김령균 (B)</span>
-    </div>
+<!-- 10. WBS -->
+<div class="slide">
+  <div class="tag">09 — WBS & 과제 현황</div>
+  <h2 class="stitle">작업 현황</h2>
+  <p class="sdesc">전체 흐름 100% 동작. 진행률 95% — 데모 영상 녹화와 최종 발표 준비만 남았다.</p>
+  <div class="prog-wrap"><div class="prog-bar" style="width:95%"></div></div>
+  <div class="prog-labels"><span>0%</span><span style="color:var(--a3)">현재 95% 완료</span><span>100%</span></div>
+  <table class="wbs-table">
+    <thead><tr><th>주차</th><th>작업 항목</th><th>담당</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--text2)">11주차</td><td>ADR 문서 5개 / 앱 기본 구조 / 공통 위젯</td><td><span class="oa">이동희</span> <span class="ob">김령균</span></td><td><span class="badge b-done">완료</span></td></tr>
+      <tr><td style="color:var(--text2)">12주차</td><td>ScenarioAgent + 시나리오 화면 / ConversationAgent + 채팅 화면</td><td><span class="oa">이동희</span> <span class="ob">김령균</span></td><td><span class="badge b-done">완료</span></td></tr>
+      <tr><td style="color:var(--text2)">13주차</td><td>FeedbackAgent + 피드백 화면 / 대화 기록 목록·상세</td><td><span class="ob">김령균</span></td><td><span class="badge b-done">완료</span></td></tr>
+      <tr><td style="color:var(--text2)">13주차</td><td>AnalysisAgent + 약점 분석 / JSON 파싱 오류 수정 / flutter analyze 0개</td><td><span class="oa">이동희</span></td><td><span class="badge b-done">완료</span></td></tr>
+      <tr><td style="color:var(--text2)">14주차</td><td>데모 영상 녹화 (30초 백업) / 최종 발표 준비</td><td><span class="oa">이동희</span> <span class="ob">김령균</span></td><td><span class="badge b-todo">예정</span></td></tr>
+    </tbody>
+  </table>
+  <div class="score-grid">
+    <div class="score-card"><div class="score-num">+1</div><div class="score-lbl">vision.md<br>requirements.md</div></div>
+    <div class="score-card"><div class="score-num">+2</div><div class="score-lbl">wbs.md<br>schedule.md</div></div>
+    <div class="score-card"><div class="score-num">+3</div><div class="score-lbl">architecture.md<br>ADR 5개</div></div>
+    <div class="score-card"><div class="score-num">+4</div><div class="score-lbl">setup.md<br>deploy.md</div></div>
+    <div class="score-card"><div class="score-num">+5</div><div class="score-lbl">AGENTS.md<br>README.md</div></div>
   </div>
+</div>
 
 </div><!-- /slides -->
 
 <div class="key-hint">
   <span class="key">←</span> 이전
   <span class="key">→</span> 다음
-  <span style="margin-left:8px">또는 화살표 버튼 클릭</span>
+  <span style="margin-left:6px">또는 화살표 버튼 클릭</span>
 </div>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
 mermaid.initialize({
-  startOnLoad: false, theme: 'dark',
-  themeVariables: { background:'#1a1a24', primaryColor:'#6c63ff', primaryTextColor:'#f0eff8', primaryBorderColor:'#6c63ff', lineColor:'#8b8aa8', secondaryColor:'#1a1a24', tertiaryColor:'#111118', fontSize:'12px' },
-  flowchart: { curve:'basis', padding:12 }
+  startOnLoad:false, theme:'dark',
+  themeVariables:{background:'#1a1a24',primaryColor:'#6c63ff',primaryTextColor:'#f0eff8',primaryBorderColor:'#6c63ff',lineColor:'#8b8aa8',secondaryColor:'#1a1a24',tertiaryColor:'#111118',fontSize:'9px'},
+  flowchart:{curve:'basis',padding:4}
 });
 await mermaid.run();
 </script>
-
 <script>
-const slides = document.querySelectorAll('.slide');
-const total = slides.length;
-let current = 0;
-
-const navDots = document.getElementById('navDots');
-const navPage = document.getElementById('navPage');
-const arrowLeft = document.getElementById('arrowLeft');
-const arrowRight = document.getElementById('arrowRight');
-
-// 도트 생성
-slides.forEach((_, i) => {
-  const dot = document.createElement('div');
-  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-  dot.onclick = () => goTo(i);
+const slides=document.querySelectorAll('.slide');
+const total=slides.length;
+let current=0;
+const navDots=document.getElementById('navDots');
+const navPage=document.getElementById('navPage');
+const arrowLeft=document.getElementById('arrowLeft');
+const arrowRight=document.getElementById('arrowRight');
+slides.forEach((_,i)=>{
+  const dot=document.createElement('div');
+  dot.className='nav-dot'+(i===0?' active':'');
+  dot.onclick=()=>goTo(i);
   navDots.appendChild(dot);
 });
-
-function goTo(idx) {
+function goTo(idx){
   slides[current].classList.remove('active');
   slides[current].classList.add('prev');
-  setTimeout(() => slides[current].classList.remove('prev'), 400);
-
-  current = idx;
+  setTimeout(()=>slides[current].classList.remove('prev'),350);
+  current=idx;
   slides[current].classList.add('active');
-
-  // 도트 업데이트
-  document.querySelectorAll('.nav-dot').forEach((d, i) => {
-    d.classList.toggle('active', i === current);
-  });
-  navPage.textContent = `${current + 1} / ${total}`;
-
-  // 화살표 상태
-  arrowLeft.classList.toggle('disabled', current === 0);
-  arrowRight.classList.toggle('disabled', current === total - 1);
+  document.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  navPage.textContent=`${current+1} / ${total}`;
+  arrowLeft.classList.toggle('disabled',current===0);
+  arrowRight.classList.toggle('disabled',current===total-1);
 }
-
-window.prevSlide = () => { if (current > 0) goTo(current - 1); };
-window.nextSlide = () => { if (current < total - 1) goTo(current + 1); };
-
-// 키보드
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowLeft') prevSlide();
-  if (e.key === 'ArrowRight') nextSlide();
+window.prevSlide=()=>{if(current>0)goTo(current-1);};
+window.nextSlide=()=>{if(current<total-1)goTo(current+1);};
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft')prevSlide();
+  if(e.key==='ArrowRight')nextSlide();
 });
-
-// 초기화
 arrowLeft.classList.add('disabled');
 </script>
 </body>
