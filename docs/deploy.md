@@ -1,7 +1,7 @@
 # 배포 가이드
 
-> MEF 앱의 배포 절차. Android APK 직접 설치 기준.
-> iOS 배포는 Apple Developer 계정 필요 (수업 과제 범위 외).
+> MEF 앱의 배포 절차.
+> 백엔드 서버 없음 — Gemini API 직접 호출, 로컬 더미 인증 사용.
 
 ---
 
@@ -9,113 +9,69 @@
 
 ```bash
 flutter doctor          # 환경 점검
-flutter --version       # Flutter 3.35.3 이상
+flutter --version       # Flutter 3.44.1 이상
 ```
 
-Android 배포에 필요한 것:
-- Android Studio (SDK 포함) 또는 Android 커맨드라인 도구
-- 서명 키스토어 파일 (아래 단계에서 생성)
+`lib/constants/api_config.dart` 파일이 있어야 한다 (`.gitignore`에 포함되어 있으므로 직접 생성):
 
----
+```dart
+class ApiConfig {
+  ApiConfig._();
 
-## 1. Supabase Edge Function 배포
-
-AI API 프록시 서버(Edge Function)를 먼저 배포해야 앱이 동작한다.
-
-```bash
-# Supabase CLI 설치 (최초 1회)
-npm install -g supabase
-
-# 로그인
-supabase login
-
-# 프로젝트 링크 (YOUR_PROJECT_ID는 Supabase 콘솔에서 확인)
-supabase link --project-ref YOUR_PROJECT_ID
-
-# Edge Function 배포
-supabase functions deploy conversation-agent
-supabase functions deploy scenario-agent
-supabase functions deploy feedback-agent
-```
-
-Edge Function 환경변수 설정 (Supabase 콘솔 → Settings → Edge Functions):
-```
-ANTHROPIC_API_KEY=sk-ant-...
-```
-
----
-
-## 2. Android APK 빌드
-
-### 2-1. 서명 키스토어 생성 (최초 1회)
-
-```bash
-keytool -genkey -v -keystore android/app/mef-release.jks \
-  -keyalg RSA -keysize 2048 -validity 10000 \
-  -alias mef-key
-```
-
-> ⚠️ `mef-release.jks` 파일은 절대 git에 커밋하지 않는다.
-
-### 2-2. `android/key.properties` 파일 생성
-
-```properties
-storePassword=YOUR_STORE_PASSWORD
-keyPassword=YOUR_KEY_PASSWORD
-keyAlias=mef-key
-storeFile=mef-release.jks
-```
-
-> ⚠️ `key.properties`도 git 커밋 금지 (`.gitignore`에 포함됨).
-
-### 2-3. `android/app/build.gradle` 서명 설정 확인
-
-```gradle
-def keyProperties = new Properties()
-def keyPropertiesFile = rootProject.file('key.properties')
-if (keyPropertiesFile.exists()) {
-    keyPropertiesFile.withReader('UTF-8') { reader ->
-        keyProperties.load(reader)
-    }
-}
-
-android {
-    signingConfigs {
-        release {
-            keyAlias keyProperties['keyAlias']
-            keyPassword keyProperties['keyPassword']
-            storeFile keyProperties['storeFile'] ? file(keyProperties['storeFile']) : null
-            storePassword keyProperties['storePassword']
-        }
-    }
-    buildTypes {
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
+  static const String _geminiApiKey = 'YOUR_GEMINI_API_KEY';
+  static const String _model = 'gemini-2.5-flash';
+  static const String apiUrl =
+      'https://generativelanguage.googleapis.com/v1beta/models/$_model:generateContent?key=$_geminiApiKey';
 }
 ```
 
-### 2-4. APK 빌드
+> Gemini API 키는 [Google AI Studio](https://aistudio.google.com)에서 발급받는다.
+
+---
+
+## 1. 발표 자료 — GitHub Pages 배포
+
+발표 슬라이드(`index.html`)는 GitHub Pages로 배포한다.
 
 ```bash
-# 환경변수 설정 (.env 파일 또는 직접 입력)
-# SUPABASE_URL, SUPABASE_ANON_KEY 필요
+# index.html 수정 후 push하면 자동 반영
+git add index.html
+git commit -m "docs: 발표자료 업데이트"
+git push origin main
+```
 
+배포 URL: `https://gyun-ryeong.github.io/AppPrograming/`
+
+> GitHub Pages 최초 활성화는 저장소 Settings → Pages → Branch: main / (root) → Save
+
+---
+
+## 2. Flutter 웹 빌드
+
+```bash
+flutter build web --release
+```
+
+빌드 결과물: `build/web/`
+
+로컬에서 확인:
+```bash
+flutter run -d chrome
+```
+
+---
+
+## 3. Android APK 빌드
+
+```bash
 flutter build apk --release
 ```
 
 빌드 결과물: `build/app/outputs/flutter-apk/app-release.apk`
 
----
-
-## 3. 테스트 기기에 설치
-
+테스트 기기에 설치:
 ```bash
 # USB 연결 후 (USB 디버깅 활성화 필요)
-flutter install
-
-# 또는 APK 파일 직접 전송 후 설치
 adb install build/app/outputs/flutter-apk/app-release.apk
 ```
 
@@ -125,16 +81,21 @@ adb install build/app/outputs/flutter-apk/app-release.apk
 
 발표 전날 반드시 확인:
 
-- [ ] Supabase Edge Function 배포 상태 확인
-- [ ] Supabase 무료 티어 한도 확인 (DB 500MB, Edge Function 500K/월)
-- [ ] 테스트 계정 사전 생성 (회원가입 과정 생략 가능하도록)
-- [ ] 발표 장소 Wi-Fi 환경 확인 (Supabase는 온라인 필수)
-- [ ] 오프라인 폴백: 화면 캡처 또는 녹화 영상 준비
-- [ ] APK 파일 USB에 백업
+- [ ] `api_config.dart`에 Gemini API 키 입력 여부 확인
+- [ ] 시나리오 생성 → 대화 → 피드백 전체 플로우 동작 확인
+- [ ] 테스트 계정 확인 (`test@mef.com` / `test1234`)
+- [ ] 발표 장소 Wi-Fi 환경 확인 (Gemini API는 온라인 필수)
+- [ ] 오프라인 폴백: 화면 녹화 영상 준비
+- [ ] GitHub Pages URL 접속 확인
 
 ---
 
 ## 자주 묻는 문제
+
+**Q: 시나리오 생성이 안 됨**
+- `api_config.dart`의 API 키 확인
+- Gemini API 키 유효 여부 확인 (Google AI Studio 콘솔)
+- 429 오류면 rate limit — 잠시 후 재시도
 
 **Q: `flutter build apk` 중 Gradle 오류**
 ```bash
@@ -142,10 +103,6 @@ cd android && ./gradlew clean && cd ..
 flutter build apk --release
 ```
 
-**Q: Supabase Edge Function 응답 없음**
-- Supabase 콘솔 → Logs → Edge Functions에서 오류 확인
-- `ANTHROPIC_API_KEY` 환경변수 설정 여부 재확인
-
-**Q: 앱 설치 후 로그인이 안 됨**
-- `lib/main.dart`의 Supabase URL/key 확인
-- Supabase 콘솔 → Authentication → URL Configuration에서 Redirect URL 확인
+**Q: Chrome 실행 시 CORS 오류**
+- Gemini API는 URL에 키를 포함하는 방식으로 CORS 헤더 없이 호출 가능
+- 오류 발생 시 `flutter run -d chrome --web-browser-flag "--disable-web-security"` 시도
