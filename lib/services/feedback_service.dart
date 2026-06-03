@@ -39,7 +39,7 @@ class FeedbackService {
             ],
           }
         ],
-        'generationConfig': {'maxOutputTokens': 1024},
+        'generationConfig': {'maxOutputTokens': 2048},
       }),
     );
 
@@ -61,8 +61,18 @@ class FeedbackService {
         .replaceAll(RegExp(r'```\s*'), '')
         .trim();
 
-    final feedbackJson = jsonDecode(jsonText) as Map<String, dynamic>;
-    return Feedback.fromJson(feedbackJson);
+    try {
+      final feedbackJson = jsonDecode(jsonText) as Map<String, dynamic>;
+      return Feedback.fromJson(feedbackJson);
+    } catch (e) {
+      // JSON 파싱 실패 시 기본 피드백 반환
+      return const Feedback(
+        grammarErrors: [],
+        expressionSuggestions: ['Great effort! Keep practicing.'],
+        naturalnessScore: 70,
+        overallComment: '피드백을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.',
+      );
+    }
   }
 
   // FeedbackAgent 프롬프트 — 사용자 문장 분석 지시

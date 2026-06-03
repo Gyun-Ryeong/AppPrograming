@@ -40,7 +40,7 @@ class AnalysisService {
             ],
           }
         ],
-        'generationConfig': {'maxOutputTokens': 1024},
+        'generationConfig': {'maxOutputTokens': 4096, 'temperature': 0.3},
       }),
     );
 
@@ -60,38 +60,27 @@ class AnalysisService {
         .replaceAll(RegExp(r'```\s*'), '')
         .trim();
 
-    final reportJson = jsonDecode(jsonText) as Map<String, dynamic>;
-    return AnalysisReport.fromJson(reportJson);
+    try {
+      final reportJson = jsonDecode(jsonText) as Map<String, dynamic>;
+      return AnalysisReport.fromJson(reportJson);
+    } catch (e) {
+      return AnalysisReport(
+        totalSessions: sessions.length,
+        weaknessPatterns: [],
+        improvementTrend: 'stable',
+        recommendedScenario: '분석 중 오류가 발생했습니다. 다시 시도해주세요.',
+      );
+    }
   }
 
   // AnalysisAgent 프롬프트 — 누적 메시지에서 약점 패턴 추출
   String _buildPrompt(int sessionCount, String allMessages) {
-    return '''
-You are an English learning coach analyzing a student's accumulated conversation practice data.
-Analyze the following messages from $sessionCount practice sessions and respond ONLY with a JSON object:
+    return '''Analyze these English practice messages and return ONLY this JSON (no markdown):
+{"total_sessions":$sessionCount,"weakness_patterns":[{"category":"시제 오류","frequency":0.4,"examples":["I am go to school"]}],"improvement_trend":"stable","recommended_scenario":"카페에서 주문하기"}
 
-{
-  "total_sessions": $sessionCount,
-  "weakness_patterns": [
-    {
-      "category": "오류 유형 (한국어, 예: 시제 오류)",
-      "frequency": 0.45,
-      "examples": ["original sentence with error", "another example"]
-    }
-  ],
-  "improvement_trend": "improving",
-  "recommended_scenario": "추천 연습 상황 (한국어)"
-}
-
-All student messages:
+Student messages:
 $allMessages
 
-Rules:
-- weakness_patterns: 1-4 most common error types, frequency is 0.0-1.0 proportion
-- improvement_trend: one of "improving", "stable", "declining"
-- recommended_scenario: a specific scenario to practice the weakest area, written in Korean
-- category: written in Korean (e.g. "시제 오류", "관사 누락", "전치사 오류")
-- Respond with JSON only. No markdown, no explanation.
-''';
+Return ONLY valid JSON matching the structure above. weakness_patterns max 3 items. All text values in Korean except examples.''';
   }
 }
