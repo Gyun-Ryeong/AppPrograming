@@ -7,6 +7,7 @@ import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
 import '../../models/conversation_session.dart';
 import '../../providers/history_provider.dart';
+import 'history_detail_screen.dart';
 
 class HistoryScreen extends ConsumerWidget {
   const HistoryScreen({super.key});
@@ -34,8 +35,15 @@ class HistoryScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(16),
               itemCount: sessions.length,
               separatorBuilder: (context, index) => const SizedBox(height: 8),
-              itemBuilder: (context, index) =>
-                  _SessionCard(session: sessions[index]),
+              itemBuilder: (context, index) => _SessionCard(
+                session: sessions[index],
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => HistoryDetailScreen(session: sessions[index]),
+                  ),
+                ),
+              ),
             ),
     );
   }
@@ -98,14 +106,18 @@ class _EmptyView extends StatelessWidget {
 // 대화 세션 카드
 class _SessionCard extends StatelessWidget {
   final ConversationSession session;
+  final VoidCallback onTap;
 
-  const _SessionCard({required this.session});
+  const _SessionCard({required this.session, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.surface,
-      child: Padding(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,6 +168,7 @@ class _SessionCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }
