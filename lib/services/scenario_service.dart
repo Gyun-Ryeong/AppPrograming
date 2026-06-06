@@ -26,7 +26,10 @@ class ScenarioService {
             ],
           }
         ],
-        'generationConfig': {'maxOutputTokens': 1024},
+        'generationConfig': {
+          'maxOutputTokens': 1024,
+          'responseMimeType': 'application/json',
+        },
       }),
     );
 

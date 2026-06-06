@@ -40,7 +40,11 @@ class AnalysisService {
             ],
           }
         ],
-        'generationConfig': {'maxOutputTokens': 4096, 'temperature': 0.3},
+        'generationConfig': {
+          'maxOutputTokens': 4096,
+          'temperature': 0.3,
+          'responseMimeType': 'application/json',
+        },
       }),
     );
 
