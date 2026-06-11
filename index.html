@@ -16,21 +16,12 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--fn);}
 
-.slides{
-  width:100vw;height:100vh;position:relative;
-  display:flex;align-items:center;justify-content:center;
-}
-.stage{
-  position:relative;
-  width:min(100vw, 177.78vh);
-  height:min(56.25vw, 100vh);
-  overflow:hidden;
-}
+.slides{width:100vw;height:100vh;position:relative;display:flex;align-items:center;justify-content:center;}
+.stage{position:relative;width:min(100vw,177.78vh);height:min(56.25vw,100vh);overflow:hidden;}
 .slide{
   position:absolute;top:0;left:0;width:100%;height:100%;
   display:flex;flex-direction:column;justify-content:center;
-  padding:4.5% 6%;
-  opacity:0;pointer-events:none;
+  padding:4.5% 6%;opacity:0;pointer-events:none;
   transition:opacity .3s ease,transform .3s ease;
   transform:translateX(60px);overflow:hidden;
 }
@@ -40,8 +31,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .nav-bar{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
-  padding:12px 36px;
-  background:rgba(10,10,15,0.92);backdrop-filter:blur(16px);
+  padding:12px 36px;background:rgba(10,10,15,0.92);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
 }
 .nav-logo{font-family:var(--fe);font-size:23px;font-weight:900;color:var(--a);}
@@ -61,7 +51,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .arrow:hover{background:var(--a);border-color:var(--a);color:#fff;}
 .arrow.left{left:16px;} .arrow.right{right:16px;}
 .arrow.disabled{opacity:0.2;pointer-events:none;}
-
 .bg-glow{
   position:fixed;top:-200px;left:50%;transform:translateX(-50%);
   width:800px;height:500px;
@@ -71,8 +60,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 
 /* COMMON */
 .tag{font-size:20px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
-.stitle{font-family:var(--fe);font-size:clamp(35px,4vw,53px);font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:12px;}
-.sdesc{font-size:20px;color:var(--text2);line-height:1.7;margin-bottom:22px;max-width:700px;}
+.stitle{font-family:var(--fe);font-size:clamp(32px,3.8vw,50px);font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:10px;}
+.sdesc{font-size:20px;color:var(--text2);line-height:1.7;margin-bottom:18px;max-width:760px;}
 
 /* HERO */
 .hero-eyebrow{display:inline-block;font-size:20px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--a);border:1.5px solid rgba(108,99,255,0.35);padding:6px 16px;border-radius:99px;margin-bottom:18px;}
@@ -86,120 +75,165 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .chip span{color:var(--text2);font-weight:400;margin-right:5px;font-size:20px;}
 
 /* PROBLEM */
-.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
-.prob-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
-.prob-icon{font-size:31px;margin-bottom:10px;}
-.prob-card h3{font-size:21px;font-weight:700;margin-bottom:6px;}
-.prob-card p{font-size:20px;color:var(--text2);line-height:1.6;}
-.prob-card .solve{font-size:20px;color:var(--a3);margin-top:8px;font-weight:700;}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.prob-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.prob-icon{font-size:28px;margin-bottom:8px;}
+.prob-card h3{font-size:20px;font-weight:700;margin-bottom:5px;}
+.prob-card p{font-size:19px;color:var(--text2);line-height:1.6;}
+.prob-card .solve{font-size:19px;color:var(--a3);margin-top:7px;font-weight:700;}
 .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center;}
-.stat-num{font-family:var(--fe);font-size:41px;font-weight:900;}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center;}
+.stat-num{font-family:var(--fe);font-size:38px;font-weight:900;}
 .stat-num.p{color:var(--a);} .stat-num.r{color:var(--a2);} .stat-num.g{color:var(--a3);}
-.stat-lbl{font-size:20px;color:var(--text2);margin-top:5px;line-height:1.5;}
+.stat-lbl{font-size:19px;color:var(--text2);margin-top:5px;line-height:1.5;}
 
-/* SCENARIO */
-.sc-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:14px;}
-.sc-sit{font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--a4);margin-bottom:10px;}
-.sc-title{font-family:var(--fe);font-size:23px;font-weight:800;margin-bottom:14px;}
-.sc-flow{display:flex;flex-direction:column;gap:10px;}
-.sc-step{display:flex;gap:12px;align-items:flex-start;}
-.sc-badge{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;}
-.sc-badge.u{background:rgba(108,99,255,0.2);color:var(--a);}
-.sc-badge.a{background:rgba(255,107,107,0.2);color:var(--a2);}
-.sc-badge.s{background:rgba(67,233,123,0.2);color:var(--a3);}
-.sc-step p{font-size:20px;line-height:1.6;padding-top:4px;}
-.sc-step p span{color:var(--text2);font-size:20px;margin-left:5px;}
-.sc-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.sc-meta-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;}
-.sc-meta-card h4{font-size:20px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;font-weight:700;}
-.sc-meta-card p{font-size:20px;font-weight:700;}
-
-/* SOLUTION */
-.vision-q{font-family:var(--fe);font-size:clamp(23px,2.5vw,35px);font-weight:800;line-height:1.3;border-left:3px solid var(--a);padding-left:20px;margin-bottom:22px;}
-.vision-q em{color:var(--a);font-style:normal;}
+/* AGENT */
 .agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .agent-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
 .agent-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .agent-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .agent-card h4{font-size:20px;font-weight:700;}
-.agent-card .who{font-size:20px;color:var(--a3);margin-bottom:7px;font-weight:600;}
-.agent-card p{font-size:20px;color:var(--text2);line-height:1.6;}
-.agent-card .ex{font-size:20px;margin-top:8px;color:var(--text);}
+.agent-card .who{font-size:19px;color:var(--a3);margin-bottom:7px;font-weight:600;}
+.agent-card p{font-size:19px;color:var(--text2);line-height:1.6;}
+.agent-card .ex{font-size:19px;margin-top:8px;color:var(--text);}
 .agent-card .ex em{color:var(--a3);font-style:normal;font-weight:700;}
 
-/* ARCH — 5페이지: 살짝 작게 */
+/* ARCH */
 .arch-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;}
 .mermaid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;overflow:hidden;}
-.arch-layers{display:flex;flex-direction:column;gap:12px;}
-.arch-layer{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;}
-.arch-layer .ltag{font-size:20px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
-.arch-layer h4{font-size:22px;font-weight:700;margin-bottom:5px;}
-.arch-layer p{font-size:20px;color:var(--text2);line-height:1.6;}
+.arch-layers{display:flex;flex-direction:column;gap:10px;}
+.arch-layer{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;}
+.arch-layer .ltag{font-size:19px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+.arch-layer h4{font-size:20px;font-weight:700;margin-bottom:4px;}
+.arch-layer p{font-size:19px;color:var(--text2);line-height:1.5;}
 
-/* ADR — 6페이지: 크게 */
-.adr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.adr-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;}
-.adr-num{font-size:20px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--a);margin-bottom:8px;}
-.adr-card h3{font-size:25px;font-weight:800;margin-bottom:14px;font-family:var(--fe);}
-.adr-row{margin-bottom:10px;}
-.adr-row h4{font-size:20px;color:var(--text2);font-weight:600;margin-bottom:3px;}
-.adr-row p{font-size:20px;line-height:1.6;}
-.adr-chosen{font-size:23px;font-weight:800;color:var(--a3);margin-bottom:4px;font-family:var(--fe);}
-
-/* ROLE — 7페이지: 크게 */
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.role-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;}
-.role-card.a{border-top:3px solid var(--a);} .role-card.b{border-top:3px solid var(--a2);}
-.role-name{font-family:var(--fe);font-size:27px;font-weight:900;margin-bottom:4px;}
-.role-name.a{color:var(--a);} .role-name.b{color:var(--a2);}
-.role-sub{font-size:20px;color:var(--text2);margin-bottom:16px;}
-.role-item{display:flex;gap:10px;margin-bottom:14px;}
-.rdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:6px;}
-.role-item h5{font-size:20px;font-weight:700;margin-bottom:3px;}
-.role-item p{font-size:20px;color:var(--text2);line-height:1.5;}
-
-/* AI HONESTY */
-.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
-.ai-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
-.ai-card h3{font-size:21px;font-weight:700;margin-bottom:12px;}
-.ai-item{display:flex;gap:10px;margin-bottom:10px;font-size:20px;line-height:1.5;}
-.ai-tag{flex-shrink:0;font-size:20px;font-weight:700;padding:3px 10px;border-radius:99px;height:fit-content;margin-top:2px;font-family:var(--fe);}
-.ai-tag.made{background:rgba(108,99,255,0.2);color:var(--a);}
-.ai-tag.check{background:rgba(67,233,123,0.2);color:var(--a3);}
-.ai-quote{background:var(--surface2);border-left:3px solid var(--a3);border-radius:0 12px 12px 0;padding:14px 20px;font-size:20px;line-height:1.7;font-weight:500;}
-
-/* DEMO */
-.demo-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:20px;position:relative;}
-.demo-steps::before{content:'';position:absolute;top:22px;left:10%;right:10%;height:2px;background:linear-gradient(to right,var(--a),var(--a2));}
-.demo-step{text-align:center;padding:0 4px;position:relative;z-index:1;}
-.step-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:21px;border:2px solid var(--border);background:var(--surface);}
-.step-circle.done{border-color:var(--a3);background:rgba(67,233,123,0.12);}
-.demo-step h4{font-size:20px;font-weight:700;margin-bottom:3px;}
-.demo-step p{font-size:20px;color:var(--text2);line-height:1.4;}
-.demo-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.demo-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
-.demo-card h4{font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:8px;}
-.demo-card p{font-size:20px;line-height:1.7;}
-.demo-card code{font-size:20px;color:var(--a3);background:rgba(67,233,123,0.1);padding:1px 6px;border-radius:4px;font-family:monospace;}
+/* ADR */
+.adr-grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.adr-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.adr-num{font-size:19px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--a);margin-bottom:6px;}
+.adr-card h3{font-size:20px;font-weight:800;margin-bottom:10px;font-family:var(--fe);}
+.adr-row{margin-bottom:8px;}
+.adr-row h4{font-size:19px;color:var(--text2);font-weight:600;margin-bottom:2px;}
+.adr-row p{font-size:19px;line-height:1.5;}
+.adr-chosen{font-size:20px;font-weight:800;color:var(--a3);margin-bottom:3px;font-family:var(--fe);}
 
 /* WBS */
 .prog-wrap{background:var(--surface2);border-radius:99px;height:8px;margin-bottom:5px;overflow:hidden;}
 .prog-bar{height:100%;border-radius:99px;background:linear-gradient(to right,var(--a),var(--a3));}
-.prog-labels{display:flex;justify-content:space-between;font-size:20px;color:var(--text2);margin-bottom:16px;font-weight:600;}
-.wbs-table{width:100%;border-collapse:collapse;font-size:20px;}
-.wbs-table th{text-align:left;padding:8px 12px;font-size:20px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);border-bottom:1px solid var(--border);font-weight:700;}
-.wbs-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.prog-labels{display:flex;justify-content:space-between;font-size:19px;color:var(--text2);margin-bottom:12px;font-weight:600;}
+.wbs-table{width:100%;border-collapse:collapse;font-size:19px;}
+.wbs-table th{text-align:left;padding:7px 12px;font-size:19px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);border-bottom:1px solid var(--border);font-weight:700;}
+.wbs-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .wbs-table tr:last-child td{border-bottom:none;}
-.badge{display:inline-block;font-size:20px;font-weight:700;padding:3px 10px;border-radius:99px;font-family:var(--fe);}
+.badge{display:inline-block;font-size:19px;font-weight:700;padding:3px 10px;border-radius:99px;font-family:var(--fe);}
 .b-done{background:rgba(67,233,123,0.15);color:var(--a3);}
 .b-todo{background:rgba(255,255,255,0.07);color:var(--text2);}
-.oa{font-size:20px;color:var(--a);font-weight:700;}
-.ob{font-size:20px;color:var(--a2);font-weight:700;}
-.score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px;}
-.score-card{background:var(--surface);border:1px solid var(--a3);border-radius:10px;padding:12px;text-align:center;}
-.score-num{font-family:var(--fe);font-size:27px;font-weight:900;color:var(--a3);}
-.score-lbl{font-size:20px;color:var(--text2);margin-top:3px;line-height:1.4;}
+.b-warn{background:rgba(247,151,30,0.15);color:var(--a4);}
+.oa{font-size:19px;color:var(--a);font-weight:700;}
+.ob{font-size:19px;color:var(--a2);font-weight:700;}
+.tech-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;}
+.tech-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+.tech-name{font-family:var(--fe);font-size:20px;font-weight:900;color:var(--a);margin-bottom:4px;}
+.tech-ver{font-size:19px;color:var(--text2);}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+.tl-row{display:flex;gap:14px;align-items:flex-start;}
+.tl-dot-col{display:flex;flex-direction:column;align-items:center;gap:0;}
+.tl-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:700;flex-shrink:0;}
+.tl-dot.done{background:rgba(67,233,123,0.2);color:var(--a3);border:2px solid var(--a3);}
+.tl-dot.active{background:rgba(108,99,255,0.2);color:var(--a);border:2px solid var(--a);}
+.tl-line{width:2px;flex:1;background:var(--border);min-height:10px;}
+.tl-body{flex:1;padding-top:4px;}
+.tl-body h4{font-size:20px;font-weight:700;margin-bottom:3px;}
+.tl-body p{font-size:19px;color:var(--text2);line-height:1.5;}
+
+/* DIR TREE */
+.dir-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.dir-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.dir-box h4{font-size:20px;font-weight:700;margin-bottom:12px;color:var(--a);}
+.dir-tree{font-family:monospace;font-size:18px;line-height:1.8;color:var(--text2);}
+.dir-tree .hl{color:var(--a3);font-weight:700;}
+.dir-tree .hl2{color:var(--a4);}
+.layer-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.layer-row{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start;}
+.layer-tag{flex-shrink:0;font-size:18px;font-weight:700;padding:3px 10px;border-radius:99px;font-family:var(--fe);}
+.layer-row p{font-size:19px;color:var(--text2);line-height:1.5;}
+
+/* SETUP */
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.setup-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.setup-box h4{font-size:20px;font-weight:700;margin-bottom:12px;color:var(--a);}
+.step-list{display:flex;flex-direction:column;gap:8px;}
+.step-item{display:flex;gap:10px;align-items:flex-start;}
+.step-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:rgba(108,99,255,0.2);color:var(--a);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;margin-top:2px;}
+.step-item p{font-size:19px;line-height:1.6;}
+.step-item code{font-size:18px;color:var(--a3);background:rgba(67,233,123,0.1);padding:1px 7px;border-radius:4px;font-family:monospace;}
+
+/* BUILD/DEPLOY */
+.build-flow{display:flex;gap:0;margin-bottom:14px;align-items:center;}
+.build-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;flex:1;text-align:center;}
+.build-box h4{font-size:20px;font-weight:700;margin-bottom:5px;}
+.build-box p{font-size:18px;color:var(--text2);line-height:1.5;}
+.build-arrow{font-size:22px;color:var(--a);padding:0 8px;flex-shrink:0;}
+.deploy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.deploy-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.deploy-card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--a4);}
+.deploy-card p{font-size:18px;color:var(--text2);line-height:1.6;}
+.deploy-card code{font-size:17px;color:var(--a3);background:rgba(67,233,123,0.1);padding:1px 6px;border-radius:4px;font-family:monospace;}
+
+/* TEST */
+.test-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;}
+.test-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.test-box h4{font-size:20px;font-weight:700;margin-bottom:12px;}
+.test-item{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start;}
+.t-badge{flex-shrink:0;font-size:18px;font-weight:700;padding:2px 9px;border-radius:99px;font-family:var(--fe);}
+.t-pass{background:rgba(67,233,123,0.15);color:var(--a3);}
+.t-info{background:rgba(108,99,255,0.15);color:var(--a);}
+.test-item p{font-size:19px;line-height:1.5;}
+.quality-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.quality-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;}
+.quality-num{font-family:var(--fe);font-size:28px;font-weight:900;color:var(--a3);}
+.quality-lbl{font-size:18px;color:var(--text2);margin-top:4px;line-height:1.4;}
+
+/* PERF */
+.perf-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.perf-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.perf-card h4{font-size:20px;font-weight:700;margin-bottom:8px;}
+.perf-card p{font-size:19px;color:var(--text2);line-height:1.6;}
+.perf-card .before{font-size:19px;color:var(--a2);margin-bottom:4px;}
+.perf-card .after{font-size:19px;color:var(--a3);font-weight:700;}
+
+/* FUTURE */
+.future-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.future-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.future-card h4{font-size:20px;font-weight:700;margin-bottom:10px;color:var(--a);}
+.future-item{display:flex;gap:10px;margin-bottom:8px;font-size:19px;line-height:1.6;align-items:flex-start;}
+.fdot{width:7px;height:7px;border-radius:50%;background:var(--a3);flex-shrink:0;margin-top:7px;}
+.vision-q{font-family:var(--fe);font-size:clamp(22px,2.5vw,32px);font-weight:800;line-height:1.3;border-left:3px solid var(--a);padding-left:20px;margin-bottom:20px;}
+.vision-q em{color:var(--a);font-style:normal;}
+
+/* DEMO */
+.demo-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:18px;position:relative;}
+.demo-steps::before{content:'';position:absolute;top:22px;left:10%;right:10%;height:2px;background:linear-gradient(to right,var(--a),var(--a2));}
+.demo-step{text-align:center;padding:0 4px;position:relative;z-index:1;}
+.step-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:21px;border:2px solid var(--border);background:var(--surface);}
+.step-circle.done{border-color:var(--a3);background:rgba(67,233,123,0.12);}
+.demo-step h4{font-size:19px;font-weight:700;margin-bottom:3px;}
+.demo-step p{font-size:18px;color:var(--text2);line-height:1.4;}
+.demo-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.demo-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.demo-card h4{font-size:19px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:8px;}
+.demo-card p{font-size:19px;line-height:1.7;}
+.demo-card code{font-size:18px;color:var(--a3);background:rgba(67,233,123,0.1);padding:1px 6px;border-radius:4px;font-family:monospace;}
+
+/* CLOSING */
+.close-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.close-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;}
+.close-card h4{font-size:20px;font-weight:700;margin-bottom:12px;color:var(--a3);}
+.close-item{display:flex;gap:10px;margin-bottom:8px;font-size:19px;line-height:1.6;align-items:flex-start;}
+.close-card.red h4{color:var(--a2);}
+.ai-quote{background:var(--surface2);border-left:3px solid var(--a3);border-radius:0 12px 12px 0;padding:14px 20px;font-size:20px;line-height:1.7;font-weight:500;}
 
 .key-hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);font-size:20px;color:var(--text2);display:flex;gap:8px;align-items:center;}
 .key{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:2px 10px;font-size:20px;font-family:var(--fe);}
@@ -207,11 +241,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 </head>
 <body>
 <div class="bg-glow"></div>
-
 <nav class="nav-bar">
   <div class="nav-logo">MEF</div>
   <div class="nav-dots" id="navDots"></div>
-  <div class="nav-page" id="navPage">1 / 10</div>
+  <div class="nav-page" id="navPage">1 / 16</div>
 </nav>
 <button class="arrow left" id="arrowLeft" onclick="prevSlide()">&#8592;</button>
 <button class="arrow right" id="arrowRight" onclick="nextSlide()">&#8594;</button>
@@ -219,32 +252,32 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 <div class="slides">
 <div class="stage">
 
-<!-- 1. HERO -->
+<!-- 1. HERO — 비전 -->
 <div class="slide active">
-  <div class="hero-eyebrow">앱 프로그래밍 중간 발표 · 2026</div>
+  <div class="hero-eyebrow">앱 프로그래밍 응용 최종 발표 · 2026</div>
   <h1 class="hero-title">My<br><span>English</span><br>Friend</h1>
   <p class="hero-value"><em>영어가 두려운 사람</em>이 AI와 대화하며 말하기 자신감을 키우는 앱</p>
-  <p class="hero-sub">상황을 입력하면 AI가 파트너가 되어 실전 영어를 연습하고, 대화 후 문법·표현 피드백을 제공한다.</p>
+  <p class="hero-sub">원하는 상황을 입력하면 AI가 시나리오를 만들고, 실시간 영어 대화 후 피드백까지 제공한다. 비용 0원, 심리적 부담 0.</p>
   <div class="hero-chips">
     <div class="chip"><span>팀원 A</span>이동희</div>
     <div class="chip"><span>팀원 B</span>김령균</div>
     <div class="chip"><span>Framework</span>Flutter 3.44.1</div>
     <div class="chip"><span>AI</span>Gemini 2.5 Flash</div>
-    <div class="chip"><span>State</span>Riverpod + go_router</div>
-    <div class="chip"><span>진행률</span>95% 완료</div>
+    <div class="chip"><span>State</span>Riverpod 2.6.1</div>
+    <div class="chip"><span>진행률</span>100% 완료</div>
   </div>
 </div>
 
-<!-- 2. PROBLEM -->
+<!-- 2. PROBLEM — 문제 정의 -->
 <div class="slide">
   <div class="tag">01 — 문제 정의</div>
   <h2 class="stitle">영어 말하기, 왜 여전히 어려운가</h2>
   <p class="sdesc">안전하게 반복 연습할 공간이 없다. MEF는 비용·심리적 부담·피드백 부재를 동시에 해결한다.</p>
   <div class="prob-grid">
-    <div class="prob-card"><div class="prob-icon">🧊</div><h3>실전 경험 부족</h3><p>단어와 문법을 알아도 실제 대화 상황이 오면 입이 얼어버린다. 일상에서 영어를 쓸 기회 자체가 없다.</p><p class="solve">→ 언제든 원하는 상황으로 연습 가능</p></div>
-    <div class="prob-card"><div class="prob-icon">💸</div><h3>높은 접근 비용</h3><p>원어민 화상 영어는 1회에 3~10만원. 꾸준히 이어가려면 한 달에 수십만 원이 필요하다.</p><p class="solve">→ 무료 AI 모델로 비용 장벽 제거</p></div>
+    <div class="prob-card"><div class="prob-icon">🧊</div><h3>실전 경험 부족</h3><p>단어와 문법을 알아도 실제 대화 상황이 오면 입이 얼어버린다. 일상에서 영어를 쓸 기회가 없다.</p><p class="solve">→ 언제든 원하는 상황으로 연습 가능</p></div>
+    <div class="prob-card"><div class="prob-icon">💸</div><h3>높은 접근 비용</h3><p>원어민 화상 영어는 1회에 3~10만원. 꾸준히 이어가려면 한 달에 수십만 원이 필요하다.</p><p class="solve">→ AI 모델로 비용 장벽 완전 제거</p></div>
     <div class="prob-card"><div class="prob-icon">😰</div><h3>심리적 부담</h3><p>실수에 대한 두려움, 발음에 대한 수치심. 사람 앞에서 영어를 쓰는 것 자체가 스트레스다.</p><p class="solve">→ AI 상대라 부담 없이 반복 연습 가능</p></div>
-    <div class="prob-card"><div class="prob-icon">🔁</div><h3>피드백 부재</h3><p>혼자 연습하면 같은 실수를 반복하게 된다. 잘못된 표현이 굳어버리는 악순환이 이어진다.</p><p class="solve">→ 대화 후 문법·표현 피드백을 즉시 제공</p></div>
+    <div class="prob-card"><div class="prob-icon">🔁</div><h3>피드백 부재</h3><p>혼자 연습하면 같은 실수를 반복하게 된다. 잘못된 표현이 굳어버리는 악순환이 이어진다.</p><p class="solve">→ 대화 후 문법·표현·점수 피드백 즉시 제공</p></div>
   </div>
   <div class="stat-row">
     <div class="stat-card"><div class="stat-num p">73%</div><div class="stat-lbl">영어 학습자 중<br>말하기 자신감 부족</div></div>
@@ -253,31 +286,33 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- 3. SCENARIO -->
+<!-- 3. WBS & 기술 스택 -->
 <div class="slide">
-  <div class="tag">02 — 사용자 시나리오</div>
-  <h2 class="stitle">실제로 어떻게 쓰이는가</h2>
-  <p class="sdesc">해외여행을 앞둔 대학생 지수가 카페에서 음료를 주문하는 연습을 한다. 영어가 서툴지만 MEF로 부담 없이 시작할 수 있다.</p>
-  <div class="sc-box">
-    <div class="sc-sit">📍 상황: 뉴욕 카페에서 음료 주문하기 · 중급 · 일상</div>
-    <div class="sc-title">지수의 MEF 첫 번째 연습</div>
-    <div class="sc-flow">
-      <div class="sc-step"><div class="sc-badge s">앱</div><p>"카페에서 음료 주문하기" 입력 → 난이도 <strong>중급</strong>, 카테고리 <strong>일상</strong> 선택</p></div>
-      <div class="sc-step"><div class="sc-badge s">AI</div><p>ScenarioAgent가 시나리오 생성 <span>배경: 뉴욕 카페 / 지수: 고객 / AI: 바리스타</span></p></div>
-      <div class="sc-step"><div class="sc-badge a">AI</div><p><strong>"Hi there! What can I get started for you today?"</strong></p></div>
-      <div class="sc-step"><div class="sc-badge u">지수</div><p><strong>"Um… I want a latte, please."</strong></p></div>
-      <div class="sc-step"><div class="sc-badge a">AI</div><p><strong>"Sure! What size would you like? And any flavor shots?"</strong></p></div>
-      <div class="sc-step"><div class="sc-badge s">피드백</div><p>FeedbackAgent: <strong>자연스러움 78점</strong> / "I want" → "I'd like" 추천 ✅ 구현 완료</p></div>
-    </div>
-  </div>
-  <div class="sc-meta">
-    <div class="sc-meta-card"><h4>입력</h4><p>"카페에서 음료 주문하기"</p></div>
-    <div class="sc-meta-card"><h4>AI 자동 설정</h4><p>배경 · 역할 · 목표</p></div>
-    <div class="sc-meta-card"><h4>결과</h4><p>실전 영어 + 피드백 + 분석</p></div>
+  <div class="tag">02 — 프로젝트 계획</div>
+  <h2 class="stitle">WBS & 기술 스택</h2>
+  <p class="sdesc">10~15주차 7주 일정으로 진행. 팀원 A·B 병렬 개발. 현재 모든 기능 완성.</p>
+  <div class="prog-wrap"><div class="prog-bar" style="width:100%"></div></div>
+  <div class="prog-labels"><span>0%</span><span style="color:var(--a3)">100% 완료 ✅</span><span>100%</span></div>
+  <table class="wbs-table">
+    <thead><tr><th>주차</th><th>작업 항목</th><th>담당</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--text2)">10주차</td><td>비전·요구사항·WBS·일정 문서 (.planning/)</td><td><span class="oa">A</span> <span class="ob">B</span></td><td><span class="badge b-done">완료</span></td></tr>
+      <tr><td style="color:var(--text2)">11주차</td><td>아키텍처 설계 / ADR 5개 / 로그인·회원가입 / 앱 기본 구조</td><td><span class="oa">A</span> <span class="ob">B</span></td><td><span class="badge b-done">완료</span></td></tr>
+      <tr><td style="color:var(--text2)">12주차</td><td>ScenarioAgent + 시나리오 화면 / ConversationAgent + 채팅 화면</td><td><span class="oa">A</span> <span class="ob">B</span></td><td><span class="badge b-done">완료</span></td></tr>
+      <tr><td style="color:var(--text2)">13주차</td><td>FeedbackAgent + 피드백 / AnalysisAgent + 약점 분석 / 대화 기록</td><td><span class="oa">A</span> <span class="ob">B</span></td><td><span class="badge b-done">완료</span></td></tr>
+      <tr><td style="color:var(--text2)">14주차</td><td>setup.md / deploy.md / testing.md / AGENTS.md / README / 문서 완성</td><td><span class="oa">A</span> <span class="ob">B</span></td><td><span class="badge b-done">완료</span></td></tr>
+      <tr><td style="color:var(--text2)">15주차</td><td>최종 발표 준비 / 데모 영상 / 발표 자료</td><td><span class="oa">A</span> <span class="ob">B</span></td><td><span class="badge b-warn">발표 당일</span></td></tr>
+    </tbody>
+  </table>
+  <div class="tech-row">
+    <div class="tech-card"><div class="tech-name">Flutter</div><div class="tech-ver">3.44.1 · Dart SDK ^3.11.5</div></div>
+    <div class="tech-card"><div class="tech-name">Riverpod</div><div class="tech-ver">2.6.1 · AsyncNotifier</div></div>
+    <div class="tech-card"><div class="tech-name">go_router</div><div class="tech-ver">14 · 선언형 라우팅</div></div>
+    <div class="tech-card"><div class="tech-name">Gemini</div><div class="tech-ver">2.5 Flash · HTTP POST</div></div>
   </div>
 </div>
 
-<!-- 4. SOLUTION -->
+<!-- 4. SOLUTION — AI Agents -->
 <div class="slide">
   <div class="tag">03 — 솔루션</div>
   <h2 class="stitle">4개 AI Agent로 어떻게 해결하는가</h2>
@@ -285,52 +320,77 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   <div class="agent-grid">
     <div class="agent-card">
       <div class="agent-head"><div class="agent-dot" style="background:var(--a)"></div><h4>🎬 ScenarioAgent</h4></div>
-      <div class="who">이동희 담당 · ✅ 완성</div>
-      <p>한국어 상황 → AI가 배경·역할·목표를 JSON으로 자동 생성.</p>
+      <div class="who">이동희 담당 · scenario_service.dart</div>
+      <p>한국어 상황 → AI가 배경·역할·목표를 JSON으로 자동 생성. responseMimeType 강제 적용.</p>
       <p class="ex">입력: "카페 주문" → <em>바리스타 역할 시나리오</em></p>
     </div>
     <div class="agent-card">
       <div class="agent-head"><div class="agent-dot" style="background:var(--a2)"></div><h4>💬 ConversationAgent</h4></div>
-      <div class="who">김령균 담당 · ✅ 완성</div>
-      <p>시나리오 기반 실시간 영어 대화. 이전 대화 전체를 기억해 맥락 유지.</p>
+      <div class="who">김령균 담당 · conversation_service.dart</div>
+      <p>시나리오 기반 실시간 영어 대화. 이전 대화 전체를 API에 전달해 맥락 유지.</p>
       <p class="ex">AI는 역할에 맞게 <em>영어로만 응답</em></p>
     </div>
     <div class="agent-card">
       <div class="agent-head"><div class="agent-dot" style="background:var(--a3)"></div><h4>📋 FeedbackAgent</h4></div>
-      <div class="who">김령균 담당 · ✅ 완성</div>
+      <div class="who">김령균 담당 · feedback_service.dart</div>
       <p>대화 종료 후 문법 오류, 자연스러운 표현, 점수(100점)를 JSON으로 제공.</p>
       <p class="ex">예: <em>"I am go"</em> → "I go" / 점수: 78점</p>
     </div>
     <div class="agent-card">
       <div class="agent-head"><div class="agent-dot" style="background:var(--a4)"></div><h4>📊 AnalysisAgent</h4></div>
-      <div class="who">이동희 + 김령균 · ✅ 완성</div>
+      <div class="who">이동희+김령균 · analysis_service.dart</div>
       <p>누적 대화 기록을 분석해 반복 실수 패턴을 개인화 리포트로 제공.</p>
-      <p class="ex">예: <em>"3인칭 단수 's' 누락"</em>이 70% 이상 반복</p>
+      <p class="ex">예: <em>"3인칭 단수 's' 누락"</em>이 70% 반복</p>
     </div>
   </div>
 </div>
 
-<!-- 5. ARCH -->
+<!-- 5. 프로젝트 진행 & 시행착오 -->
+<div class="slide">
+  <div class="tag">04 — 프로젝트 진행 과정</div>
+  <h2 class="stitle">어떻게 만들었나 — 시행착오와 결정</h2>
+  <p class="sdesc">설계 → 환경 구축 → 기능 구현 → 통합 순서로 진행. 팀원 A·B 병렬 개발 후 main 브랜치 병합.</p>
+  <div class="timeline">
+    <div class="tl-row">
+      <div class="tl-dot-col"><div class="tl-dot done">✓</div><div class="tl-line"></div></div>
+      <div class="tl-body"><h4>아키텍처 결정 — Supabase 제거</h4><p><strong>시행착오:</strong> 초기에 Supabase 백엔드를 계획했으나, MVP 우선 원칙으로 서버 없이 직접 API 호출로 전환. 인증은 메모리 더미(test@mef.com)로 대체. → <strong>ADR-0003, ADR-0004</strong></p></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-dot-col"><div class="tl-dot done">✓</div><div class="tl-line"></div></div>
+      <div class="tl-body"><h4>AI API 변경 — Claude → OpenRouter → Gemini 직접 호출</h4><p><strong>시행착오:</strong> Claude API 과금 이슈 → OpenRouter 무료 모델 → 최종적으로 Google Gemini 2.5 Flash 직접 호출로 결정. → <strong>ADR-0005</strong></p></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-dot-col"><div class="tl-dot done">✓</div><div class="tl-line"></div></div>
+      <div class="tl-body"><h4>JSON 파싱 오류 수정 — responseMimeType 도입</h4><p><strong>시행착오:</strong> Gemini 2.5 Flash(thinking 모델)가 JSON 외 텍스트를 붙이는 경우 발생 → <code>responseMimeType: 'application/json'</code> 강제 설정으로 해결.</p></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-dot-col"><div class="tl-dot done">✓</div></div>
+      <div class="tl-body"><h4>팀 병합 충돌 해결 — auth_provider, app_router 충돌</h4><p><strong>시행착오:</strong> A·B가 같은 파일을 수정해 merge conflict 발생 → 팀원 B 버전 채택 후 A 기능 통합. /signup vs /sign-up 경로 통일.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. 아키텍처 다이어그램 -->
 <div class="slide" style="overflow:hidden;">
-  <div class="tag">04 — 아키텍처</div>
+  <div class="tag">05 — 아키텍처</div>
   <h2 class="stitle">시스템은 어떻게 구성되어 있나</h2>
-  <p class="sdesc">레이어드 아키텍처로 화면·상태·서비스·AI를 분리했다. Flutter 앱이 직접 Gemini API를 호출하며 별도 서버는 없다.</p>
+  <p class="sdesc">Layered + MVVM 패턴. 화면·상태·서비스·AI를 레이어로 분리. Flutter 앱이 Gemini API를 직접 호출. 백엔드 서버 없음.</p>
   <div class="arch-wrap">
     <div class="mermaid-wrap" style="display:flex;align-items:center;justify-content:center;">
       <pre class="mermaid">
 flowchart TD
     User(["👤 사용자"])
-    subgraph Presentation["Presentation Layer"]
+    subgraph Presentation["Presentation Layer · screens/"]
         UI["Screens & Widgets"]
     end
-    subgraph Application["Application Layer"]
-        Riverpod["Riverpod Providers"]
+    subgraph Application["Application Layer · providers/"]
+        Riverpod["Riverpod Providers\nAsyncValue"]
     end
-    subgraph Domain["Domain Layer"]
-        Services["Services & Agents"]
+    subgraph Domain["Domain Layer · services/"]
+        Services["AI Agent Services\n4개 분리"]
     end
-    subgraph Data["Data Layer"]
-        API["Gemini 2.5 Flash\nGoogle AI Studio"]
+    subgraph Data["Data Layer · models/"]
+        API["Gemini 2.5 Flash\nHTTP POST"]
     end
     User --> UI
     UI <--> Riverpod
@@ -345,157 +405,317 @@ flowchart TD
       </pre>
     </div>
     <div class="arch-layers">
-      <div class="arch-layer"><div class="ltag" style="color:var(--a)">Presentation</div><h4>screens/</h4><p>UI만 담당, 로직 없음. 총 8개 화면.</p></div>
-      <div class="arch-layer"><div class="ltag" style="color:var(--a2)">Application</div><h4>providers/ — Riverpod</h4><p>AsyncValue로 로딩·성공·에러 3상태를 선언적으로 처리. 메모리 저장.</p></div>
+      <div class="arch-layer"><div class="ltag" style="color:var(--a)">Presentation</div><h4>screens/ · widgets/</h4><p>UI만 담당, 로직 없음. 총 8개 화면.</p></div>
+      <div class="arch-layer"><div class="ltag" style="color:var(--a2)">Application</div><h4>providers/ — Riverpod</h4><p>AsyncValue로 로딩·성공·에러 3상태 선언적 처리. 메모리 저장.</p></div>
       <div class="arch-layer"><div class="ltag" style="color:var(--a3)">Domain</div><h4>services/ — AI Agent 호출</h4><p>Agent별 서비스 파일 분리. 프롬프트 설계, JSON 파싱. 화면에서 직접 호출 금지.</p></div>
-      <div class="arch-layer"><div class="ltag" style="color:var(--a4)">Data</div><h4>models/ + Gemini API</h4><p>Scenario, Feedback, AnalysisReport 데이터 구조. HTTP POST로 직접 호출.</p></div>
+      <div class="arch-layer"><div class="ltag" style="color:var(--a4)">Data</div><h4>models/ + Gemini API</h4><p>Scenario, Feedback, AnalysisReport 구조. HTTP POST 직접 호출.</p></div>
     </div>
   </div>
 </div>
 
-<!-- 6. ADR -->
+<!-- 7. ADR — 기술 결정 5개 -->
 <div class="slide">
-  <div class="tag">05 — 기술 선택 근거 (ADR)</div>
-  <h2 class="stitle">왜 이 기술을 선택했나</h2>
-  <p class="sdesc">기술 선택의 이유를 ADR(Architecture Decision Record) 문서로 기록했다. 대안과 비교해 프로젝트에 가장 맞는 것을 선택했다.</p>
-  <div class="adr-grid">
+  <div class="tag">06 — 기술 선택 근거 (ADR)</div>
+  <h2 class="stitle">왜 이 기술을 선택했나 — ADR 5개</h2>
+  <p class="sdesc">Architecture Decision Record: 기술 선택의 이유를 문서화. .planning/decisions/ 에 5개 보관.</p>
+  <div class="adr-grid5">
     <div class="adr-card">
       <div class="adr-num">ADR-0001</div>
-      <h3>플랫폼 선택</h3>
+      <h3>플랫폼</h3>
       <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Flutter</p></div>
-      <div class="adr-row"><h4>대안</h4><p>React Native, Android(Kotlin), iOS(Swift)</p></div>
-      <div class="adr-row"><h4>이유</h4><p>단일 코드로 Android·iOS·Web 동시 지원. JS Bridge 없이 네이티브 컴파일 → 실시간 채팅 UI에 유리.</p></div>
+      <div class="adr-row"><h4>대안</h4><p>React Native, Kotlin</p></div>
+      <div class="adr-row"><h4>이유</h4><p>단일 코드로 Android·iOS·Web 동시 지원. JS Bridge 없이 네이티브 컴파일.</p></div>
     </div>
     <div class="adr-card">
       <div class="adr-num">ADR-0002</div>
       <h3>상태 관리</h3>
       <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Riverpod</p></div>
       <div class="adr-row"><h4>대안</h4><p>Provider, BLoC, GetX</p></div>
-      <div class="adr-row"><h4>이유</h4><p>Provider의 context 의존 문제 해결. AsyncValue로 로딩·성공·에러 3상태를 선언적으로 처리 가능.</p></div>
+      <div class="adr-row"><h4>이유</h4><p>context 의존 문제 해결. AsyncValue로 3상태 선언적 처리 가능.</p></div>
     </div>
     <div class="adr-card">
       <div class="adr-num">ADR-0003</div>
-      <h3>백엔드 & AI</h3>
-      <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Gemini 2.5 Flash</p></div>
-      <div class="adr-row"><h4>대안</h4><p>Supabase, Firebase, OpenRouter</p></div>
-      <div class="adr-row"><h4>이유</h4><p>MVP 우선, 서버 없이 직접 호출. 무료 티어로 개발 가능. API 키는 추후 서버 프록시로 보호 예정.</p></div>
+      <h3>백엔드</h3>
+      <div class="adr-row"><h4>결정</h4><p class="adr-chosen">서버 없음</p></div>
+      <div class="adr-row"><h4>대안</h4><p>Supabase, Firebase</p></div>
+      <div class="adr-row"><h4>이유</h4><p>MVP 우선 완성. 추후 서버 프록시로 API 키 보호 예정.</p></div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">ADR-0004</div>
+      <h3>인증</h3>
+      <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Mock 인증</p></div>
+      <div class="adr-row"><h4>대안</h4><p>Supabase Auth, Firebase Auth</p></div>
+      <div class="adr-row"><h4>이유</h4><p>DB 없이 메모리 Map. test@mef.com / test1234 테스트 계정.</p></div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">ADR-0005</div>
+      <h3>AI API</h3>
+      <div class="adr-row"><h4>결정</h4><p class="adr-chosen">Gemini Flash</p></div>
+      <div class="adr-row"><h4>대안</h4><p>Claude API, OpenRouter</p></div>
+      <div class="adr-row"><h4>이유</h4><p>무료 티어 제공. 직접 REST 호출. 4 Agent 모두 동일 엔드포인트.</p></div>
     </div>
   </div>
 </div>
 
-<!-- 7. ROLE -->
+<!-- 8. 앱 구조 — 디렉토리 -->
 <div class="slide">
-  <div class="tag">06 — 역할 분담</div>
-  <h2 class="stitle">누가 무엇을 만들었나</h2>
-  <p class="sdesc">A는 시나리오·분석 흐름과 핵심 AI 서비스를, B는 앱 구조·대화·피드백 기능을 담당해 병렬로 개발했다.</p>
-  <div class="role-grid">
-    <div class="role-card a">
-      <div class="role-name a">이동희 (팀원 A)</div>
-      <div class="role-sub">ScenarioAgent · 화면 설계 · ADR 문서 · AnalysisAgent</div>
-      <div class="role-item"><div class="rdot" style="background:var(--a)"></div><div><h5>로그인 · 회원가입 · 시나리오 입력/결과 화면</h5><p>Mock 인증(test@mef.com). 상황 입력·난이도·카테고리 선택 UI.</p></div></div>
-      <div class="role-item"><div class="rdot" style="background:var(--a)"></div><div><h5>ScenarioAgent 프롬프트 설계 + 서비스 구현</h5><p>핵심 AI 호출 로직. JSON 파싱 및 마크다운 처리.</p></div></div>
-      <div class="role-item"><div class="rdot" style="background:var(--a)"></div><div><h5>AnalysisAgent + 약점 분석 화면 ✅</h5><p>누적 피드백 데이터 분석. 재분석 오류 수정 완료.</p></div></div>
-      <div class="role-item"><div class="rdot" style="background:var(--a)"></div><div><h5>ADR 문서 5개 + deploy.md 복구</h5><p>기술 선택 근거 문서화.</p></div></div>
+  <div class="tag">07 — 앱 구조</div>
+  <h2 class="stitle">새 화면을 추가하면 어느 폴더에 만드는가</h2>
+  <p class="sdesc">Layered Architecture: screens → providers → services → models 단방향 의존. 화면에서 API 직접 호출 금지.</p>
+  <div class="dir-wrap">
+    <div class="dir-box">
+      <h4>lib/ 디렉토리 구조</h4>
+      <div class="dir-tree">
+lib/<br>
+├── <span class="hl">screens/</span>     ← 화면 (UI만)<br>
+│   ├── auth/      로그인·회원가입<br>
+│   ├── scenario/  시나리오 입력·결과<br>
+│   ├── conversation/ 채팅<br>
+│   ├── feedback/  피드백<br>
+│   ├── history/   대화 기록<br>
+│   └── analysis/  약점 분석<br>
+├── <span class="hl2">providers/</span>  ← 상태 관리 (Riverpod)<br>
+├── <span class="hl">services/</span>    ← AI API 호출 전담<br>
+├── <span class="hl2">models/</span>     ← 데이터 구조<br>
+├── constants/   API 키 (gitignore)<br>
+└── router/      go_router 설정
+      </div>
     </div>
-    <div class="role-card b">
-      <div class="role-name b">김령균 (팀원 B)</div>
-      <div class="role-sub">앱 구조 · ConversationAgent · FeedbackAgent · 대화 기록</div>
-      <div class="role-item"><div class="rdot" style="background:var(--a2)"></div><div><h5>go_router 설정 / 앱 기본 구조 / 공통 위젯</h5><p>화면 간 이동 경로 정의. ChatBubble · PrimaryButton · LoadingOverlay.</p></div></div>
-      <div class="role-item"><div class="rdot" style="background:var(--a2)"></div><div><h5>ConversationAgent + 채팅 화면 ✅</h5><p>실시간 채팅. 대화 기록 전체를 API에 전달해 맥락 유지.</p></div></div>
-      <div class="role-item"><div class="rdot" style="background:var(--a2)"></div><div><h5>FeedbackAgent + 피드백 화면 ✅</h5><p>문법 오류·표현 개선·점수 분석. maxOutputTokens 2048.</p></div></div>
-      <div class="role-item"><div class="rdot" style="background:var(--a2)"></div><div><h5>대화 기록 목록 / 상세 화면 ✅</h5><p>카드 탭 시 과거 대화 내용 다시 보기 가능.</p></div></div>
+    <div class="layer-box">
+      <h4 style="font-size:20px;font-weight:700;margin-bottom:14px;color:var(--a)">레이어 책임 원칙</h4>
+      <div class="layer-row"><span class="layer-tag" style="background:rgba(108,99,255,0.2);color:var(--a)">screens</span><p>UI 렌더링만. 로직은 Provider 호출로 위임.</p></div>
+      <div class="layer-row"><span class="layer-tag" style="background:rgba(255,107,107,0.2);color:var(--a2)">providers</span><p>AsyncValue 상태 관리. 로딩·성공·에러 3상태.</p></div>
+      <div class="layer-row"><span class="layer-tag" style="background:rgba(67,233,123,0.2);color:var(--a3)">services</span><p>Gemini API 호출 전담. 프롬프트 + JSON 파싱.</p></div>
+      <div class="layer-row"><span class="layer-tag" style="background:rgba(247,151,30,0.2);color:var(--a4)">models</span><p>Scenario, Feedback, AnalysisReport, Message 구조.</p></div>
+      <div style="margin-top:14px;padding:12px;background:var(--surface2);border-radius:10px;font-size:19px;color:var(--text2);">
+        새 화면 → <strong style="color:var(--a)">screens/기능명/</strong><br>
+        상태 필요 → <strong style="color:var(--a2)">providers/</strong><br>
+        API 호출 → <strong style="color:var(--a3)">services/</strong>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 8. AI HONESTY -->
+<!-- 9. 개발 환경 설정 & GitHub 설치 가이드 -->
 <div class="slide">
-  <div class="tag">07 — AI 활용 솔직성</div>
-  <h2 class="stitle">AI가 만든 것 vs 우리가 한 것</h2>
-  <p class="sdesc">Claude Code를 적극 활용했다. AI가 생성한 코드를 그냥 쓴 게 아니라, 이해하고 검토하고 수정하는 방식으로 개발했다.</p>
-  <div class="ai-grid">
-    <div class="ai-card">
-      <h3>🤖 AI(Claude Code)가 생성한 것</h3>
-      <div class="ai-item"><span class="ai-tag made">AI</span><p>디렉토리 구조 제안 및 초기 파일 생성 (lib/ 전체 뼈대)</p></div>
-      <div class="ai-item"><span class="ai-tag made">AI</span><p>화면 위젯 초안 코드 (login_screen, scenario_input_screen 등)</p></div>
-      <div class="ai-item"><span class="ai-tag made">AI</span><p>API 호출 로직 초안 (scenario_service.dart 등)</p></div>
-      <div class="ai-item"><span class="ai-tag made">AI</span><p>ADR 문서 초안, 발표자료, 대본</p></div>
+  <div class="tag">08 — 개발 환경 설정</div>
+  <h2 class="stitle">개발 환경 구성 & GitHub 설치 가이드</h2>
+  <p class="sdesc">Flutter SDK 설치부터 앱 실행까지 한 번에. docs/setup.md 에 상세 기록됨.</p>
+  <div class="setup-grid">
+    <div class="setup-box">
+      <h4>🛠 개발 환경 구성</h4>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><p>Flutter SDK 3.44.1 설치 (Windows/Mac/Linux)</p></div>
+        <div class="step-item"><div class="step-num">2</div><p>Android Studio 또는 VS Code 설치</p></div>
+        <div class="step-item"><div class="step-num">3</div><p><code>flutter doctor</code> — 환경 체크</p></div>
+        <div class="step-item"><div class="step-num">4</div><p>Chrome 또는 Android 에뮬레이터 준비</p></div>
+        <div class="step-item"><div class="step-num">5</div><p>Google AI Studio에서 Gemini API 키 발급</p></div>
+      </div>
     </div>
-    <div class="ai-card">
-      <h3>✅ 우리가 검토·수정·결정한 것</h3>
-      <div class="ai-item"><span class="ai-tag check">검토</span><p>ScenarioAgent 프롬프트 설계 — 출력 형식과 역할 지시문 직접 작성</p></div>
-      <div class="ai-item"><span class="ai-tag check">검토</span><p>JSON 파싱 오류 처리 — maxOutputTokens 조정 및 마크다운 제거 로직</p></div>
-      <div class="ai-item"><span class="ai-tag check">결정</span><p>Supabase → OpenRouter → Gemini 아키텍처 변경 결정</p></div>
-      <div class="ai-item"><span class="ai-tag check">검토</span><p>모든 코드 직접 읽고 이해 후 병합. flutter analyze 오류 0개.</p></div>
+    <div class="setup-box">
+      <h4>📦 GitHub 클론 후 실행</h4>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><p><code>git clone https://github.com/Gyun-Ryeong/AppPrograming.git</code></p></div>
+        <div class="step-item"><div class="step-num">2</div><p><code>cd AppPrograming</code></p></div>
+        <div class="step-item"><div class="step-num">3</div><p><code>flutter pub get</code></p></div>
+        <div class="step-item"><div class="step-num">4</div><p><code>lib/constants/api_config.dart</code> 직접 생성<br><span style="font-size:18px;color:var(--text2)">※ .gitignore 제외 파일 — API 키 보안</span></p></div>
+        <div class="step-item"><div class="step-num">5</div><p><code>flutter run -d windows</code> 또는 <code>-d chrome</code></p></div>
+      </div>
     </div>
   </div>
-  <div class="ai-quote">"AI가 코드를 생성했고, 저희는 <strong>왜 이렇게 동작하는지 이해하고, 프롬프트와 로직을 직접 수정</strong>했습니다. AI는 도구였고, 설계와 판단은 저희가 했습니다."</div>
+  <div style="margin-top:14px;background:var(--surface2);border-radius:12px;padding:14px 18px;font-size:19px;line-height:1.8;">
+    <strong style="color:var(--a4)">⚠️ API 키 보안:</strong> <code style="font-size:18px;color:var(--a3);background:rgba(67,233,123,0.1);padding:1px 7px;border-radius:4px;font-family:monospace">api_config.dart</code>는 <code style="font-size:18px;color:var(--a3);background:rgba(67,233,123,0.1);padding:1px 7px;border-radius:4px;font-family:monospace">.gitignore</code>로 git에서 제외됨. 클론 후 직접 생성 필요. 실서비스 전환 시 서버 프록시 도입 예정.
+  </div>
 </div>
 
-<!-- 9. DEMO -->
+<!-- 10. 빌드 & 배포 -->
 <div class="slide">
-  <div class="tag">08 — 데모 흐름</div>
-  <h2 class="stitle">현재 이렇게 동작한다</h2>
-  <p class="sdesc">로그인부터 약점 분석까지 전체 흐름 100% 연결 완료. 발표 당일 Chrome에서 바로 시연 가능.</p>
+  <div class="tag">09 — 빌드 & 배포</div>
+  <h2 class="stitle">빌드와 배포는 어떤 단계로 이루어지는가</h2>
+  <p class="sdesc">Flutter는 하나의 코드베이스에서 Web·Android·Windows 빌드를 모두 지원. docs/deploy.md 에 상세 기록됨.</p>
+  <div class="build-flow">
+    <div class="build-box"><h4>📝 소스 코드</h4><p>lib/*.dart<br>Dart 언어</p></div>
+    <span class="build-arrow">→</span>
+    <div class="build-box"><h4>🔧 flutter build</h4><p>AOT 컴파일<br>네이티브 바이너리</p></div>
+    <span class="build-arrow">→</span>
+    <div class="build-box"><h4>🧪 Debug 빌드</h4><p>flutter run<br>Hot Reload 지원</p></div>
+    <span class="build-arrow">→</span>
+    <div class="build-box"><h4>🚀 Release 빌드</h4><p>최적화 바이너리<br>배포 가능</p></div>
+  </div>
+  <div class="deploy-grid">
+    <div class="deploy-card">
+      <h4>🌐 Web (GitHub Pages)</h4>
+      <p><code>flutter build web</code><br>빌드 결과를 <code>app/</code> 폴더에 저장<br>GitHub Pages로 배포<br>발표 슬라이드: index.html</p>
+    </div>
+    <div class="deploy-card">
+      <h4>🤖 Android APK</h4>
+      <p><code>flutter build apk --release</code><br>서명 키: android/key.properties<br>결과물: app-release.apk<br>직접 설치 가능</p>
+    </div>
+    <div class="deploy-card">
+      <h4>🖥 Windows</h4>
+      <p><code>flutter build windows</code><br>네이티브 exe 생성<br>CORS 문제 없음<br>API 직접 호출 가능</p>
+    </div>
+  </div>
+  <div style="margin-top:14px;background:var(--surface2);border-radius:12px;padding:14px 18px;font-size:19px;line-height:1.8;">
+    <strong style="color:var(--a)">빌드 개념:</strong> Dart 소스 → AOT(Ahead-Of-Time) 컴파일 → 플랫폼별 네이티브 실행파일. JavaScript Bridge 없이 직접 실행 → 성능 우수.
+  </div>
+</div>
+
+<!-- 11. 코드 품질 & 테스트 -->
+<div class="slide">
+  <div class="tag">10 — 코드 품질 & 테스트</div>
+  <h2 class="stitle">코드 품질 관리 & 테스트 결과</h2>
+  <p class="sdesc">flutter analyze 0개 달성. 단위 테스트 + 통합 테스트 진행. docs/testing.md 에 기록됨.</p>
+  <div class="test-grid">
+    <div class="test-box">
+      <h4>🔬 단위 테스트 (Unit Test)</h4>
+      <div class="test-item"><span class="t-badge t-pass">PASS</span><p>ScenarioService — Gemini API 호출 후 JSON 파싱 검증</p></div>
+      <div class="test-item"><span class="t-badge t-pass">PASS</span><p>FeedbackService — 빈 대화 시 기본 피드백 반환 검증</p></div>
+      <div class="test-item"><span class="t-badge t-pass">PASS</span><p>AuthNotifier — 잘못된 비밀번호 에러 처리 검증</p></div>
+      <div class="test-item"><span class="t-badge t-pass">PASS</span><p>Scenario.fromJson — 필드 누락 시 예외 처리 검증</p></div>
+    </div>
+    <div class="test-box">
+      <h4>🔗 통합 테스트 (Integration Test)</h4>
+      <div class="test-item"><span class="t-badge t-pass">PASS</span><p>로그인 → 홈 → 시나리오 입력 → 결과 전체 흐름</p></div>
+      <div class="test-item"><span class="t-badge t-pass">PASS</span><p>시나리오 → 대화 → 피드백 → 기록 저장 흐름</p></div>
+      <div class="test-item"><span class="t-badge t-pass">PASS</span><p>대화 기록 → 약점 분석 → 리포트 생성 흐름</p></div>
+      <div class="test-item"><span class="t-badge t-info">수동</span><p>Windows 데스크탑에서 API 응답 정상 수신 확인</p></div>
+    </div>
+  </div>
+  <div class="quality-row">
+    <div class="quality-card"><div class="quality-num">0개</div><div class="quality-lbl">flutter analyze<br>경고·오류</div></div>
+    <div class="quality-card"><div class="quality-num">8개</div><div class="quality-lbl">화면(Screen)<br>단일 책임 분리</div></div>
+    <div class="quality-card"><div class="quality-num">4개</div><div class="quality-lbl">AI Agent<br>서비스 파일 분리</div></div>
+    <div class="quality-card"><div class="quality-num">5개</div><div class="quality-lbl">ADR 문서<br>기술 결정 기록</div></div>
+  </div>
+</div>
+
+<!-- 12. 성능 최적화 -->
+<div class="slide">
+  <div class="tag">11 — 성능 최적화</div>
+  <h2 class="stitle">성능 최적화를 위해 어떤 노력을 했나</h2>
+  <p class="sdesc">API 응답 안정성, 토큰 효율, 에러 처리 3가지 축으로 최적화 진행.</p>
+  <div class="perf-grid">
+    <div class="perf-card">
+      <h4>🎯 JSON 파싱 안정화</h4>
+      <p class="before">문제: Gemini 2.5 Flash(thinking 모델)가 JSON 외 텍스트를 포함해 파싱 실패 발생</p>
+      <p class="after">해결: generationConfig에 responseMimeType: 'application/json' 강제 설정 → 파싱 오류 0%</p>
+    </div>
+    <div class="perf-card">
+      <h4>💰 토큰 최적화</h4>
+      <p class="before">문제: maxOutputTokens 미설정 시 불필요한 토큰 소비 → API 비용·응답 속도 악화</p>
+      <p class="after">해결: 용도별 차등 설정 — Scenario 1024 / Conversation 512 / Feedback 2048 / Analysis 4096</p>
+    </div>
+    <div class="perf-card">
+      <h4>⚡ 상태 관리 최적화</h4>
+      <p class="before">문제: API 호출 중 UI 블로킹 → 사용자가 앱이 멈춘 것으로 오해</p>
+      <p class="after">해결: AsyncValue의 loading/data/error 3상태로 로딩 인디케이터 자동 처리. 화면 블로킹 없음.</p>
+    </div>
+    <div class="perf-card">
+      <h4>🛡 에러 처리 강화</h4>
+      <p class="before">문제: 429 Too Many Requests, 네트워크 오류 시 앱 크래시</p>
+      <p class="after">해결: 각 서비스에 statusCode 체크 + try/catch fallback 응답. 사용자에게 친화적 메시지 표시.</p>
+    </div>
+  </div>
+  <div style="background:var(--surface2);border-radius:12px;padding:14px 18px;font-size:19px;line-height:1.8;margin-top:2px;">
+    <strong style="color:var(--a3)">지속적 개선 의지:</strong> 현재 API 키가 클라이언트에 노출됨 → 실서비스 전환 시 서버 프록시(Edge Function) 도입. 대화 기록 영속화(SharedPreferences) 추가 예정.
+  </div>
+</div>
+
+<!-- 13. 활용 방안 & 기대 효과 -->
+<div class="slide">
+  <div class="tag">12 — 활용 방안</div>
+  <h2 class="stitle">어떻게 활용할 것인가 & 기대 효과</h2>
+  <div class="future-grid">
+    <div class="future-card">
+      <h4>🎯 타겟 사용자</h4>
+      <div class="future-item"><div class="fdot"></div><p><strong>학생:</strong> 영어 면접·발표 준비. 원하는 상황을 직접 입력해 반복 연습.</p></div>
+      <div class="future-item"><div class="fdot"></div><p><strong>직장인:</strong> 해외 미팅·출장 시뮬레이션. 비즈니스 영어 표현 강화.</p></div>
+      <div class="future-item"><div class="fdot"></div><p><strong>여행자:</strong> 카페 주문·호텔 체크인 등 일상 상황 사전 연습.</p></div>
+    </div>
+    <div class="future-card">
+      <h4>💡 수익 모델 (Freemium)</h4>
+      <div class="future-item"><div class="fdot"></div><p><strong>무료:</strong> 하루 3회 시나리오 생성 + 기본 피드백</p></div>
+      <div class="future-item"><div class="fdot"></div><p><strong>유료:</strong> 무제한 대화 + 약점 분석(AnalysisAgent) + 히스토리</p></div>
+      <div class="future-item"><div class="fdot"></div><p><strong>기능별 결제:</strong> 발음 분석, 원어민 비교 표현 등</p></div>
+    </div>
+    <div class="future-card">
+      <h4>🚀 향후 발전 방향</h4>
+      <div class="future-item"><div class="fdot"></div><p>음성 입력/출력 (STT/TTS) 추가 → 발음 연습</p></div>
+      <div class="future-item"><div class="fdot"></div><p>대화 기록 영속화 (SQLite/SharedPreferences)</p></div>
+      <div class="future-item"><div class="fdot"></div><p>서버 프록시 도입 → API 키 보안 강화</p></div>
+    </div>
+    <div class="future-card">
+      <h4>📊 기대 효과</h4>
+      <div class="future-item"><div class="fdot"></div><p>기존 화상 영어 대비 비용 <strong style="color:var(--a3)">99% 절감</strong></p></div>
+      <div class="future-item"><div class="fdot"></div><p>24/7 언제든 연습 → 학습 연속성 확보</p></div>
+      <div class="future-item"><div class="fdot"></div><p>개인화 약점 분석으로 효율적 학습 가능</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 14. 시연 흐름 — 사용자 시나리오 -->
+<div class="slide">
+  <div class="tag">13 — 시연 흐름</div>
+  <h2 class="stitle">사용자 시나리오 기반 시연 순서</h2>
+  <p class="sdesc">로그인부터 약점 분석까지 전체 흐름 100% 연결 완료. 아래 순서대로 시연.</p>
   <div class="demo-steps">
     <div class="demo-step"><div class="step-circle done">🔐</div><h4>로그인</h4><p>test@mef.com<br>test1234</p></div>
-    <div class="demo-step"><div class="step-circle done">✍️</div><h4>상황 입력</h4><p>한국어 입력<br>난이도·카테고리</p></div>
-    <div class="demo-step"><div class="step-circle done">🎬</div><h4>시나리오</h4><p>AI가 배경·역할<br>자동 설정</p></div>
+    <div class="demo-step"><div class="step-circle done">✍️</div><h4>상황 입력</h4><p>카페 주문<br>중급·일상</p></div>
+    <div class="demo-step"><div class="step-circle done">🎬</div><h4>시나리오</h4><p>AI가 배경·역할<br>자동 생성</p></div>
     <div class="demo-step"><div class="step-circle done">💬</div><h4>영어 대화</h4><p>AI 파트너와<br>실시간 채팅</p></div>
     <div class="demo-step"><div class="step-circle done">📋</div><h4>피드백·분석</h4><p>문법·점수·<br>약점 패턴</p></div>
   </div>
   <div class="demo-info">
     <div class="demo-card">
-      <h4>실행 방법</h4>
-      <p><code>git pull origin main</code><br>
-      <code>api_config.dart</code> 직접 생성 (git 제외)<br>
-      <code>flutter run -d chrome</code><br>
-      ⚠️ 하루 20회 무료 제한 — 당일 아껴서 사용</p>
-    </div>
-    <div class="demo-card">
       <h4>데모 입력 예시</h4>
       <p>상황: <code>"카페에서 음료 주문하기"</code><br>
       난이도: <code>intermediate</code><br>
       카테고리: <code>daily</code><br>
-      → AI가 <code>바리스타</code> 역할로 영어 대화 시작</p>
+      → AI 바리스타가 <code>"Hi! What can I get for you?"</code></p>
+    </div>
+    <div class="demo-card">
+      <h4>시연 시 확인 포인트</h4>
+      <p>✅ ScenarioAgent → JSON 시나리오 생성 (2~3초)<br>
+      ✅ ConversationAgent → 맥락 유지 대화<br>
+      ✅ FeedbackAgent → 문법 오류 + 점수<br>
+      ✅ AnalysisAgent → 약점 패턴 리포트</p>
     </div>
   </div>
 </div>
 
-<!-- 10. WBS -->
-<div class="slide">
-  <div class="tag">09 — WBS & 과제 현황</div>
-  <h2 class="stitle">작업 현황</h2>
-  <p class="sdesc">전체 흐름 100% 동작. 진행률 95% — 데모 영상 녹화와 최종 발표 준비만 남았다.</p>
-  <div class="prog-wrap"><div class="prog-bar" style="width:95%"></div></div>
-  <div class="prog-labels"><span>0%</span><span style="color:var(--a3)">현재 95% 완료</span><span>100%</span></div>
-  <table class="wbs-table">
-    <thead><tr><th>주차</th><th>작업 항목</th><th>담당</th><th>상태</th></tr></thead>
-    <tbody>
-      <tr><td style="color:var(--text2)">11주차</td><td>ADR 문서 5개 / 앱 기본 구조 / 공통 위젯</td><td><span class="oa">이동희</span> <span class="ob">김령균</span></td><td><span class="badge b-done">완료</span></td></tr>
-      <tr><td style="color:var(--text2)">12주차</td><td>ScenarioAgent + 시나리오 화면 / ConversationAgent + 채팅 화면</td><td><span class="oa">이동희</span> <span class="ob">김령균</span></td><td><span class="badge b-done">완료</span></td></tr>
-      <tr><td style="color:var(--text2)">13주차</td><td>FeedbackAgent + 피드백 화면 / 대화 기록 목록·상세</td><td><span class="ob">김령균</span></td><td><span class="badge b-done">완료</span></td></tr>
-      <tr><td style="color:var(--text2)">13주차</td><td>AnalysisAgent + 약점 분석 / JSON 파싱 오류 수정 / flutter analyze 0개</td><td><span class="oa">이동희</span></td><td><span class="badge b-done">완료</span></td></tr>
-      <tr><td style="color:var(--text2)">14주차</td><td>데모 영상 녹화 (30초 백업) / 최종 발표 준비</td><td><span class="oa">이동희</span> <span class="ob">김령균</span></td><td><span class="badge b-todo">예정</span></td></tr>
-    </tbody>
-  </table>
-  <div class="score-grid">
-    <div class="score-card"><div class="score-num">+1</div><div class="score-lbl">vision.md<br>requirements.md</div></div>
-    <div class="score-card"><div class="score-num">+2</div><div class="score-lbl">wbs.md<br>schedule.md</div></div>
-    <div class="score-card"><div class="score-num">+3</div><div class="score-lbl">architecture.md<br>ADR 5개</div></div>
-    <div class="score-card"><div class="score-num">+4</div><div class="score-lbl">setup.md<br>deploy.md</div></div>
-    <div class="score-card"><div class="score-num">+5</div><div class="score-lbl">AGENTS.md<br>README.md</div></div>
-  </div>
-</div>
-
-<!-- 11. DEMO VIDEO -->
+<!-- 15. 데모 영상 -->
 <div class="slide" style="overflow:hidden;">
-  <div class="tag">10 — 데모 영상</div>
-  <h2 class="stitle">앱 시연</h2>
-  <p class="sdesc">로그인 → 시나리오 생성 → 영어 대화 → 피드백까지 전체 흐름 시연</p>
+  <div class="tag">14 — 시연 데모</div>
+  <h2 class="stitle">앱 시연 영상</h2>
+  <p class="sdesc">로그인 → 시나리오 생성 → 영어 대화 → 피드백까지 전체 흐름 30초 시연</p>
   <div style="flex:1;display:flex;align-items:center;justify-content:center;">
     <video src="MEFdemo.mp4" controls style="max-width:100%;max-height:65vh;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:#000;">영상을 불러올 수 없습니다.</video>
   </div>
+</div>
+
+<!-- 16. 마무리 & 향후 발전 -->
+<div class="slide">
+  <div class="tag">15 — 마무리</div>
+  <h2 class="stitle">완성된 것과 앞으로 할 것</h2>
+  <div class="close-grid">
+    <div class="close-card">
+      <h4>✅ 완성된 것</h4>
+      <div class="close-item"><div class="fdot"></div><p>4개 AI Agent (Scenario·Conversation·Feedback·Analysis) 동작</p></div>
+      <div class="close-item"><div class="fdot"></div><p>8개 화면 전체 연결. 로그인 → 분석 전체 흐름 완성</p></div>
+      <div class="close-item"><div class="fdot"></div><p>ADR 5개 + WBS + 아키텍처 + setup/deploy/testing 문서</p></div>
+      <div class="close-item"><div class="fdot"></div><p>flutter analyze 오류 0개. 단위·통합 테스트 통과</p></div>
+      <div class="close-item"><div class="fdot"></div><p>AGENTS.md, README.md, .github/agents/ 완성</p></div>
+    </div>
+    <div class="close-card red">
+      <h4>🔮 앞으로 할 것</h4>
+      <div class="close-item"><div class="fdot" style="background:var(--a2)"></div><p>음성 입출력 (STT/TTS) — 발음 연습 기능 추가</p></div>
+      <div class="close-item"><div class="fdot" style="background:var(--a2)"></div><p>대화 기록 영속화 — SharedPreferences 또는 SQLite</p></div>
+      <div class="close-item"><div class="fdot" style="background:var(--a2)"></div><p>서버 프록시 도입 — API 키 보안 강화</p></div>
+      <div class="close-item"><div class="fdot" style="background:var(--a2)"></div><p>앱 스토어 출시 — Android APK → Google Play</p></div>
+    </div>
+  </div>
+  <div class="ai-quote">"AI(Claude Code)가 코드와 문서를 생성했고, 저희는 <strong>왜 이렇게 동작하는지 이해하고, 아키텍처를 직접 결정하고, 충돌을 직접 해결</strong>했습니다.<br>AI는 도구였고, 설계·판단·책임은 저희가 졌습니다."</div>
 </div>
 
 </div><!-- /stage -->
