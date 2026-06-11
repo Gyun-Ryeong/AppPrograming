@@ -272,17 +272,16 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 <div class="slide">
   <div class="tag">01 — 문제 정의</div>
   <h2 class="stitle">영어 말하기, 왜 여전히 어려운가</h2>
-  <p class="sdesc">안전하게 반복 연습할 공간이 없다. MEF는 비용·심리적 부담·피드백 부재를 동시에 해결한다.</p>
-  <div class="prob-grid">
-    <div class="prob-card"><div class="prob-icon">🧊</div><h3>실전 경험 부족</h3><p>단어와 문법을 알아도 실제 대화 상황이 오면 입이 얼어버린다. 일상에서 영어를 쓸 기회가 없다.</p><p class="solve">→ 언제든 원하는 상황으로 연습 가능</p></div>
-    <div class="prob-card"><div class="prob-icon">💸</div><h3>높은 접근 비용</h3><p>원어민 화상 영어는 1회에 3~10만원. 꾸준히 이어가려면 한 달에 수십만 원이 필요하다.</p><p class="solve">→ AI 모델로 비용 장벽 완전 제거</p></div>
-    <div class="prob-card"><div class="prob-icon">😰</div><h3>심리적 부담</h3><p>실수에 대한 두려움, 발음에 대한 수치심. 사람 앞에서 영어를 쓰는 것 자체가 스트레스다.</p><p class="solve">→ AI 상대라 부담 없이 반복 연습 가능</p></div>
-    <div class="prob-card"><div class="prob-icon">🔁</div><h3>피드백 부재</h3><p>혼자 연습하면 같은 실수를 반복하게 된다. 잘못된 표현이 굳어버리는 악순환이 이어진다.</p><p class="solve">→ 대화 후 문법·표현·점수 피드백 즉시 제공</p></div>
+  <div class="prob-grid" style="gap:8px;margin-bottom:8px;">
+    <div class="prob-card" style="padding:12px;"><div class="prob-icon" style="font-size:24px;margin-bottom:6px;">🧊</div><h3 style="font-size:19px;">실전 경험 부족</h3><p style="font-size:18px;">단어·문법을 알아도 실제 대화 상황이 오면 입이 얼어버린다.</p><p class="solve" style="font-size:18px;">→ 언제든 원하는 상황으로 연습 가능</p></div>
+    <div class="prob-card" style="padding:12px;"><div class="prob-icon" style="font-size:24px;margin-bottom:6px;">💸</div><h3 style="font-size:19px;">높은 접근 비용</h3><p style="font-size:18px;">원어민 화상 영어 1회에 3~10만원. 꾸준히 하려면 수십만 원.</p><p class="solve" style="font-size:18px;">→ AI 모델로 비용 장벽 완전 제거</p></div>
+    <div class="prob-card" style="padding:12px;"><div class="prob-icon" style="font-size:24px;margin-bottom:6px;">😰</div><h3 style="font-size:19px;">심리적 부담</h3><p style="font-size:18px;">실수·발음에 대한 두려움. 사람 앞에서 영어 쓰는 것 자체가 스트레스.</p><p class="solve" style="font-size:18px;">→ AI 상대라 부담 없이 반복 연습 가능</p></div>
+    <div class="prob-card" style="padding:12px;"><div class="prob-icon" style="font-size:24px;margin-bottom:6px;">🔁</div><h3 style="font-size:19px;">피드백 부재</h3><p style="font-size:18px;">혼자 연습하면 같은 실수를 반복. 잘못된 표현이 굳어버리는 악순환.</p><p class="solve" style="font-size:18px;">→ 대화 후 문법·표현·점수 피드백 즉시 제공</p></div>
   </div>
-  <div class="stat-row">
-    <div class="stat-card"><div class="stat-num p">73%</div><div class="stat-lbl">영어 학습자 중<br>말하기 자신감 부족</div></div>
-    <div class="stat-card"><div class="stat-num r">4만원+</div><div class="stat-lbl">원어민 화상 영어<br>1회 평균 비용</div></div>
-    <div class="stat-card"><div class="stat-num g">24/7</div><div class="stat-lbl">MEF와 함께라면<br>언제든 연습 가능</div></div>
+  <div class="stat-row" style="gap:8px;">
+    <div class="stat-card" style="padding:12px;"><div class="stat-num p" style="font-size:34px;">73%</div><div class="stat-lbl" style="font-size:18px;">영어 학습자 중<br>말하기 자신감 부족</div></div>
+    <div class="stat-card" style="padding:12px;"><div class="stat-num r" style="font-size:34px;">4만원+</div><div class="stat-lbl" style="font-size:18px;">원어민 화상 영어<br>1회 평균 비용</div></div>
+    <div class="stat-card" style="padding:12px;"><div class="stat-num g" style="font-size:34px;">24/7</div><div class="stat-lbl" style="font-size:18px;">MEF와 함께라면<br>언제든 연습 가능</div></div>
   </div>
 </div>
 
@@ -373,9 +372,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 <!-- 6. 아키텍처 다이어그램 -->
 <div class="slide" style="overflow:hidden;">
   <div class="tag">05 — 아키텍처</div>
-  <h2 class="stitle">시스템은 어떻게 구성되어 있나</h2>
-  <p class="sdesc">Layered + MVVM 패턴. 화면·상태·서비스·AI를 레이어로 분리. Flutter 앱이 Gemini API를 직접 호출. 백엔드 서버 없음.</p>
-  <div class="arch-wrap">
+  <h2 class="stitle" style="margin-bottom:6px;">시스템은 어떻게 구성되어 있나</h2>
+  <p class="sdesc" style="margin-bottom:10px;font-size:18px;">Layered + MVVM 패턴. 화면·상태·서비스·AI 레이어 분리. 백엔드 서버 없음.</p>
+  <div class="arch-wrap" style="gap:10px;">
     <div class="mermaid-wrap" style="display:flex;align-items:center;justify-content:center;">
       <pre class="mermaid">
 flowchart TD
@@ -405,10 +404,10 @@ flowchart TD
       </pre>
     </div>
     <div class="arch-layers">
-      <div class="arch-layer"><div class="ltag" style="color:var(--a)">Presentation</div><h4>screens/ · widgets/</h4><p>UI만 담당, 로직 없음. 총 8개 화면.</p></div>
-      <div class="arch-layer"><div class="ltag" style="color:var(--a2)">Application</div><h4>providers/ — Riverpod</h4><p>AsyncValue로 로딩·성공·에러 3상태 선언적 처리. 메모리 저장.</p></div>
-      <div class="arch-layer"><div class="ltag" style="color:var(--a3)">Domain</div><h4>services/ — AI Agent 호출</h4><p>Agent별 서비스 파일 분리. 프롬프트 설계, JSON 파싱. 화면에서 직접 호출 금지.</p></div>
-      <div class="arch-layer"><div class="ltag" style="color:var(--a4)">Data</div><h4>models/ + Gemini API</h4><p>Scenario, Feedback, AnalysisReport 구조. HTTP POST 직접 호출.</p></div>
+      <div class="arch-layer" style="padding:10px 14px;"><div class="ltag" style="color:var(--a);font-size:18px;">Presentation</div><h4 style="font-size:19px;">screens/ · widgets/</h4><p style="font-size:18px;">UI만 담당, 로직 없음. 총 8개 화면.</p></div>
+      <div class="arch-layer" style="padding:10px 14px;"><div class="ltag" style="color:var(--a2);font-size:18px;">Application</div><h4 style="font-size:19px;">providers/ — Riverpod</h4><p style="font-size:18px;">AsyncValue로 로딩·성공·에러 3상태 선언적 처리.</p></div>
+      <div class="arch-layer" style="padding:10px 14px;"><div class="ltag" style="color:var(--a3);font-size:18px;">Domain</div><h4 style="font-size:19px;">services/ — AI Agent 호출</h4><p style="font-size:18px;">Agent별 파일 분리. 프롬프트·JSON 파싱. 화면 직접 호출 금지.</p></div>
+      <div class="arch-layer" style="padding:10px 14px;"><div class="ltag" style="color:var(--a4);font-size:18px;">Data</div><h4 style="font-size:19px;">models/ + Gemini API</h4><p style="font-size:18px;">Scenario, Feedback, AnalysisReport. HTTP POST 직접 호출.</p></div>
     </div>
   </div>
 </div>
