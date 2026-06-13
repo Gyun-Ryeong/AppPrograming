@@ -221,7 +221,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 <nav class="nav-bar">
   <div class="nav-logo">MEF</div>
   <div class="nav-dots" id="navDots"></div>
-  <div class="nav-page" id="navPage">1 / 18</div>
+  <div class="nav-page" id="navPage">1 / 20</div>
 </nav>
 <button class="arrow left" id="arrowLeft" onclick="prevSlide()">&#8592;</button>
 <button class="arrow right" id="arrowRight" onclick="nextSlide()">&#8594;</button>
@@ -485,7 +485,33 @@ flutter run -d chrome
   </div>
 </div>
 
-<!-- 14. 역할 & WBS -->
+<!-- 14. 성능 최적화 -->
+<div class="slide">
+  <div class="tag">성능 최적화</div>
+  <h2 class="stitle">응답 속도와 토큰 최적화</h2>
+  <p class="sdesc" style="margin-bottom:14px;">실제 코드에서 적용한 4가지 최적화 — 불필요한 API 비용을 줄이고 안정적인 응답을 확보했다.</p>
+  <div class="tcol">
+    <div class="tcard">
+      <h4>⚡ 토큰 예산 설계</h4>
+      <div class="titem"><div class="p">maxOutputTokens 작업별 조정</div><div class="d">대화 512 · 피드백 2,048 · 분석 4,096 — 불필요한 낭비 방지 + 응답 잘림 방지.</div></div>
+      <div class="titem"><div class="p">responseMimeType 강제 설정</div><div class="d">JSON 반환 강제로 마크다운 코드블록 제거 정규식 불필요, 파싱 실패율 0% 달성.</div></div>
+    </div>
+    <div class="tcard">
+      <h4>🔄 중복 호출 방지</h4>
+      <div class="titem"><div class="p">AsyncValue 로딩 상태 활용</div><div class="d">Riverpod AsyncNotifier의 loading 상태로 진행 중인 요청에 중복 API 호출을 원천 차단.</div></div>
+      <div class="titem"><div class="p">대화 히스토리 범위 제어</div><div class="d">전체 대화를 messages 배열로 전달하되, 맥락에 필요한 범위만 포함해 입력 토큰 절약.</div></div>
+    </div>
+  </div>
+  <div style="margin-top:14px;display:flex;gap:9px;flex-wrap:wrap;">
+    <div class="chip"><span>대화</span>512 tokens</div>
+    <div class="chip"><span>피드백</span>2,048 tokens</div>
+    <div class="chip"><span>분석</span>4,096 tokens</div>
+    <div class="chip"><span>JSON 파싱 실패</span>0%</div>
+    <div class="chip"><span>중복 호출</span>AsyncValue 차단</div>
+  </div>
+</div>
+
+<!-- 15. 역할 & WBS -->
 <div class="slide">
   <div class="tag">팀 & 완성도</div>
   <h2 class="stitle">팀과 완성도</h2>
@@ -509,7 +535,28 @@ flutter run -d chrome
   </div>
 </div>
 
-<!-- 15. AI 활용 (가산점) -->
+<!-- 16. 작업 분해 구조 (WBS) -->
+<div class="slide">
+  <div class="tag">WBS</div>
+  <h2 class="stitle">작업 분해 구조 (WBS)</h2>
+  <div class="prog-wrap"><div class="prog-bar" style="width:100%"></div></div>
+  <div class="prog-labels"><span>기획</span><span>설계</span><span>구현</span><span>품질</span><span style="color:var(--a3)">전 단계 완료 ✅</span></div>
+  <table class="wbs-table">
+    <thead><tr><th>Phase</th><th>작업 항목</th><th>담당</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td>기획</td><td>비전·요구사항 정의 / vision.md · requirements.md</td><td><span class="oa">이동희</span></td><td><span class="badge b-done">✅ 완료</span></td></tr>
+      <tr><td>기획</td><td>WBS · 일정 수립 / wbs.md · schedule.md</td><td><span class="ob">김령균</span></td><td><span class="badge b-done">✅ 완료</span></td></tr>
+      <tr><td>설계</td><td>아키텍처 설계 / ADR 5개 / 디렉토리 구조 확정</td><td><span class="oa">이동희</span></td><td><span class="badge b-done">✅ 완료</span></td></tr>
+      <tr><td>구현</td><td>ScenarioAgent · AnalysisAgent · 시나리오/분석 화면</td><td><span class="oa">이동희</span></td><td><span class="badge b-done">✅ 완료</span></td></tr>
+      <tr><td>구현</td><td>ConversationAgent · FeedbackAgent · 채팅/피드백/기록</td><td><span class="ob">김령균</span></td><td><span class="badge b-done">✅ 완료</span></td></tr>
+      <tr><td>구현</td><td>공통 위젯 3개 / go_router / 인증 화면</td><td><span class="ob">김령균</span></td><td><span class="badge b-done">✅ 완료</span></td></tr>
+      <tr><td>품질</td><td>단위·통합 테스트 / flutter analyze 0 errors / 성능 최적화</td><td><span class="ob">김령균</span></td><td><span class="badge b-done">✅ 완료</span></td></tr>
+      <tr><td>배포</td><td>발표 자료(index.html) / GitHub Pages 배포</td><td><span class="oa">이동희</span></td><td><span class="badge b-done">✅ 완료</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 17. AI 활용 (가산점) -->
 <div class="slide">
   <div class="tag">AI 기반 개발 방식</div>
   <h2 class="stitle">체계적인 개발 워크플로우</h2>
