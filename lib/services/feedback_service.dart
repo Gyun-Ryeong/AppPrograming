@@ -35,7 +35,10 @@ class FeedbackService {
           ],
         }
       ],
-      'generationConfig': {'maxOutputTokens': 2048},
+      'generationConfig': {
+        'maxOutputTokens': 2048,
+        'responseMimeType': 'application/json',
+      },
     });
 
     if (response.statusCode == 429) {
