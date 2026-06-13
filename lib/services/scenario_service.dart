@@ -1,10 +1,9 @@
 // ScenarioAgent: 사용자 상황 입력 → Gemini API 호출 → 시나리오 생성
 
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
-import '../constants/api_config.dart';
 import '../models/scenario.dart';
+import 'gemini_api_helper.dart';
 
 class ScenarioService {
   /// 사용자가 입력한 상황으로 AI 시나리오를 생성한다.
@@ -13,22 +12,18 @@ class ScenarioService {
     required String difficulty,
     required String category,
   }) async {
-    // 네이티브 Gemini API — API 키를 URL에 포함해 CORS 헤더 없이 호출
-    final response = await http.post(
-      Uri.parse(ApiConfig.apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'contents': [
-          {
-            'role': 'user',
-            'parts': [
-              {'text': _buildPrompt(situation, difficulty, category)}
-            ],
-          }
-        ],
-        'generationConfig': {'maxOutputTokens': 1024},
-      }),
-    );
+    // 네이티브 Gemini API — 429(요청 과다) 시 헬퍼가 한 번 자동 재시도한다
+    final response = await GeminiApiHelper.post({
+      'contents': [
+        {
+          'role': 'user',
+          'parts': [
+            {'text': _buildPrompt(situation, difficulty, category)}
+          ],
+        }
+      ],
+      'generationConfig': {'maxOutputTokens': 1024},
+    });
 
     if (response.statusCode == 429) {
       throw Exception('서버가 혼잡합니다. 잠시 후 다시 시도해주세요.');

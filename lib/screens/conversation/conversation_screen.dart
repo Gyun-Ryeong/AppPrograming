@@ -28,6 +28,15 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> {
   final ScrollController _scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+    // 새 대화 시작 시 이전 세션의 메시지가 남아있지 않도록 초기화
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(conversationProvider.notifier).reset();
+    });
+  }
+
+  @override
   void dispose() {
     _textController.dispose();
     _scrollController.dispose();

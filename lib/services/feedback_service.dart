@@ -1,11 +1,10 @@
 // FeedbackAgent: 대화 종료 후 Gemini API로 문법/표현/자연스러움 종합 피드백 생성
 
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
-import '../constants/api_config.dart';
 import '../models/feedback.dart';
 import '../models/message.dart';
+import 'gemini_api_helper.dart';
 
 class FeedbackService {
   /// 전체 대화 내용을 분석해 피드백을 생성한다
@@ -26,22 +25,18 @@ class FeedbackService {
       );
     }
 
-    // 네이티브 Gemini API — API 키를 URL에 포함해 CORS 헤더 없이 호출
-    final response = await http.post(
-      Uri.parse(ApiConfig.apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'contents': [
-          {
-            'role': 'user',
-            'parts': [
-              {'text': _buildPrompt(userMessages)}
-            ],
-          }
-        ],
-        'generationConfig': {'maxOutputTokens': 2048},
-      }),
-    );
+    // 네이티브 Gemini API — 429(요청 과다) 시 헬퍼가 한 번 자동 재시도한다
+    final response = await GeminiApiHelper.post({
+      'contents': [
+        {
+          'role': 'user',
+          'parts': [
+            {'text': _buildPrompt(userMessages)}
+          ],
+        }
+      ],
+      'generationConfig': {'maxOutputTokens': 2048},
+    });
 
     if (response.statusCode == 429) {
       throw Exception('서버가 혼잡합니다. 잠시 후 다시 시도해주세요.');
