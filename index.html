@@ -9,9 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#0a0a0f; --surface:#111118; --surface2:#1a1a24;
-  --border:rgba(255,255,255,0.08); --text:#f0eff8; --text2:#9b9ab8;
-  --a:#6c63ff; --a2:#ff6b6b; --a3:#43e97b; --a4:#f7971e;
+  --bg:#f7f7fb; --surface:#ffffff; --surface2:#f0f0f6;
+  --border:rgba(0,0,0,0.1); --text:#1a1a24; --text2:#6b6a85;
+  --a:#5b52e6; --a2:#e64545; --a3:#1d9e54; --a4:#d97a06;
   --r:14px; --fn:'Pretendard','Apple SD Gothic Neo',sans-serif; --fe:'Figtree','Pretendard',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -29,10 +29,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .slide.active{opacity:1;pointer-events:all;transform:translateX(0);}
 .slide.prev{transform:translateX(-60px);opacity:0;pointer-events:none;}
 
-.nav-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:12px 36px;background:rgba(10,10,15,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:12px 36px;background:rgba(247,247,251,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
 .nav-logo{font-family:var(--fe);font-size:18px;font-weight:900;color:var(--a);}
 .nav-dots{display:flex;gap:6px;align-items:center;flex-wrap:wrap;max-width:60%;justify-content:center;}
-.nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.15);cursor:pointer;transition:all .2s;}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(0,0,0,0.15);cursor:pointer;transition:all .2s;}
 .nav-dot.active{background:var(--a);transform:scale(1.4);}
 .nav-page{font-size:14px;font-weight:700;color:var(--text2);font-family:var(--fe);}
 
@@ -41,7 +41,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .arrow.left{left:16px;} .arrow.right{right:16px;}
 .arrow.disabled{opacity:0.2;pointer-events:none;}
 
-.bg-glow{position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse at center,rgba(108,99,255,0.09) 0%,transparent 70%);pointer-events:none;z-index:0;}
+.bg-glow{position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse at center,rgba(91,82,230,0.1) 0%,transparent 70%);pointer-events:none;z-index:0;}
 
 .tag{font-size:clamp(13px,1.14vw,20px);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
 .stitle{font-family:var(--fe);font-size:clamp(36px,4.35vw,67px);font-weight:900;letter-spacing:-1px;line-height:1.12;margin-bottom:12px;}
@@ -111,7 +111,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .tree{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;font-family:'Nanum Gothic Coding',monospace;font-size:clamp(14px,1.24vw,22px);line-height:1.7;}
 .tree .dir{color:var(--a);font-weight:700;}
 .tree .file{color:var(--text2);}
-.tree .cmt{color:#555;}
+.tree .cmt{color:#999;}
 .tree-desc{display:flex;flex-direction:column;gap:10px;}
 .tree-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;}
 .tree-card h4{font-size:clamp(15px,1.39vw,25px);font-weight:700;margin-bottom:3px;}
@@ -188,7 +188,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .wbs-table tr:last-child td{border-bottom:none;}
 .badge{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;font-family:var(--fe);}
 .b-done{background:rgba(67,233,123,0.15);color:var(--a3);}
-.b-todo{background:rgba(255,255,255,0.07);color:var(--text2);}
+.b-todo{background:rgba(0,0,0,0.06);color:var(--text2);}
 .oa{font-size:13px;color:var(--a);font-weight:700;}
 .ob{font-size:13px;color:var(--a2);font-weight:700;}
 
@@ -346,11 +346,11 @@ flowchart TD
     RP <--> SV
     SV -->|HTTP POST| API
     API -->|JSON| SV
-    style P fill:#1a1a24,stroke:#6c63ff,stroke-width:1.5px,color:#f0eff8
-    style A fill:#1a1a24,stroke:#ff6b6b,stroke-width:1.5px,color:#f0eff8
-    style D fill:#1a1a24,stroke:#43e97b,stroke-width:1.5px,color:#f0eff8
-    style DT fill:#1a1a24,stroke:#f7971e,stroke-width:1.5px,color:#f0eff8
-    style User fill:#111118,stroke:#8b8aa8,color:#f0eff8
+    style P fill:#eceaff,stroke:#5b52e6,stroke-width:1.5px
+    style A fill:#ffecec,stroke:#e64545,stroke-width:1.5px
+    style D fill:#e6f9ee,stroke:#1d9e54,stroke-width:1.5px
+    style DT fill:#fdf0dd,stroke:#d97a06,stroke-width:1.5px
+    style User fill:#f0f0f6,stroke:#6b6a85,color:#1a1a24
       </pre>
     </div>
     <div class="arch-layers">
@@ -626,7 +626,7 @@ flutter run -d chrome
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false,theme:'dark',themeVariables:{background:'#1a1a24',primaryColor:'#6c63ff',primaryTextColor:'#f0eff8',primaryBorderColor:'#6c63ff',lineColor:'#8b8aa8',secondaryColor:'#1a1a24',tertiaryColor:'#111118',fontSize:'13px'},flowchart:{curve:'basis',padding:10}});
+mermaid.initialize({startOnLoad:false,theme:'default',themeVariables:{background:'#ffffff',primaryColor:'#eceaff',primaryTextColor:'#1a1a24',primaryBorderColor:'#5b52e6',lineColor:'#6b6a85',secondaryColor:'#f0f0f6',tertiaryColor:'#ffffff',fontSize:'13px'},flowchart:{curve:'basis',padding:10}});
 await mermaid.run();
 </script>
 <script>
