@@ -221,7 +221,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 <nav class="nav-bar">
   <div class="nav-logo">MEF</div>
   <div class="nav-dots" id="navDots"></div>
-  <div class="nav-page" id="navPage">1 / 20</div>
+  <div class="nav-page" id="navPage">1 / 19</div>
 </nav>
 <button class="arrow left" id="arrowLeft" onclick="prevSlide()">&#8592;</button>
 <button class="arrow right" id="arrowRight" onclick="nextSlide()">&#8594;</button>
@@ -301,22 +301,22 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   <p class="sdesc" style="margin-bottom:0;">입력 한 줄로 시작해 실전 대화와 개인 맞춤 피드백까지 — 학원 한 번 갈 시간에 수십 번 연습할 수 있다.</p>
 </div>
 
-<!-- 6. 기술 스택 -->
+<!-- 6. 기술 스택 + 선택 근거 (통합) -->
 <div class="slide">
-  <div class="tag">기술 스택</div>
-  <h2 class="stitle">무엇으로 만들었나</h2>
-  <p class="sdesc">프로토타입을 빠르게 완성하면서도 확장 가능한 구조를 위해 검증된 기술을 선택했다.</p>
-  <div class="role-grid" style="grid-template-columns:1fr 1fr 1fr;">
-    <div class="role-card"><div class="role-name" style="color:var(--a)">Flutter 3.44</div><div class="role-sub">UI 프레임워크</div><div class="role-item"><div class="rdot" style="background:var(--a)"></div><div><h5>단일 코드 멀티플랫폼</h5><p>Android·iOS·Web 동시 지원. 네이티브 컴파일로 실시간 채팅 UI에 유리.</p></div></div></div>
-    <div class="role-card"><div class="role-name" style="color:var(--a2)">Riverpod 2.6</div><div class="role-sub">상태 관리</div><div class="role-item"><div class="rdot" style="background:var(--a2)"></div><div><h5>AsyncValue 3상태</h5><p>로딩·성공·에러를 선언적으로 처리. 컴파일 타임 안전성 보장.</p></div></div></div>
-    <div class="role-card"><div class="role-name" style="color:var(--a3)">Gemini 2.5</div><div class="role-sub">AI 모델</div><div class="role-item"><div class="rdot" style="background:var(--a3)"></div><div><h5>Google AI Studio</h5><p>무료 티어로 4개 Agent 구동. 서버 없이 HTTP 직접 호출.</p></div></div></div>
+  <div class="tag">기술 스택 & 선택 근거</div>
+  <h2 class="stitle">무엇으로, 왜 만들었나</h2>
+  <p class="sdesc">빠른 완성과 확장성을 위해 검증된 기술을 선택했고, 모든 결정은 ADR로 기록했다.</p>
+  <div class="adr-grid">
+    <div class="adr-card"><div class="adr-num">ADR-0001 · 플랫폼</div><h3>Flutter 3.44</h3><div class="adr-row"><h4>대안</h4><p>React Native, Kotlin, Swift</p></div><div class="adr-row"><h4>이유</h4><p>단일 코드로 Android·iOS·Web 동시 지원. 네이티브 컴파일로 실시간 채팅 UI에 유리.</p></div></div>
+    <div class="adr-card"><div class="adr-num">ADR-0002 · 상태관리</div><h3>Riverpod 2.6</h3><div class="adr-row"><h4>대안</h4><p>Provider, BLoC, GetX</p></div><div class="adr-row"><h4>이유</h4><p>context 의존 해결. AsyncValue로 로딩·성공·에러 3상태를 선언적으로 처리.</p></div></div>
+    <div class="adr-card"><div class="adr-num">ADR-0003 · 백엔드·AI</div><h3>Gemini 2.5</h3><div class="adr-row"><h4>대안</h4><p>Supabase, Firebase, OpenRouter</p></div><div class="adr-row"><h4>이유</h4><p>MVP 우선, 무료 티어로 4개 Agent 구동. 서버 없이 HTTP 직접 호출.</p></div></div>
   </div>
-  <div style="margin-top:14px;display:flex;gap:9px;flex-wrap:wrap;">
-    <div class="chip"><span>라우팅</span>go_router 14</div>
-    <div class="chip"><span>HTTP</span>http 패키지</div>
+  <div style="margin-top:14px;display:flex;gap:9px;flex-wrap:wrap;align-items:center;">
+    <div class="chip"><span>ADR-0004</span>라우팅 go_router</div>
+    <div class="chip"><span>ADR-0005</span>인증 로컬 세션</div>
     <div class="chip"><span>아키텍처</span>레이어드 4계층</div>
-    <div class="chip"><span>인증</span>로컬 세션</div>
     <div class="chip"><span>분석</span>flutter analyze 0 errors</div>
+    <span style="font-size:clamp(13px,1.1vw,18px);color:var(--text2);font-weight:600;">→ 총 <strong style="color:var(--a3)">5개 ADR</strong> 문서화 완료</span>
   </div>
 </div>
 
@@ -392,20 +392,7 @@ flowchart TD
   </div>
 </div>
 
-<!-- 9. ADR -->
-<div class="slide">
-  <div class="tag">기술 선택 근거</div>
-  <h2 class="stitle">왜 이 기술을 선택했나</h2>
-  <p class="sdesc">모든 핵심 결정은 ADR(Architecture Decision Record)로 기록해 일관된 의사결정을 유지했다.</p>
-  <div class="adr-grid">
-    <div class="adr-card"><div class="adr-num">ADR-0001</div><h3>플랫폼</h3><div class="adr-row"><h4>결정</h4><p class="adr-chosen">Flutter</p></div><div class="adr-row"><h4>대안</h4><p>React Native, Kotlin, Swift</p></div><div class="adr-row"><h4>이유</h4><p>단일 코드 멀티플랫폼, 네이티브 컴파일로 채팅 UI에 유리.</p></div></div>
-    <div class="adr-card"><div class="adr-num">ADR-0002</div><h3>상태 관리</h3><div class="adr-row"><h4>결정</h4><p class="adr-chosen">Riverpod</p></div><div class="adr-row"><h4>대안</h4><p>Provider, BLoC, GetX</p></div><div class="adr-row"><h4>이유</h4><p>context 의존 해결, AsyncValue로 3상태 선언적 처리.</p></div></div>
-    <div class="adr-card"><div class="adr-num">ADR-0003</div><h3>백엔드·AI</h3><div class="adr-row"><h4>결정</h4><p class="adr-chosen">Gemini (서버리스)</p></div><div class="adr-row"><h4>대안</h4><p>Supabase, Firebase, OpenRouter</p></div><div class="adr-row"><h4>이유</h4><p>MVP 우선, 무료 티어, 서버 없이 직접 호출.</p></div></div>
-  </div>
-  <p class="sdesc" style="margin-top:14px;margin-bottom:0;font-size:14px;">+ ADR-0004 (라우팅: go_router) · ADR-0005 (인증: 로컬 세션) — 총 <strong style="color:var(--a3)">5개 ADR</strong> 문서화 완료</p>
-</div>
-
-<!-- 10. 개발 환경 설정 -->
+<!-- 9. 개발 환경 설정 -->
 <div class="slide">
   <div class="tag">개발 환경 설정</div>
   <h2 class="stitle">어떻게 설치하고 실행하나</h2>
