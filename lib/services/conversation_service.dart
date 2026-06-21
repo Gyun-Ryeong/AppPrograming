@@ -1,11 +1,10 @@
 // ConversationAgent: 시나리오 맥락을 유지하며 Gemini API로 실시간 대화 진행
 
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
-import '../constants/api_config.dart';
 import '../models/message.dart';
 import '../models/scenario.dart';
+import 'gemini_api_helper.dart';
 
 class ConversationService {
   /// 시나리오 맥락 + 대화 히스토리를 포함해 메시지를 전송하고 응답을 받는다.
@@ -30,21 +29,20 @@ class ConversationService {
       },
     ];
 
-    // 네이티브 Gemini API — 시스템 인스트럭션 + 대화 히스토리 전달
-    final response = await http.post(
-      Uri.parse(ApiConfig.apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'system_instruction': {
-          'parts': [
-            {'text': _buildSystemPrompt(scenario)}
-          ],
-        },
-        'contents': contents,
-        'generationConfig': {'maxOutputTokens': 512},
-      }),
-    );
+    // 네이티브 Gemini API — 429(요청 과다) 시 헬퍼가 한 번 자동 재시도한다
+    final response = await GeminiApiHelper.post({
+      'system_instruction': {
+        'parts': [
+          {'text': _buildSystemPrompt(scenario)}
+        ],
+      },
+      'contents': contents,
+      'generationConfig': {'maxOutputTokens': 512},
+    });
 
+    if (response.statusCode == 429) {
+      throw Exception('서버가 혼잡합니다. 잠시 후 다시 시도해주세요.');
+    }
     if (response.statusCode != 200) {
       throw Exception('대화 응답 실패: ${response.statusCode}');
     }

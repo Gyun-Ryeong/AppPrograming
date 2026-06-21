@@ -1,11 +1,10 @@
 // AnalysisAgent: 누적 대화 세션을 분석해 약점 패턴 리포트 생성 (유료 기능)
 
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
-import '../constants/api_config.dart';
 import '../models/analysis_report.dart';
 import '../models/conversation_session.dart';
+import 'gemini_api_helper.dart';
 
 class AnalysisService {
   /// 누적 대화 세션 목록을 분석해 약점 패턴 리포트를 반환한다
@@ -28,25 +27,21 @@ class AnalysisService {
         .map((m) => '- "${m.content}"')
         .join('\n');
 
-    final response = await http.post(
-      Uri.parse(ApiConfig.apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'contents': [
-          {
-            'role': 'user',
-            'parts': [
-              {'text': _buildPrompt(sessions.length, allUserMessages)},
-            ],
-          }
-        ],
-        'generationConfig': {
-          'maxOutputTokens': 4096,
-          'temperature': 0.3,
-          'responseMimeType': 'application/json',
-        },
-      }),
-    );
+    final response = await GeminiApiHelper.post({
+      'contents': [
+        {
+          'role': 'user',
+          'parts': [
+            {'text': _buildPrompt(sessions.length, allUserMessages)},
+          ],
+        }
+      ],
+      'generationConfig': {
+        'maxOutputTokens': 4096,
+        'temperature': 0.3,
+        'responseMimeType': 'application/json',
+      },
+    });
 
     if (response.statusCode == 429) {
       throw Exception('서버가 혼잡합니다. 잠시 후 다시 시도해주세요.');
