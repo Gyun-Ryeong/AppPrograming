@@ -9,13 +9,13 @@
 
 | 항목 | 점수 | 상태 | 증빙 |
 |------|------|------|------|
-| A. AI Agent 활용 사례 | +1 | ⚠️ 준비 중 | 아래 참고 |
+| A. AI Agent 활용 사례 | +1 | ✅ 완료 | `AGENTS.md`, `.github/agents/`, `BONUS.md` |
 | B. 본인만의 부트스트랩 기법 | +2 | ❌ 미작성 | `AUTHORING.{이름}.md` 필요 |
-| C. LLM Wiki 운영 | +1 | ❌ 미작성 | 10개 이상 항목 필요 |
+| C. LLM Wiki 운영 | +1 | ✅ 완료 | `.planning/wiki/` 7개 파일, 20개+ 항목 |
 | D. AI Agent 리포트 발표 | +2 | ❌ 미예약 | 10분 이상, 별도 신청 |
 
-**현재 목표 가산점: +1점 (A 항목만)**
-**최대 목표: +3점 (A + B + C)**
+**현재 확보 가산점: +2점 (A + C)**
+**최대 목표: +4점 (A + B + C + D)**
 
 ---
 
@@ -51,10 +51,16 @@
 
 ---
 
-## C. LLM Wiki (+1점) — 미완성
+## C. LLM Wiki (+1점) — 완료
 
-> 잘 동작한 프롬프트 패턴, 실패 사례, 모델별 차이점 10개 이상 정리 필요
+`.planning/wiki/` 폴더에 7개 파일, 20개+ 항목 운영 중.
 
-**TODO:**
-- [ ] 별도 노트/파일에 항목 10개 이상 작성
-- [ ] 출처 명시 (Anthropic 문서, Claude Code 공식 가이드 등)
+| 파일 | 내용 | 항목 수 |
+|------|------|---------|
+| `00-index.md` | 위키 목적·사용법·빠른 참조 | — |
+| `01-architecture-evolution.md` | 아키텍처 변천 (React Native→Flutter→Gemini) | 4개 |
+| `02-trial-and-error.md` | 시행착오 로그 (Supabase, CORS, JSON 오류 등) | 5개 |
+| `03-gemini-api-guide.md` | Gemini API 실전 사용법 | 6개 |
+| `04-flutter-patterns.md` | Riverpod·Flutter 패턴 정리 | 5개 |
+| `decisions-log.md` | 판단·시행착오 시간순 기록 | 8개 |
+| `glossary.md` | 프로젝트 용어 사전 | 22개 |
